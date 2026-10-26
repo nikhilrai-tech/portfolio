@@ -202,6 +202,7 @@ export type Profile = {
     englishOnly: string;
   };
   testimonials: { label: string; heading: string };
+  linkedin: { heading: string; by: string; load: string; open: string; note: string };
   activity: {
     heading: string;
     total: string;

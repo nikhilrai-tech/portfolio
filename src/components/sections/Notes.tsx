@@ -5,6 +5,7 @@ import Container from "@/components/ui/Container";
 import { ArrowUpRight } from "@/components/ui/Icons";
 import SectionHeader from "@/components/ui/SectionHeader";
 import Tag from "@/components/ui/Tag";
+import LinkedInPosts from "@/components/ui/LinkedInPosts";
 
 export default function Notes({ profile, locale }: { profile: Profile; locale: Locale }) {
   const { notes: t } = profile;
@@ -43,6 +44,7 @@ export default function Notes({ profile, locale }: { profile: Profile; locale: L
             </li>
           ))}
         </ul>
+        <LinkedInPosts labels={profile.linkedin} />
       </Container>
     </section>
   );

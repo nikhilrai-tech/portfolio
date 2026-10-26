@@ -55,6 +55,27 @@ export const marquee = {
   secondary: ["Azure", "AWS", "DigitalOcean", "Docker", "Jenkins", "Kafka", "Grafana", "Sentry"],
 };
 
+// LinkedIn posts shown in Notes. Topics are the post's own hashtags. Cards open the post on
+// LinkedIn. To show a post inline, paste the src from LinkedIn's "⋯ → Embed this post" code into
+// `embed`; it then loads only when a visitor taps it.
+export const linkedinPosts: { urn: string; url: string; tags: string[]; embed?: string }[] = [
+  {
+    urn: "urn:li:share:7517878181916368896",
+    url: "https://www.linkedin.com/posts/nikhil-rai-551219183_ai-aiagents-llm-share-7517878181916368896-PgM7",
+    tags: ["AI", "AI agents", "LLM"],
+  },
+  {
+    urn: "urn:li:share:7480871490364645376",
+    url: "https://www.linkedin.com/posts/nikhil-rai-551219183_systemdesign-iot-mqtt-share-7480871490364645376-YLy8",
+    tags: ["System design", "IoT", "MQTT"],
+  },
+  {
+    urn: "urn:li:ugcPost:7196711116641619970",
+    url: "https://www.linkedin.com/posts/nikhil-rai-551219183_iitkanpur-cyber3ra-automationinpython-ugcPost-7196711116641619970-lY28",
+    tags: ["IIT Kanpur", "Cyber3ra", "Automation in Python"],
+  },
+];
+
 // LinkedIn recommendations (copied word for word, with permission). The section stays hidden while empty.
 export const testimonials: Testimonial[] = [];
 

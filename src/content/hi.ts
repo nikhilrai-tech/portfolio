@@ -428,6 +428,13 @@ export const hi: Profile = {
     englishOnly: "ये नोट्स अंग्रेज़ी में हैं।",
   },
   testimonials: { label: "कुछ शब्द", heading: "लोग क्या कहते हैं।" },
+  linkedin: {
+    heading: "मेरे LinkedIn से",
+    by: "निखिल राय की पोस्ट",
+    load: "पोस्ट देखें",
+    open: "LinkedIn पर खोलें",
+    note: "टैप करने पर LinkedIn से लोड होती है।",
+  },
   activity: {
     heading: "GitHub से लाइव",
     total: "पिछले साल में कंट्रीब्यूशन",

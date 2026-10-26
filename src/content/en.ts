@@ -424,6 +424,13 @@ export const en: Profile = {
     englishOnly: "",
   },
   testimonials: { label: "Kind words", heading: "What people say." },
+  linkedin: {
+    heading: "From my LinkedIn",
+    by: "Post by Nikhil Rai",
+    load: "Show post",
+    open: "Open on LinkedIn",
+    note: "Loads from LinkedIn when you tap it.",
+  },
   activity: {
     heading: "Live from GitHub",
     total: "contributions in the last year",
