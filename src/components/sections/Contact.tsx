@@ -5,6 +5,7 @@ import Container from "@/components/ui/Container";
 import CopyEmail from "@/components/ui/CopyEmail";
 import { ArrowUpRight } from "@/components/ui/Icons";
 import SectionHeader from "@/components/ui/SectionHeader";
+import LensFallback from "@/components/three/LensFallback";
 
 export default function Contact({ profile }: { profile: Profile }) {
   const { contact, ui } = profile;
@@ -17,7 +18,15 @@ export default function Contact({ profile }: { profile: Profile }) {
   return (
     <section id="contact" data-section="contact" className="relative pt-28 md:pt-40">
       <Container>
-        <SectionHeader id="contact" label={contact.label} heading={contact.heading} intro={contact.body} />
+        <div className="grid items-center gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-8">
+            <SectionHeader id="contact" label={contact.label} heading={contact.heading} intro={contact.body} />
+          </div>
+          {/* Second stop for the 3D lens: by the end of the page it is stopped down to f/16. */}
+          <div data-lens-slot className="relative hidden aspect-square w-full max-w-[19rem] justify-self-end lg:col-span-4 lg:block">
+            <LensFallback className="lens-fallback size-full" />
+          </div>
+        </div>
 
         <a
           href={`mailto:${person.email}`}

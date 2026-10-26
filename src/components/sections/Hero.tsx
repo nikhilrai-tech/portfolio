@@ -22,7 +22,7 @@ export default function Hero({ profile }: { profile: Profile }) {
       className="relative flex min-h-[100svh] flex-col justify-center pt-24 pb-16 lg:pt-28"
     >
       <Container className="grid items-center gap-10 lg:grid-cols-12">
-        {/* The 3D lens tracks this box. On mobile it sits above the text. */}
+        {/* The 3D lens tracks any [data-lens-slot] box. On mobile this one sits above the text. */}
         <div
           id="lens-slot"
           data-lens-slot
