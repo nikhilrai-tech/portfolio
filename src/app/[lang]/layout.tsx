@@ -10,6 +10,8 @@ import { hasLocale, locales } from "@/i18n/config";
 import { getProfile, person } from "@/content/profile";
 import { themeScript } from "@/lib/theme-script";
 import SmoothScroll from "@/components/motion/SmoothScroll";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "../globals.css";
 
 const bricolage = Bricolage_Grotesque({
@@ -111,6 +113,9 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
           {profile.ui.skip}
         </a>
         <SmoothScroll>{children}</SmoothScroll>
+        {/* Cookie-free, privacy-friendly visit counts and real-user performance (Vercel). */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
