@@ -378,6 +378,23 @@ export const en: Profile = {
     heading: "Prefer a terminal?",
     hint: "Type help and press Enter.",
   },
+  ask: {
+    launcher: "Ask about me",
+    title: "Ask Nikhil (AI)",
+    intro:
+      "Ask anything about my work, experience or stack. Answers come from this site's content.",
+    placeholder: "e.g. Has he run Kubernetes in production?",
+    send: "Send",
+    close: "Close chat",
+    suggestions: [
+      "What does Nikhil do as Head of IT?",
+      "Which clouds and DevOps tools has he used?",
+      "Tell me about his cybersecurity work",
+    ],
+    disclaimer: "AI answers can be imperfect. For anything important, email me.",
+    unavailable: "The assistant isn't available right now. Please email me instead.",
+    limited: "That's a lot of questions! Please try again in an hour, or email me.",
+  },
   form: {
     heading: "Or leave a message here",
     name: "Your name",

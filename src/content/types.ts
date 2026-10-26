@@ -146,6 +146,18 @@ export type Profile = {
     scenes: JourneyScene[];
     outro: { heading: string; body: string; cta: string };
   };
+  ask: {
+    launcher: string;
+    title: string;
+    intro: string;
+    placeholder: string;
+    send: string;
+    close: string;
+    suggestions: string[];
+    disclaimer: string;
+    unavailable: string;
+    limited: string;
+  };
   form: {
     heading: string;
     name: string;

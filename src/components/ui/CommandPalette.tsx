@@ -40,6 +40,8 @@ type Props = {
   resume?: string;
   links: { label: string; href: string }[];
   share: { title: string; text: string; url: string };
+  /** Label for the AI chat entry; omitted when the chat is not configured. */
+  ask?: string;
 };
 
 /** Follows an in-page anchor the same way a click would, so smooth scrolling still applies. */
@@ -59,6 +61,7 @@ export default function CommandPalette({
   resume,
   links,
   share,
+  ask,
 }: Props) {
   const dialog = useRef<HTMLDialogElement>(null);
   const input = useRef<HTMLInputElement>(null);
@@ -192,6 +195,14 @@ export default function CommandPalette({
         run: () => window.setTimeout(() => window.print(), 50),
       },
     );
+    if (ask)
+      list.push({
+        id: "ask",
+        group: "actions",
+        label: `✦ ${ask}`,
+        keywords: "ai chat question claude",
+        run: () => window.setTimeout(() => window.dispatchEvent(new Event("ask:open")), 50),
+      });
     if (resume)
       list.push({
         id: "resume",
@@ -218,7 +229,7 @@ export default function CommandPalette({
       }),
     );
     return list;
-  }, [labels, sections, otherLocale, email, resume, links, installable, share]);
+  }, [labels, sections, otherLocale, email, resume, links, installable, share, ask]);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();

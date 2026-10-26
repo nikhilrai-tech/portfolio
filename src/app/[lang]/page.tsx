@@ -22,6 +22,7 @@ import SoundToggle from "@/components/ui/SoundToggle";
 import CommandPalette from "@/components/ui/CommandPalette";
 import ServiceWorker from "@/components/ui/ServiceWorker";
 import Shortcuts from "@/components/ui/Shortcuts";
+import AskNikhil from "@/components/ui/AskNikhil";
 
 export default async function Home({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;
@@ -29,6 +30,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
   const profile = getProfile(lang);
 
   const other = lang === "en" ? "hi" : "en";
+  const askEnabled = Boolean(process.env.ANTHROPIC_API_KEY);
   // Structured data so search engines understand who this page is about.
   const jsonLd = {
     "@context": "https://schema.org",
@@ -83,6 +85,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
           { label: "LinkedIn", href: person.links.linkedin },
           { label: "Instagram", href: person.links.instagram },
         ]}
+        ask={askEnabled ? profile.ask.launcher : undefined}
         share={{
           title: profile.meta.title,
           text: profile.share.text,
@@ -90,6 +93,8 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         }}
       />
       <Shortcuts title={profile.shortcuts.title} items={profile.shortcuts.items} />
+      {/* The AI chat only appears once ANTHROPIC_API_KEY is configured for the deployment. */}
+      {askEnabled && <AskNikhil labels={profile.ask} email={person.email} />}
       <SoundToggle
         labels={{ on: profile.ui.soundOn, off: profile.ui.soundOff, hint: profile.ui.soundHint }}
       />
