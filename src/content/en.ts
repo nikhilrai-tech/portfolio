@@ -1,0 +1,294 @@
+import { companyLinks, person, productLinks, repos, stackItems, stacks } from "./shared";
+import type { Profile } from "./types";
+
+export const en: Profile = {
+  meta: {
+    title: `${person.name} · Head of IT & Infrastructure`,
+    description:
+      "Nikhil Rai runs IT, cloud and infrastructure at SimDaaS Autonomy, and has shipped microservices, CI/CD and cloud platforms for media, cybersecurity, aerospace and telecom.",
+  },
+  ui: {
+    skip: "Skip to content",
+    menu: "Menu",
+    close: "Close",
+    theme: "Switch colour theme",
+    language: "Language",
+    backToTop: "Back to top",
+    frame: "Frame",
+  },
+  nav: {
+    intro: "Intro",
+    about: "About",
+    experience: "Experience",
+    work: "Work",
+    stack: "Stack",
+    photography: "Photography",
+    contact: "Contact",
+  },
+  hero: {
+    eyebrow: "Head of IT & Infrastructure · SimDaaS Autonomy",
+    role: "Senior Software & DevOps Engineer",
+    intro:
+      "I design, ship and run the platforms engineering teams depend on: microservices, CI/CD, infrastructure as code and the cloud underneath, from first commit to production.",
+    primaryCta: "See my work",
+    secondaryCta: "Get in touch",
+    facts: [
+      { value: "2021", label: "shipping to production since" },
+      { value: "6", label: "products across 4 sectors" },
+      { value: "3", label: "clouds: Azure, AWS, DigitalOcean" },
+    ],
+    scroll: "Scroll",
+  },
+  about: {
+    label: "About",
+    heading: "Software and operations, in one frame.",
+    paragraphs: [
+      "I'm Nikhil Rai, an engineer from India. I started on the network operations side at Bharti Airtel, moved into building products at IIT Kanpur startups, and today I lead IT and infrastructure at SimDaaS Autonomy.",
+      "My work sits where software meets operations: microservices architecture, CI/CD pipelines, infrastructure as code and the monitoring around it. I've delivered for media, cybersecurity, aerospace and telecom teams, and I mentor the people I work with on DevOps, cloud and secure delivery.",
+      "Away from the terminal I'm usually behind a camera. Photography and infrastructure ask for the same habit: get the fundamentals right and everything else comes into focus.",
+    ],
+    portraitAlt: "Portrait of Nikhil Rai",
+    caption: "Based in India",
+  },
+  experience: {
+    label: "Experience",
+    heading: "Where I've worked.",
+    current: "Current",
+    keyProducts: "Key products",
+    stack: "Tech stack",
+    responsibilities: "Responsibilities",
+    visit: "Visit",
+    education: {
+      label: "Education",
+      degree: "Bachelor of Technology in Information Technology",
+      school: "Veer Bahadur Singh Purvanchal University, Jaunpur, U.P.",
+      year: "2021",
+    },
+  },
+  roles: [
+    {
+      title: "Head of IT & Infrastructure",
+      company: "SimDaaS Autonomy",
+      companyHref: companyLinks.simdaas,
+      place: "IIT Kanpur",
+      period: "Aug 2025 – Present",
+      current: true,
+      bullets: [
+        "Own SimDaaS' IT infrastructure, cloud ecosystem, software deployment platform and internal business applications, keeping them secure, reliable and cost-effective.",
+        "Define and enforce the company IT security policy across device security, access control and acceptable use, and own incident response for IT security issues.",
+        "Own all cloud accounts, deployments and billing; enforce tagging, environment segregation and right-sizing, with cost alerts and guardrails against unplanned spend.",
+        "Run end-to-end license management for SimDaaS software products, including the licensing portal and an audit trail of issuance, renewals and revocations.",
+        "Design, build and host the server-side API layer for SimDaaS applications across cloud and on-prem environments, with availability and monitoring.",
+        "Technical owner of the hardware team's software platforms, from architecture and CI/CD to releases and production support, working with hardware, firmware, cloud and product teams.",
+      ],
+    },
+    {
+      title: "Software Engineer / AI and Cloud Engineer",
+      company: "SkyAI Technologies",
+      place: "IIT Kanpur",
+      period: "Oct 2024 – 2025",
+      bullets: [
+        "Led development and cloud management for two AI-driven and microservices-based products, delivering scalable solutions for the media sector.",
+        "Architected and managed microservices deployments on DigitalOcean, utilizing Docker, Kubernetes, and Terraform for infrastructure automation.",
+        "Implemented CI/CD pipelines with Jenkins and SonarQube to ensure high code quality and streamlined deployments.",
+        "Integrated Razorpay for secure payment gateways, enhancing user experience in commercial applications.",
+      ],
+      products: [
+        {
+          name: "VTV Gujarati News Channel",
+          href: productLinks.vtv,
+          blurb:
+            "Developed a dynamic news platform using Django and Wagtail, leveraging microservices architecture for scalability.",
+          stack: stacks.vtv,
+          responsibilities: [
+            "Designed and managed microservices for content management and delivery, deployed on DigitalOcean.",
+            "Configured CI/CD pipelines with Jenkins and ensured code quality with SonarQube.",
+            "Optimized infrastructure for high-traffic news delivery using Kubernetes for container orchestration.",
+          ],
+        },
+        {
+          name: "AI Varta",
+          href: productLinks.aiVarta,
+          blurb:
+            "Engineered an AI-powered chatbot solution to enhance customer experience on websites, becoming SkyAI Technologies' flagship product.",
+          stack: stacks.aiVarta,
+          responsibilities: [
+            "Developed backend with Django, integrating AI-driven chatbot functionalities for seamless user interaction.",
+            "Implemented CI/CD pipelines using Jenkins and Docker, with SonarQube for code quality assurance.",
+            "Integrated Razorpay for secure payment processing, enabling subscription-based access.",
+            "Deployed and managed the application on DigitalOcean, ensuring scalability and performance.",
+          ],
+        },
+      ],
+    },
+    {
+      title: "Software Engineer",
+      company: "Cyber3ra",
+      place: "IIT Kanpur",
+      period: "Nov 2022 – Sep 2024",
+      bullets: [
+        "Led development of three high-impact products, including a cybersecurity platform, a creative talent marketplace, and an aerospace application, leveraging microservices and advanced DevOps practices.",
+        "Architected microservices-based systems, deployed on Azure, AWS, and DigitalOcean, using Docker, Kubernetes, and Terraform for scalability and automation.",
+        "Designed event-driven architectures with Kafka and RabbitMQ for reliable asynchronous communication.",
+        "Implemented CI/CD pipelines with Jenkins and SonarQube, and configured Sentry and BetterStack for real-time monitoring and logging.",
+        "Mentored cross-functional teams on DevOps best practices, cloud management, and secure application development.",
+      ],
+      products: [
+        {
+          name: "SecuriumX",
+          href: productLinks.securiumx,
+          blurb:
+            "Developed a pioneering cybersecurity platform connecting businesses with ethical hackers for bug bounty programs and offering Capture the Flag challenges to secure the digital world.",
+          stack: stacks.securiumx,
+          responsibilities: [
+            "Architected microservices-based backend with Django and PostgreSQL, integrated with React and Vue.js frontends for a seamless user experience.",
+            "Implemented CI/CD pipelines using Jenkins and SonarQube for automated deployments and code quality assurance.",
+            "Deployed the platform on Azure, optimizing for scalability and security.",
+            "Integrated Razorpay for secure payment processing in bug bounty programs.",
+            "Configured Sentry and BetterStack for real-time monitoring and logging, enhancing platform reliability.",
+          ],
+        },
+        {
+          name: "Persius",
+          href: productLinks.persius,
+          blurb:
+            "Contributed to a microservices-based marketplace connecting creative talent with businesses, institutions, and individuals, offering jobs, gigs, workshops, and online courses.",
+          stack: stacks.persius,
+          responsibilities: [
+            "Developed microservices for job listings, user profiles, and payment processing.",
+            "Integrated RabbitMQ for asynchronous task queues and event-driven communication.",
+            "Deployed services on AWS using Terraform and monitored performance with Grafana and Prometheus.",
+            "Ensured code quality with SonarQube and automated deployments with Jenkins.",
+          ],
+        },
+        {
+          name: "Aethrone Aerospace",
+          href: productLinks.aethrone,
+          blurb:
+            "Developed a web application for a deep tech startup incubated at SIIC-IIT Kanpur, supporting critical mission systems, platforms, and components for the aerospace and defense sector.",
+          stack: stacks.aethrone,
+          responsibilities: [
+            "Built a scalable backend with Django and MySQL, integrated with a responsive React frontend.",
+            "Implemented CI/CD pipelines using Jenkins and Docker, with SonarQube for code quality assurance.",
+            "Deployed the application on DigitalOcean, optimizing for performance and reliability.",
+            "Collaborated with stakeholders to align features with aerospace and defense requirements.",
+          ],
+        },
+      ],
+    },
+    {
+      title: "NOC Developer",
+      company: "Bharti Airtel",
+      place: "Gurugram, Haryana",
+      period: "Nov 2021 – Nov 2022",
+      bullets: [
+        "Led database development for a network operations dashboard, enhancing data management and real-time monitoring for telecommunications infrastructure.",
+        "Contributed to network operation tools development, integrating REST APIs for automation and monitoring.",
+        "Supported deployment pipelines with early adoption of microservices principles for scalable solutions.",
+      ],
+      products: [
+        {
+          name: "Network Operations Dashboard",
+          blurb:
+            "Developed a database-driven application to manage and visualize network operations data, improving efficiency in telecommunications monitoring and management.",
+          stack: stacks.noc,
+          responsibilities: [
+            "Designed and optimized PostgreSQL database schemas for real-time network data storage and retrieval.",
+            "Developed backend APIs with Django to support dashboard functionalities and data integration.",
+            "Implemented CI/CD pipelines using Jenkins and Docker for automated deployments.",
+            "Collaborated with network engineers to ensure data accuracy and alignment with operational needs.",
+          ],
+        },
+      ],
+    },
+  ],
+  work: {
+    label: "Work",
+    heading: "Things I've shipped.",
+    intro: "Products I built and ran in production, and the open-source tools I'm working on now.",
+    productsHeading: "Products",
+    openSourceHeading: "Open source",
+    visit: "Visit site",
+    source: "Source",
+    live: "Live",
+    at: "at",
+  },
+  projects: [
+    {
+      name: "seatbelt for AI agents",
+      blurb:
+        "Reads the shell commands an AI coding agent is about to run and blocks or asks before the dangerous ones: leaked secrets, production deletes, prompt injection. Zero dependencies.",
+      ...repos.seatbelt,
+      tags: ["Python", "AI safety", "DevSecOps"],
+    },
+    {
+      name: "cloud-ownerlens",
+      blurb:
+        "Finds unused cloud resources nobody owns, infers who they belong to, scores the waste and asks before anyone touches anything. Read-only by design.",
+      ...repos.ownerlens,
+      tags: ["Python", "AWS", "FinOps"],
+    },
+    {
+      name: "ScamSaathi",
+      blurb:
+        "An offline, multilingual scam shield for farmers, students and families, with a trusted-person alert loop. Checks messages, links and apps in Hindi or English.",
+      ...repos.scamsaathi,
+      tags: ["Flutter", "Django", "Security"],
+    },
+    {
+      name: "Scenario-Based V&V Tool",
+      blurb:
+        "A prototype for verification and validation of autonomous vehicles and ADAS: Latin Hypercube scenario generation, surrogate TTC evaluation and coverage analysis.",
+      ...repos.vnv,
+      tags: ["Python", "Streamlit", "Autonomy"],
+    },
+    {
+      name: "Stock Trading Simulator",
+      blurb:
+        "A full-stack, real-time trading simulator with virtual money, live market data, portfolio tracking and analytics.",
+      ...repos.trading,
+      tags: ["Python", "Real-time", "Full stack"],
+    },
+  ],
+  stack: {
+    label: "Stack",
+    heading: "Tools I reach for.",
+    intro: "Grouped the way I use them, from the language up to the dashboards that watch it.",
+    groups: [
+      { name: "Languages", items: stackItems.languages },
+      { name: "Frameworks", items: stackItems.frameworks },
+      { name: "Frontend", items: stackItems.frontend },
+      { name: "Data", items: stackItems.data },
+      { name: "Messaging", items: stackItems.messaging },
+      { name: "Cloud", items: stackItems.cloud },
+      { name: "Platform", items: stackItems.platform },
+      { name: "Observability", items: stackItems.observability },
+      { name: "Tooling", items: stackItems.tooling },
+      {
+        name: "IT & governance",
+        items: [
+          "IT security policy",
+          "Access control",
+          "IT asset management",
+          "Cloud cost governance",
+          "License management",
+          "Incident response",
+        ],
+      },
+    ],
+  },
+  photography: {
+    label: "Photography",
+    heading: "Through the lens.",
+    intro: "When I'm not shipping, I'm shooting.",
+  },
+  contact: {
+    label: "Contact",
+    heading: "Let's build something reliable.",
+    body: "Infrastructure, DevOps, Python, or photography: my inbox is open.",
+    copy: "Copy email",
+    copied: "Copied",
+    elsewhere: "Elsewhere",
+    footer: "Designed and built by Nikhil Rai.",
+  },
+};
