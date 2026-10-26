@@ -19,7 +19,7 @@ export default function Header({
     .map((id) => ({ id, label: profile.nav[id] }));
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-line bg-bg/75 backdrop-blur-lg">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-10">
         <a href="#intro" className="group flex items-center gap-3" aria-label={person.name}>
           <span className="grid size-9 place-items-center rounded-full border border-line-strong font-mono text-[0.7rem] tracking-wider transition-colors group-hover:border-accent group-hover:text-accent">
@@ -32,7 +32,7 @@ export default function Header({
 
         <nav
           aria-label="Primary"
-          className="hidden items-center gap-1 rounded-full border border-line bg-bg/60 px-2 py-1 backdrop-blur-md lg:flex"
+          className="hidden items-center gap-1 lg:flex"
         >
           {links.map((link) => (
             <a

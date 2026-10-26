@@ -10,7 +10,7 @@ export const person = {
     github: "https://github.com/nikhilrai-tech",
     instagram: "https://instagram.com/officialraisahabh",
   },
-  portrait: { src: "/images/portrait.jpg", width: 960, height: 960 },
+  portrait: { src: "/images/portrait.jpg", width: 470, height: 588 },
   // Set to "/resume.pdf" once a public copy without the phone number is in /public.
   resume: undefined as string | undefined,
 } as const;
