@@ -7,6 +7,7 @@ import { ArrowUpRight } from "@/components/ui/Icons";
 import SectionHeader from "@/components/ui/SectionHeader";
 import Terminal from "@/components/ui/Terminal";
 import ShareCard from "@/components/ui/ShareCard";
+import ContactForm from "@/components/ui/ContactForm";
 import type { Locale } from "@/i18n/config";
 
 export default function Contact({ profile, locale }: { profile: Profile; locale: Locale }) {
@@ -56,6 +57,10 @@ export default function Contact({ profile, locale }: { profile: Profile; locale:
               {contact.resume}
             </Button>
           )}
+        </div>
+
+        <div className="mt-12">
+          <ContactForm labels={profile.form} email={person.email} />
         </div>
 
         <div id="terminal" className="mt-20 grid scroll-mt-24 gap-8 lg:grid-cols-12">
