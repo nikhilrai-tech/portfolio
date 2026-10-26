@@ -6,6 +6,7 @@ import Header from "@/components/ui/Header";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import Experience from "@/components/sections/Experience";
+import Journey from "@/components/sections/Journey";
 import Work from "@/components/sections/Work";
 import Stack from "@/components/sections/Stack";
 import Photography from "@/components/sections/Photography";
@@ -62,6 +63,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <Marquee words={marquee.primary} />
         <Marquee words={marquee.secondary} direction={-1} outline />
         <Experience profile={profile} />
+        <Journey profile={profile} />
         <Work profile={profile} />
         <Stack profile={profile} />
         <Photography profile={profile} locale={lang} />

@@ -43,7 +43,17 @@ export type Photo = {
 };
 
 export type SectionId =
-  "intro" | "about" | "experience" | "work" | "stack" | "photography" | "contact";
+  "intro" | "about" | "experience" | "journey" | "work" | "stack" | "photography" | "contact";
+
+export type JourneyScene = {
+  year: string;
+  sector: string;
+  company: string;
+  line: string;
+  tools: string[];
+  /** Which illustration plays: network, security, cloud or autonomy. */
+  visual: "network" | "security" | "cloud" | "autonomy";
+};
 
 export type Profile = {
   meta: { title: string; description: string };
@@ -125,6 +135,17 @@ export type Profile = {
     copied: string;
   };
   terminal: { label: string; heading: string; hint: string };
+  journey: {
+    label: string;
+    heading: string;
+    play: string;
+    pause: string;
+    replay: string;
+    chapter: string;
+    pipeline: string[];
+    scenes: JourneyScene[];
+    outro: { heading: string; body: string; cta: string };
+  };
   share: {
     heading: string;
     body: string;

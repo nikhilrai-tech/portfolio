@@ -35,7 +35,8 @@ export default function Hud({ sections }: { sections: Section[] }) {
           if (indexRef.current)
             indexRef.current.textContent = `${String(index + 1).padStart(2, "0")}/${String(sections.length).padStart(2, "0")}`;
           if (nameRef.current) nameRef.current.textContent = sections[index].label;
-          root.current?.toggleAttribute("data-hidden", index === 0);
+          // Hidden over the hero (stats) and the journey film (it has its own player).
+          root.current?.toggleAttribute("data-hidden", ["intro", "journey"].includes(sections[index].id));
         }
       },
       { rootMargin: "-45% 0px -45% 0px" },

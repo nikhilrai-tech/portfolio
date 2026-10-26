@@ -10,6 +10,7 @@ const CHORDS = [
   [57, 60, 64, 67], // Am7  intro
   [53, 57, 60, 64], // Fmaj7 about
   [48, 52, 55, 59], // Cmaj7 experience
+  [53, 57, 60, 67], // Fadd9 journey
   [55, 59, 62, 65], // G7   work
   [52, 55, 59, 62], // Em7  stack
   [50, 53, 57, 60], // Dm7  moments
