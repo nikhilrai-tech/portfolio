@@ -8,8 +8,12 @@ export function listenForInstall() {
   const onPrompt = (e: Event) => {
     e.preventDefault();
     deferred = e as InstallEvent;
+    window.dispatchEvent(new Event("install:ready"));
   };
-  const onInstalled = () => (deferred = null);
+  const onInstalled = () => {
+    deferred = null;
+    window.dispatchEvent(new Event("install:done"));
+  };
   window.addEventListener("beforeinstallprompt", onPrompt);
   window.addEventListener("appinstalled", onInstalled);
   return () => {
@@ -24,4 +28,5 @@ export async function promptInstall() {
   if (!deferred) return;
   await deferred.prompt();
   deferred = null;
+  window.dispatchEvent(new Event("install:done"));
 }

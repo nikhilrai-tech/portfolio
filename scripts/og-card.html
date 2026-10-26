@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@96,800&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Sans+Devanagari:wght@400;600&display=block"
+      rel="stylesheet"
+    />
+    <style>
+      * { box-sizing: border-box; margin: 0; }
+      html, body { width: 1200px; height: 630px; overflow: hidden; background: #0a0c0f; }
+      .card { position: relative; width: 1200px; height: 630px; padding: 64px 72px; color: #e9ebee;
+        font-family: "IBM Plex Sans", "IBM Plex Sans Devanagari", sans-serif;
+        background:
+          radial-gradient(800px 500px at 82% 50%, rgba(99,199,217,0.10), transparent 60%),
+          linear-gradient(rgba(233,235,238,0.035) 1px, transparent 1px) 0 0 / 48px 48px,
+          linear-gradient(90deg, rgba(233,235,238,0.035) 1px, transparent 1px) 0 0 / 48px 48px,
+          #0a0c0f; }
+      canvas { position: absolute; right: -95px; top: 5px; }
+      .portrait { position: absolute; right: 115px; top: 175px; width: 260px; height: 260px; border-radius: 50%;
+        overflow: hidden; border: 4px solid #eba73f; box-shadow: 0 0 0 10px rgba(10,12,15,0.85), 0 30px 80px rgba(0,0,0,0.6); }
+      .portrait img { width: 100%; height: 118%; object-fit: cover; object-position: 50% 12%; }
+      .eyebrow { max-width: 640px; font-family: "IBM Plex Mono", "IBM Plex Sans Devanagari", monospace; font-size: 20px; letter-spacing: 0.16em;
+        text-transform: uppercase; color: #eba73f; }
+      .name { margin-top: 34px; font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 128px;
+        line-height: 0.88; letter-spacing: -0.045em; }
+      .name span { color: #eba73f; }
+      .tag { margin-top: 30px; font-size: 31px; color: #e9ebee; font-weight: 500; max-width: 600px; line-height: 1.3; }
+      .sub { display: none; margin-top: 12px; font-size: 22px; color: #9aa3ae; max-width: 600px; line-height: 1.45; }
+      .chips { position: absolute; left: 72px; bottom: 58px; display: flex; gap: 12px; }
+      .chip { border: 1px solid #2a3038; border-radius: 999px; padding: 9px 18px; font-size: 18px; color: #9aa3ae;
+        font-family: "IBM Plex Mono", monospace; }
+      .url { position: absolute; right: 72px; bottom: 66px; font-family: "IBM Plex Mono", monospace; font-size: 18px; color: #63c7d9; }
+      .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #63c7d9; margin-right: 10px;
+        box-shadow: 0 0 12px #63c7d9; vertical-align: 1px; }
+      :lang(hi) .tag, :lang(hi) .sub { font-family: "IBM Plex Sans Devanagari", sans-serif; }
+      :lang(hi) .eyebrow { letter-spacing: 0.04em; font-family: "IBM Plex Sans Devanagari", sans-serif; font-weight: 600; }
+    </style>
+  </head>
+  <body>
+    <div class="card" id="card">
+      <canvas id="globe" width="620" height="620"></canvas>
+      <div class="portrait"><img id="photo" alt="" /></div>
+      <div class="eyebrow" id="eyebrow"></div>
+      <div class="name">NIKHIL<br />RAI<span>.</span></div>
+      <div class="tag" id="tag"></div>
+      <div class="sub" id="sub"></div>
+      <div class="chips"><div class="chip">Azure · AWS · DO</div><div class="chip">Kubernetes</div><div class="chip">Terraform</div></div>
+      <div class="url"><span class="dot"></span><span id="url"></span></div>
+    </div>
+    <script>
+      const p = new URLSearchParams(location.search);
+      const copy = {
+        en: {
+          eyebrow: "Head of Information Technology · SimDaaS Autonomy",
+          tag: "IT, cloud, DevOps and security, from first commit to production.",
+          sub: "Microservices, CI/CD and infrastructure as code for media, cybersecurity, aerospace and telecom.",
+        },
+        hi: {
+          eyebrow: "हेड ऑफ़ इनफ़ॉर्मेशन टेक्नोलॉजी · SimDaaS Autonomy",
+          tag: "IT, क्लाउड, DevOps और सिक्योरिटी, पहले commit से production तक।",
+          sub: "मीडिया, साइबर सिक्योरिटी, एयरोस्पेस और टेलीकॉम के लिए माइक्रोसर्विसेज़, CI/CD और इंफ्रास्ट्रक्चर ऐज़ कोड।",
+        },
+      };
+      const lang = p.get("lang") || "en";
+      document.documentElement.lang = lang;
+      for (const k of ["eyebrow", "tag", "sub"]) document.getElementById(k).textContent = copy[lang][k];
+      document.getElementById("url").textContent = p.get("url") || "";
+      document.getElementById("photo").src = p.get("photo");
+
+      // Dotted globe with data arcs, like the hero.
+      const c = document.getElementById("globe").getContext("2d");
+      const R = 280, cx = 310, cy = 310, N = 2600, g = Math.PI * (3 - Math.sqrt(5));
+      const rot = -0.5;
+      const pts = [];
+      for (let i = 0; i < N; i++) {
+        const y = 1 - (i / (N - 1)) * 2, r = Math.sqrt(1 - y * y), t = g * i;
+        let x = Math.cos(t) * r, z = Math.sin(t) * r;
+        [x, z] = [x * Math.cos(rot) - z * Math.sin(rot), x * Math.sin(rot) + z * Math.cos(rot)];
+        pts.push([x, y, z]);
+      }
+      pts.sort((a, b) => a[2] - b[2]);
+      for (const [x, y, z] of pts) {
+        const a = 0.12 + (z + 1) * 0.32;
+        const pick = Math.abs(Math.sin(x * 91 + y * 57));
+        c.fillStyle = pick < 0.12 ? `rgba(235,167,63,${a})` : pick < 0.25 ? `rgba(233,235,238,${a * 0.8})` : `rgba(99,199,217,${a})`;
+        c.beginPath();
+        c.arc(cx + x * R, cy - y * R, 1.2 + (z + 1) * 0.7, 0, Math.PI * 2);
+        c.fill();
+      }
+      // arcs
+      c.lineWidth = 1.6;
+      const arcs = [[-0.2, 0.25, 0.75, 0.45], [-0.25, 0.2, 0.6, -0.55], [-0.2, 0.25, -0.85, 0.35], [-0.2, 0.25, 0.1, -0.85]];
+      for (const [x1, y1, x2, y2] of arcs) {
+        const grad = c.createLinearGradient(cx + x1 * R, cy - y1 * R, cx + x2 * R, cy - y2 * R);
+        grad.addColorStop(0, "rgba(235,167,63,0.9)");
+        grad.addColorStop(1, "rgba(99,199,217,0.5)");
+        c.strokeStyle = grad;
+        c.beginPath();
+        c.moveTo(cx + x1 * R, cy - y1 * R);
+        c.quadraticCurveTo(cx + ((x1 + x2) / 2) * R * 1.45, cy - ((y1 + y2) / 2) * R * 1.45, cx + x2 * R, cy - y2 * R);
+        c.stroke();
+      }
+    </script>
+  </body>
+</html>

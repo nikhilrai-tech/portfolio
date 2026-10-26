@@ -392,3 +392,76 @@ html.booting .rise {
     transform: translateX(6px);
   }
 }
+
+/* ---------- Print: a clean, resume-like page ---------- */
+@media print {
+  :root {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --fg: #0f1318;
+    --muted: #4a525d;
+    --line: #d8dde3;
+    --accent: #9a5a00;
+    color-scheme: light;
+  }
+  body::after,
+  .gl-canvas,
+  .cursor-layer,
+  .boot,
+  header,
+  dialog,
+  [data-marquee],
+  #terminal,
+  button,
+  .fixed {
+    display: none !important;
+  }
+  * {
+    animation: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+  [data-hscroll-track] {
+    display: block !important;
+    transform: none !important;
+    overflow: visible !important;
+  }
+  [data-hscroll-track] > li {
+    width: auto !important;
+    max-width: none !important;
+    margin-bottom: 12px;
+    break-inside: avoid;
+  }
+  section {
+    min-height: 0 !important;
+    padding-top: 24px !important;
+    padding-bottom: 24px !important;
+    break-inside: auto;
+  }
+  #intro {
+    min-height: 0 !important;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .sticky {
+    position: static !important;
+  }
+  .shape-fallback {
+    opacity: 1 !important;
+  }
+  /* Undo scroll animations so every block prints in its final state. */
+  [data-hero-split],
+  [data-reveal],
+  [data-parallax],
+  .rise {
+    opacity: 1 !important;
+    transform: none !important;
+    translate: none !important;
+  }
+  .print-hidden {
+    display: none !important;
+  }
+}

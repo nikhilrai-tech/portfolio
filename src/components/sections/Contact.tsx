@@ -6,6 +6,7 @@ import CopyEmail from "@/components/ui/CopyEmail";
 import { ArrowUpRight } from "@/components/ui/Icons";
 import SectionHeader from "@/components/ui/SectionHeader";
 import Terminal from "@/components/ui/Terminal";
+import ShareCard from "@/components/ui/ShareCard";
 import type { Locale } from "@/i18n/config";
 
 export default function Contact({ profile, locale }: { profile: Profile; locale: Locale }) {
@@ -87,6 +88,10 @@ export default function Contact({ profile, locale }: { profile: Profile; locale:
               }}
             />
           </div>
+        </div>
+
+        <div className="mt-20">
+          <ShareCard profile={profile} url={`${person.siteUrl}/${locale}`} />
         </div>
 
         <div className="border-line mt-20 grid gap-6 border-t pt-8 md:grid-cols-12">

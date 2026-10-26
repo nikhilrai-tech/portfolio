@@ -20,6 +20,7 @@ import BootScreen from "@/components/ui/BootScreen";
 import SoundToggle from "@/components/ui/SoundToggle";
 import CommandPalette from "@/components/ui/CommandPalette";
 import ServiceWorker from "@/components/ui/ServiceWorker";
+import Shortcuts from "@/components/ui/Shortcuts";
 
 export default async function Home({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;
@@ -80,7 +81,13 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
           { label: "LinkedIn", href: person.links.linkedin },
           { label: "Instagram", href: person.links.instagram },
         ]}
+        share={{
+          title: profile.meta.title,
+          text: profile.share.text,
+          url: `${person.siteUrl}/${lang}`,
+        }}
       />
+      <Shortcuts title={profile.shortcuts.title} items={profile.shortcuts.items} />
       <SoundToggle
         labels={{ on: profile.ui.soundOn, off: profile.ui.soundOff, hint: profile.ui.soundHint }}
       />

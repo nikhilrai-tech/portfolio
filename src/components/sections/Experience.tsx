@@ -26,7 +26,7 @@ export default function Experience({ profile }: { profile: Profile }) {
           </aside>
 
           {/* Phones: a slim sticky bar under the header carries the rolling year. */}
-          <div className="border-line bg-bg/85 sticky top-16 z-20 -mx-4 border-b px-4 py-3 backdrop-blur-md sm:-mx-6 sm:px-6 lg:hidden">
+          <div className="print-hidden border-line bg-bg/85 sticky top-16 z-20 -mx-4 border-b px-4 py-3 backdrop-blur-md sm:-mx-6 sm:px-6 lg:hidden">
             <YearRoller
               compact
               label={experience.chapter}

@@ -30,13 +30,12 @@ export default function Hero({ profile }: { profile: Profile }) {
           <span {...rise()}>{hero.eyebrow}</span>
         </p>
 
-        {/* Desktop: NIKHIL · globe · RAI. on one line. Phones: two big stacked lines. */}
-        <h1 className="display mt-8 flex w-full flex-col items-center text-[clamp(4.5rem,24vw,8rem)] leading-[0.86] md:grid md:grid-cols-[1fr_minmax(10rem,20vw)_1fr] md:text-[clamp(4rem,11vw,12.5rem)] md:leading-none">
-          <span data-hero-split="-1" className="md:justify-self-end">
+        {/* Desktop: NIKHIL RAI. on one line over the globe. Phones: two big stacked lines. */}
+        <h1 className="display mt-8 flex w-full flex-col items-center text-[clamp(4.5rem,24vw,8rem)] leading-[0.86] md:flex-row md:justify-center md:gap-[0.3em] md:text-[clamp(4rem,11.5vw,13rem)] md:leading-none">
+          <span data-hero-split="-1">
             <span {...rise()}>{first.toUpperCase()}</span>
           </span>
-          <span aria-hidden className="hidden md:block" />
-          <span data-hero-split="1" className="md:justify-self-start">
+          <span data-hero-split="1">
             <span {...rise()}>
               {rest.join(" ").toUpperCase()}
               <span className="text-accent">.</span>

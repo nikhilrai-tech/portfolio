@@ -26,6 +26,10 @@ type Props = {
       resume: string;
       install: string;
       terminal: string;
+      share: string;
+      saveContact: string;
+      shortcuts: string;
+      print: string;
     };
     copied: string;
     open: string;
@@ -35,6 +39,7 @@ type Props = {
   email: string;
   resume?: string;
   links: { label: string; href: string }[];
+  share: { title: string; text: string; url: string };
 };
 
 /** Follows an in-page anchor the same way a click would, so smooth scrolling still applies. */
@@ -53,6 +58,7 @@ export default function CommandPalette({
   email,
   resume,
   links,
+  share,
 }: Props) {
   const dialog = useRef<HTMLDialogElement>(null);
   const input = useRef<HTMLInputElement>(null);
@@ -147,6 +153,45 @@ export default function CommandPalette({
         },
       },
     );
+    list.push(
+      {
+        id: "share",
+        group: "actions",
+        label: labels.actions.share,
+        keywords: "link qr send whatsapp",
+        run: () => {
+          if (navigator.share) navigator.share(share).catch(() => {});
+          else navigator.clipboard?.writeText(share.url);
+        },
+      },
+      {
+        id: "vcard",
+        group: "actions",
+        label: labels.actions.saveContact,
+        keywords: "vcf phone address book",
+        run: () => {
+          const a = document.createElement("a");
+          a.href = "/nikhil-rai.vcf";
+          a.download = "Nikhil-Rai.vcf";
+          a.click();
+        },
+      },
+      {
+        id: "shortcuts",
+        group: "actions",
+        label: labels.actions.shortcuts,
+        hint: "?",
+        keywords: "keys help",
+        run: () => window.setTimeout(() => window.dispatchEvent(new Event("shortcuts:open")), 50),
+      },
+      {
+        id: "print",
+        group: "actions",
+        label: labels.actions.print,
+        keywords: "pdf paper",
+        run: () => window.setTimeout(() => window.print(), 50),
+      },
+    );
     if (resume)
       list.push({
         id: "resume",
@@ -173,7 +218,7 @@ export default function CommandPalette({
       }),
     );
     return list;
-  }, [labels, sections, otherLocale, email, resume, links, installable]);
+  }, [labels, sections, otherLocale, email, resume, links, installable, share]);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();

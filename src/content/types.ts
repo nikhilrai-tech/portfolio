@@ -117,10 +117,26 @@ export type Profile = {
       resume: string;
       install: string;
       terminal: string;
+      share: string;
+      saveContact: string;
+      shortcuts: string;
+      print: string;
     };
     copied: string;
   };
   terminal: { label: string; heading: string; hint: string };
+  share: {
+    heading: string;
+    body: string;
+    button: string;
+    copied: string;
+    save: string;
+    scan: string;
+    install: string;
+    text: string;
+  };
+  shortcuts: { title: string; items: { keys: string; label: string }[] };
+  error: { title: string; body: string; retry: string };
   contact: {
     label: string;
     heading: string;

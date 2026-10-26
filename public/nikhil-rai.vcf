@@ -1,0 +1,13 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Rai;Nikhil;;;
+FN:Nikhil Rai
+TITLE:Head of Information Technology
+ORG:SimDaaS Autonomy
+EMAIL;TYPE=INTERNET,PREF:nikhilrai662@gmail.com
+URL:https://nikhil-rai-portfolio-xi.vercel.app
+X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/in/nikhil-rai-551219183/
+X-SOCIALPROFILE;TYPE=github:https://github.com/nikhilrai-tech
+ADR;TYPE=WORK:;;IIT Kanpur;Kanpur;Uttar Pradesh;;India
+NOTE:IT\, cloud\, DevOps and security.
+END:VCARD

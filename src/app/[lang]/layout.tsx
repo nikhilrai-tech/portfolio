@@ -45,6 +45,15 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   const { meta } = getProfile(lang);
+  // Pre-rendered JPEG cards (public/og): small and served from the CDN, so chat apps
+  // (WhatsApp, LinkedIn, Telegram) fetch them fast enough to show a rich preview.
+  const card = {
+    url: `/og/card-${lang}.jpg`,
+    width: 1200,
+    height: 630,
+    type: "image/jpeg",
+    alt: meta.title,
+  };
   return {
     metadataBase: new URL(person.siteUrl),
     title: meta.title,
@@ -61,8 +70,15 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
       url: `/${lang}`,
       siteName: person.name,
       locale: lang === "hi" ? "hi_IN" : "en_IN",
+      alternateLocale: lang === "hi" ? ["en_IN"] : ["hi_IN"],
+      images: [card],
     },
-    twitter: { card: "summary_large_image", title: meta.title, description: meta.description },
+    twitter: {
+      card: "summary_large_image",
+      title: meta.title,
+      description: meta.description,
+      images: [card],
+    },
   };
 }
 
