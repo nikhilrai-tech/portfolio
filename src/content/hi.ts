@@ -15,6 +15,10 @@ export const hi: Profile = {
     theme: "कलर थीम बदलें",
     language: "भाषा",
     backToTop: "ऊपर जाएँ",
+    soundOn: "आवाज़ चालू करें",
+    soundOff: "आवाज़ बंद करें",
+    soundHint: "आवाज़ के साथ सुनें",
+    skipIntro: "छोड़ें",
   },
   nav: {
     intro: "परिचय",

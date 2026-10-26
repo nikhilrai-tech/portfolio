@@ -14,6 +14,10 @@ export const en: Profile = {
     theme: "Switch colour theme",
     language: "Language",
     backToTop: "Back to top",
+    soundOn: "Turn sound on",
+    soundOff: "Turn sound off",
+    soundHint: "Best with sound",
+    skipIntro: "Skip",
   },
   nav: {
     intro: "Intro",

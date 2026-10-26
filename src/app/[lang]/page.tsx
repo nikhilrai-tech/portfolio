@@ -16,6 +16,8 @@ import Marquee from "@/components/ui/Marquee";
 import { marquee } from "@/content/profile";
 import Hud from "@/components/ui/Hud";
 import Cursor from "@/components/motion/Cursor";
+import BootScreen from "@/components/ui/BootScreen";
+import SoundToggle from "@/components/ui/SoundToggle";
 
 export default async function Home({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;
@@ -24,6 +26,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
 
   return (
     <>
+      <BootScreen skipLabel={profile.ui.skipIntro} />
       <ParticleCanvas />
       <Header profile={profile} locale={lang} sections={sections} />
       <main id="main" className="relative z-10">
@@ -39,6 +42,9 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       </main>
       <ScrollEffects />
       <Cursor />
+      <SoundToggle
+        labels={{ on: profile.ui.soundOn, off: profile.ui.soundOff, hint: profile.ui.soundHint }}
+      />
       <Hud sections={sections.map((id) => ({ id, label: profile.nav[id] }))} />
     </>
   );

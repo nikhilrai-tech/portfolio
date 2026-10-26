@@ -54,6 +54,10 @@ export type Profile = {
     theme: string;
     language: string;
     backToTop: string;
+    soundOn: string;
+    soundOff: string;
+    soundHint: string;
+    skipIntro: string;
   };
   nav: Record<SectionId, string>;
   hero: {
