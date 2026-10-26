@@ -4,8 +4,10 @@ import { ArrowUpRight } from "@/components/ui/Icons";
 import SectionHeader from "@/components/ui/SectionHeader";
 import Tag from "@/components/ui/Tag";
 import TiltCard from "@/components/motion/TiltCard";
+import Activity from "@/components/sections/Activity";
+import type { Locale } from "@/i18n/config";
 
-export default function Work({ profile }: { profile: Profile }) {
+export default function Work({ profile, locale }: { profile: Profile; locale: Locale }) {
   const { work, roles, projects, experience } = profile;
   const products = roles.flatMap((role) =>
     (role.products ?? []).map((product) => ({ ...product, company: role.company })),
@@ -154,6 +156,10 @@ export default function Work({ profile }: { profile: Profile }) {
             </li>
           ))}
         </ul>
+
+        <div className="mt-16">
+          <Activity labels={profile.activity} locale={locale} />
+        </div>
       </Container>
     </section>
   );

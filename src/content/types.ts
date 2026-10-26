@@ -146,6 +146,18 @@ export type Profile = {
     scenes: JourneyScene[];
     outro: { heading: string; body: string; cta: string };
   };
+  activity: {
+    heading: string;
+    total: string;
+    days: string;
+    streak: string;
+    recent: string;
+    updated: string;
+    less: string;
+    more: string;
+    offline: string;
+    profile: string;
+  };
   share: {
     heading: string;
     body: string;

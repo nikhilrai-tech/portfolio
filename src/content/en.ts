@@ -378,6 +378,18 @@ export const en: Profile = {
     heading: "Prefer a terminal?",
     hint: "Type help and press Enter.",
   },
+  activity: {
+    heading: "Live from GitHub",
+    total: "contributions in the last year",
+    days: "active days",
+    streak: "longest streak (days)",
+    recent: "Recently pushed",
+    updated: "Updates every hour",
+    less: "Less",
+    more: "More",
+    offline: "GitHub is not reachable right now.",
+    profile: "Open GitHub profile",
+  },
   share: {
     heading: "Pass it on.",
     body: "Scan to open this page on a phone, share the link, or save me straight to your contacts.",

@@ -64,7 +64,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <Marquee words={marquee.secondary} direction={-1} outline />
         <Experience profile={profile} />
         <Journey profile={profile} />
-        <Work profile={profile} />
+        <Work profile={profile} locale={lang} />
         <Stack profile={profile} />
         <Photography profile={profile} locale={lang} />
         <Contact profile={profile} locale={lang} />
