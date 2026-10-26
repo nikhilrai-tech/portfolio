@@ -9,6 +9,7 @@ const SHAPE: Record<SectionId, number> = {
   about: 1, // portrait in particles
   experience: 2, // server racks
   journey: 5, // quiet star field behind the film
+  notes: 5, // star field again: reading needs a calm background
   work: 3, // microservice mesh
   stack: 4, // kubernetes helm
   photography: 5, // star field

@@ -29,6 +29,15 @@ export default function Hero({ profile }: { profile: Profile }) {
         <p className="label text-accent">
           <span {...rise()}>{hero.eyebrow}</span>
         </p>
+        {hero.status && (
+          <p className="border-line bg-bg/60 text-fg/85 mt-4 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs backdrop-blur-md">
+            <span className="relative flex size-2">
+              <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+              <span className="relative inline-flex size-2 rounded-full bg-emerald-400" />
+            </span>
+            <span {...rise()}>{hero.status}</span>
+          </p>
+        )}
 
         {/* Desktop: NIKHIL RAI. on one line over the globe. Phones: two big stacked lines. */}
         <h1 className="display mt-8 flex w-full flex-col items-center text-[clamp(4.5rem,24vw,8rem)] leading-[0.86] md:flex-row md:justify-center md:gap-[0.3em] md:text-[clamp(4rem,11.5vw,13rem)] md:leading-none">

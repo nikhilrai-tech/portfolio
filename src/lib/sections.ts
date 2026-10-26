@@ -7,6 +7,7 @@ export const sections: SectionId[] = [
   "experience",
   "journey",
   "work",
+  "notes",
   "stack",
   ...(photos.length > 0 ? (["photography"] as const) : []),
   "contact",

@@ -5,7 +5,9 @@ export default function LanguageSwitch({ current, label }: { current: Locale; la
   const remember = (locale: Locale) => (event: React.MouseEvent<HTMLAnchorElement>) => {
     document.cookie = `${LOCALE_COOKIE}=${locale}; path=/; max-age=31536000; samesite=lax`;
     // Keep the visitor on the same section after switching.
-    event.currentTarget.href = `/${locale}${window.location.hash}`;
+    // Same page and section in the other language: swap only the leading locale segment.
+    const rest = window.location.pathname.replace(/^\/(en|hi)(?=\/|$)/, "");
+    event.currentTarget.href = `/${locale}${rest}${window.location.hash}`;
   };
 
   return (

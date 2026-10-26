@@ -1,4 +1,4 @@
-import type { Photo } from "./types";
+import type { Photo, Testimonial } from "./types";
 
 // Language-independent facts. Text that a visitor reads lives in en.ts / hi.ts.
 export const person = {
@@ -54,6 +54,9 @@ export const marquee = {
   primary: ["Infrastructure", "Cloud", "DevOps", "Security", "Kubernetes", "Terraform", "Python"],
   secondary: ["Azure", "AWS", "DigitalOcean", "Docker", "Jenkins", "Kafka", "Grafana", "Sentry"],
 };
+
+// LinkedIn recommendations (copied word for word, with permission). The section stays hidden while empty.
+export const testimonials: Testimonial[] = [];
 
 export const stacks = {
   vtv: [

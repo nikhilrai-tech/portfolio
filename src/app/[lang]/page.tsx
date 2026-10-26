@@ -9,6 +9,7 @@ import Experience from "@/components/sections/Experience";
 import Journey from "@/components/sections/Journey";
 import Work from "@/components/sections/Work";
 import Stack from "@/components/sections/Stack";
+import Notes from "@/components/sections/Notes";
 import Photography from "@/components/sections/Photography";
 import Contact from "@/components/sections/Contact";
 import ScrollEffects from "@/components/motion/ScrollEffects";
@@ -67,6 +68,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <Experience profile={profile} />
         <Journey profile={profile} />
         <Work profile={profile} locale={lang} />
+        <Notes profile={profile} locale={lang} />
         <Stack profile={profile} />
         <Photography profile={profile} locale={lang} />
         <Contact profile={profile} locale={lang} />

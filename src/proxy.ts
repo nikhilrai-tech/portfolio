@@ -1,5 +1,8 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { LOCALE_COOKIE, defaultLocale, hasLocale, locales, type Locale } from "@/i18n/config";
+import { notes } from "@/content/notes";
+
+const noteSlugs = new Set(notes.map((n) => n.slug));
 
 // Picks the best supported locale from the Accept-Language header, honouring q-values.
 function fromAcceptLanguage(header: string | null): Locale | undefined {
@@ -17,7 +20,16 @@ function fromAcceptLanguage(header: string | null): Locale | undefined {
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const hasPrefix = locales.some((l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`));
-  if (hasPrefix) return;
+  if (hasPrefix) {
+    // Unknown note slugs: send them to the catch-all route, which answers with a real 404.
+    // (dynamicParams = false is not available with Cache Components.)
+    const note = /^\/(en|hi)\/notes\/([^/]+)\/?$/.exec(pathname);
+    if (note && !noteSlugs.has(note[2])) {
+      request.nextUrl.pathname = `/${note[1]}/__missing`;
+      return NextResponse.rewrite(request.nextUrl);
+    }
+    return;
+  }
 
   const cookie = request.cookies.get(LOCALE_COOKIE)?.value;
   const locale =

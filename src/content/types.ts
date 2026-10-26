@@ -43,7 +43,15 @@ export type Photo = {
 };
 
 export type SectionId =
-  "intro" | "about" | "experience" | "journey" | "work" | "stack" | "photography" | "contact";
+  | "intro"
+  | "about"
+  | "experience"
+  | "journey"
+  | "work"
+  | "notes"
+  | "stack"
+  | "photography"
+  | "contact";
 
 export type JourneyScene = {
   year: string;
@@ -53,6 +61,14 @@ export type JourneyScene = {
   tools: string[];
   /** Which illustration plays: network, security, cloud or autonomy. */
   visual: "network" | "security" | "cloud" | "autonomy";
+};
+
+export type Testimonial = {
+  quote: string;
+  name: string;
+  role: string;
+  /** Where the recommendation can be read in full, e.g. LinkedIn. */
+  href?: string;
 };
 
 export type Profile = {
@@ -77,6 +93,8 @@ export type Profile = {
     intro: string;
     primaryCta: string;
     secondaryCta: string;
+    /** Short availability line under the eyebrow. Empty string hides it. */
+    status: string;
     facts: { value: string; label: string }[];
     scroll: string;
   };
@@ -171,6 +189,18 @@ export type Profile = {
     invalid: string;
     note: string;
   };
+  notes: {
+    label: string;
+    heading: string;
+    intro: string;
+    read: string;
+    minutes: string;
+    source: string;
+    back: string;
+    all: string;
+    englishOnly: string;
+  };
+  testimonials: { label: string; heading: string };
   activity: {
     heading: string;
     total: string;

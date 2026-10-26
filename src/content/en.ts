@@ -26,6 +26,7 @@ export const en: Profile = {
     experience: "Experience",
     journey: "Journey",
     work: "Work",
+    notes: "Notes",
     stack: "Stack",
     photography: "Moments",
     contact: "Contact",
@@ -37,6 +38,7 @@ export const en: Profile = {
       "I design, ship and run the platforms engineering teams depend on: microservices, CI/CD, infrastructure as code and the cloud underneath, from first commit to production.",
     primaryCta: "See my work",
     secondaryCta: "Get in touch",
+    status: "Open to conversations · IT leadership, cloud, DevOps",
     facts: [
       { value: "2021", label: "shipping to production since" },
       { value: "6", label: "products across 4 sectors" },
@@ -408,6 +410,19 @@ export const en: Profile = {
     invalid: "Please check your name, email, and a message of at least 10 characters.",
     note: "Goes straight to my inbox. No newsletter, no tracking.",
   },
+  notes: {
+    label: "Notes",
+    heading: "Notes from the work.",
+    intro:
+      "Write-ups of the open-source tools I'm building: what problem each one solves and how it stays safe.",
+    read: "Read the note",
+    minutes: "min read",
+    source: "Based on the project README",
+    back: "All notes",
+    all: "All notes",
+    englishOnly: "",
+  },
+  testimonials: { label: "Kind words", heading: "What people say." },
   activity: {
     heading: "Live from GitHub",
     total: "contributions in the last year",
