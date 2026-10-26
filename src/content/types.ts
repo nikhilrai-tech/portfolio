@@ -34,7 +34,8 @@ export type Photo = {
   height: number;
 };
 
-export type SectionId = "intro" | "about" | "experience" | "work" | "stack" | "photography" | "contact";
+export type SectionId =
+  "intro" | "about" | "experience" | "work" | "stack" | "photography" | "contact";
 
 export type Profile = {
   meta: { title: string; description: string };

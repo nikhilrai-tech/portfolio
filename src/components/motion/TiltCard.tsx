@@ -1,11 +1,24 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import {
+  LazyMotion,
+  domAnimation,
+  m,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 
 const MAX_TILT = 5; // degrees
 
 // Light 3D tilt that follows the pointer. Mouse/trackpad only, off for reduced motion.
-export default function TiltCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+export default function TiltCard({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const [enabled, setEnabled] = useState(false);
   const px = useMotionValue(0.5);
@@ -17,11 +30,14 @@ export default function TiltCard({ children, className = "" }: { children: React
   const glowY = useTransform(py, (v) => `${v * 100}%`);
   const glow = useTransform(
     [glowX, glowY],
-    ([x, y]) => `radial-gradient(420px circle at ${x} ${y}, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%)`,
+    ([x, y]) =>
+      `radial-gradient(420px circle at ${x} ${y}, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%)`,
   );
 
   useEffect(() => {
-    const mq = window.matchMedia("(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)");
+    const mq = window.matchMedia(
+      "(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
+    );
     const update = () => setEnabled(mq.matches);
     update();
     mq.addEventListener("change", update);
@@ -40,21 +56,23 @@ export default function TiltCard({ children, className = "" }: { children: React
   };
 
   return (
-    <motion.div
-      ref={ref}
-      onPointerMove={enabled ? onMove : undefined}
-      onPointerLeave={enabled ? reset : undefined}
-      style={enabled ? { rotateX, rotateY, transformPerspective: 900 } : undefined}
-      className={`group/tilt relative transition-colors hover:border-line-strong ${className}`}
-    >
-      {enabled && (
-        <motion.span
-          aria-hidden
-          className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover/tilt:opacity-100"
-          style={{ background: glow }}
-        />
-      )}
-      {children}
-    </motion.div>
+    <LazyMotion features={domAnimation}>
+      <m.div
+        ref={ref}
+        onPointerMove={enabled ? onMove : undefined}
+        onPointerLeave={enabled ? reset : undefined}
+        style={enabled ? { rotateX, rotateY, transformPerspective: 900 } : undefined}
+        className={`group/tilt hover:border-line-strong relative transition-colors ${className}`}
+      >
+        {enabled && (
+          <m.span
+            aria-hidden
+            className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover/tilt:opacity-100"
+            style={{ background: glow }}
+          />
+        )}
+        {children}
+      </m.div>
+    </LazyMotion>
   );
 }

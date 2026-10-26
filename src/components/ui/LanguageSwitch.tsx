@@ -9,7 +9,7 @@ export default function LanguageSwitch({ current, label }: { current: Locale; la
   };
 
   return (
-    <nav aria-label={label} className="flex items-center rounded-full border border-line p-0.5">
+    <nav aria-label={label} className="border-line flex items-center rounded-full border p-0.5">
       {locales.map((locale) => {
         const active = locale === current;
         return (

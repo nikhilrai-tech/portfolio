@@ -5,13 +5,31 @@ import dynamic from "next/dynamic";
 // three.js and the scene load only after hydration, in their own chunk.
 const LensScene = dynamic(() => import("./LensScene"), { ssr: false });
 
-function hasWebGL() {
+// True only for GPU-backed WebGL. Software renderers (SwiftShader, llvmpipe) would make the
+// page janky, so those visitors keep the SVG lens. Add ?lens=force to the URL to override.
+function hasHardwareWebGL() {
   try {
     const c = document.createElement("canvas");
-    return !!(c.getContext("webgl2") || c.getContext("webgl"));
+    const gl = c.getContext("webgl2") || c.getContext("webgl");
+    if (!gl) return false;
+    if (new URLSearchParams(window.location.search).get("lens") === "force") return true;
+    const info = gl.getExtension("WEBGL_debug_renderer_info");
+    const renderer = info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)) : "";
+    gl.getExtension("WEBGL_lose_context")?.loseContext();
+    return !/swiftshader|llvmpipe|softpipe|software|basic render/i.test(renderer);
   } catch {
     return false;
   }
+}
+
+// Start the 3D work once the page has painted and gone idle, so it never competes with LCP.
+function whenIdle(fn: () => void) {
+  const start = () =>
+    "requestIdleCallback" in window
+      ? requestIdleCallback(fn, { timeout: 2500 })
+      : setTimeout(fn, 1200);
+  if (document.readyState === "complete") start();
+  else window.addEventListener("load", start, { once: true });
 }
 
 export type Pointer = { x: number; y: number };
@@ -28,9 +46,13 @@ export default function LensCanvas() {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const slots = Array.from(document.querySelectorAll<HTMLElement>("[data-lens-slot]"));
     slot.current = slots[0] ?? null;
-    if (reduced || !hasWebGL() || slots.length === 0) return;
-    setMaxDpr(window.innerWidth < 860 ? 1.5 : 2);
-    setEnabled(true);
+    if (reduced || slots.length === 0 || !hasHardwareWebGL()) return;
+    let cancelled = false;
+    whenIdle(() => {
+      if (cancelled) return;
+      setMaxDpr(window.innerWidth < 860 ? 1.5 : 2);
+      setEnabled(true);
+    });
 
     // The lens sits in whichever slot is most on screen (hero, then contact), fades with
     // how much of it is visible, and stops rendering when no slot is in view.
@@ -57,6 +79,7 @@ export default function LensCanvas() {
     };
     window.addEventListener("pointermove", onMove, { passive: true });
     return () => {
+      cancelled = true;
       io.disconnect();
       window.removeEventListener("pointermove", onMove);
       delete document.documentElement.dataset.lens;
@@ -66,7 +89,11 @@ export default function LensCanvas() {
   if (!enabled) return null;
 
   return (
-    <div ref={wrapper} aria-hidden className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-300">
+    <div
+      ref={wrapper}
+      aria-hidden
+      className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-300"
+    >
       <LensScene
         active={active}
         maxDpr={maxDpr}

@@ -16,13 +16,13 @@ export default function Work({ profile }: { profile: Profile }) {
       <Container>
         <SectionHeader id="work" label={work.label} heading={work.heading} intro={work.intro} />
 
-        <h3 className="label mb-6 text-muted">{work.productsHeading}</h3>
+        <h3 className="label text-muted mb-6">{work.productsHeading}</h3>
         <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {products.map((product, i) => (
             <li key={product.name} data-reveal className="h-full">
-              <TiltCard className="flex h-full flex-col rounded-3xl border border-line bg-surface p-6 md:p-7">
+              <TiltCard className="border-line bg-surface flex h-full flex-col rounded-3xl border p-6 md:p-7">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs text-muted">
+                  <span className="text-muted font-mono text-xs">
                     {String(i + 1).padStart(2, "0")} · {product.company}
                   </span>
                   {product.href && (
@@ -30,7 +30,7 @@ export default function Work({ profile }: { profile: Profile }) {
                       href={product.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-1 text-xs text-muted transition-colors hover:text-accent"
+                      className="text-muted hover:text-accent inline-flex items-center gap-1 text-xs transition-colors"
                     >
                       {work.visit}
                       <ArrowUpRight />
@@ -38,23 +38,29 @@ export default function Work({ profile }: { profile: Profile }) {
                   )}
                 </div>
                 <p className="display mt-8 text-[1.75rem] md:text-3xl">{product.name}</p>
-                <p className="mt-4 text-[0.95rem] text-fg/80">{product.blurb}</p>
+                <p className="text-fg/80 mt-4 text-[0.95rem]">{product.blurb}</p>
                 <ul aria-label={experience.stack} className="mt-6 flex flex-wrap gap-1.5">
                   {product.stack.map((t) => (
                     <Tag key={t}>{t}</Tag>
                   ))}
                 </ul>
                 <details className="group mt-auto pt-6">
-                  <summary className="label flex cursor-pointer list-none items-center gap-2 text-muted transition-colors hover:text-fg [&::-webkit-details-marker]:hidden">
-                    <span aria-hidden className="inline-block transition-transform group-open:rotate-45">
+                  <summary className="label text-muted hover:text-fg flex cursor-pointer list-none items-center gap-2 transition-colors [&::-webkit-details-marker]:hidden">
+                    <span
+                      aria-hidden
+                      className="inline-block transition-transform group-open:rotate-45"
+                    >
                       +
                     </span>
                     {experience.responsibilities}
                   </summary>
-                  <ul className="mt-4 space-y-2 text-sm text-fg/80">
+                  <ul className="text-fg/80 mt-4 space-y-2 text-sm">
                     {product.responsibilities.map((r) => (
                       <li key={r.slice(0, 40)} className="relative pl-5">
-                        <span aria-hidden className="absolute top-[0.7em] left-0 h-px w-2.5 bg-accent" />
+                        <span
+                          aria-hidden
+                          className="bg-accent absolute top-[0.7em] left-0 h-px w-2.5"
+                        />
                         {r}
                       </li>
                     ))}
@@ -65,15 +71,19 @@ export default function Work({ profile }: { profile: Profile }) {
           ))}
         </ul>
 
-        <h3 className="label mt-20 mb-6 text-muted">{work.openSourceHeading}</h3>
-        <ul className="divide-y divide-line border-y border-line">
+        <h3 className="label text-muted mt-20 mb-6">{work.openSourceHeading}</h3>
+        <ul className="divide-line border-line divide-y border-y">
           {projects.map((project) => (
-            <li key={project.name} data-reveal className="group grid gap-4 py-7 md:grid-cols-12 md:items-baseline md:gap-8">
+            <li
+              key={project.name}
+              data-reveal
+              className="group grid gap-4 py-7 md:grid-cols-12 md:items-baseline md:gap-8"
+            >
               <a
                 href={project.repo}
                 target="_blank"
                 rel="noreferrer"
-                className="display inline-flex items-center gap-2 text-2xl transition-colors group-hover:text-accent md:col-span-4 md:text-3xl"
+                className="display group-hover:text-accent inline-flex items-center gap-2 text-2xl transition-colors md:col-span-4 md:text-3xl"
               >
                 {project.name}
                 <ArrowUpRight className="size-4 opacity-0 transition-opacity group-hover:opacity-100" />
@@ -90,7 +100,7 @@ export default function Work({ profile }: { profile: Profile }) {
                     href={project.homepage}
                     target="_blank"
                     rel="noreferrer"
-                    className="label inline-flex items-center gap-1 text-accent hover:underline"
+                    className="label text-accent inline-flex items-center gap-1 hover:underline"
                   >
                     {work.live}
                     <ArrowUpRight />

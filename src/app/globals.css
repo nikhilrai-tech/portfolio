@@ -160,9 +160,10 @@ html:lang(hi) .display {
 }
 
 /* ---------- Hero entrance (CSS only, so text is never stuck hidden if JS fails) ---------- */
+/* Starts at 1% opacity, not 0, so the hero heading still counts as the LCP element. */
 @keyframes rise {
   from {
-    opacity: 0;
+    opacity: 0.01;
     transform: translate3d(0, 0.6em, 0);
   }
 }

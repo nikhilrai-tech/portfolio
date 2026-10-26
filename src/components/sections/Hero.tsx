@@ -39,8 +39,8 @@ export default function Hero({ profile }: { profile: Profile }) {
             {word(rest.join(" "))}
             {word(".", "text-accent")}
           </h1>
-          <p className="mt-6 font-mono text-sm text-muted">{word(hero.role)}</p>
-          <p className="measure mt-5 text-lg text-fg/85 md:text-xl">{word(hero.intro)}</p>
+          <p className="text-muted mt-6 font-mono text-sm">{word(hero.role)}</p>
+          <p className="measure text-fg/85 mt-5 text-lg md:text-xl">{word(hero.intro)}</p>
 
           <div className="mt-9 flex flex-wrap gap-3">
             <span className="rise" style={{ "--i": i++ } as React.CSSProperties}>
@@ -53,13 +53,15 @@ export default function Hero({ profile }: { profile: Profile }) {
             </span>
           </div>
 
-          <dl className="mt-12 grid max-w-xl grid-cols-3 gap-4 border-t border-line pt-6">
+          <dl className="border-line mt-12 grid max-w-xl grid-cols-3 gap-4 border-t pt-6">
             {hero.facts.map((fact) => (
               <div key={fact.label}>
                 <dt className="sr-only">{fact.label}</dt>
                 <dd>
                   <span className="display block text-3xl md:text-4xl">{fact.value}</span>
-                  <span className="mt-1 block text-xs leading-snug text-muted md:text-sm">{fact.label}</span>
+                  <span className="text-muted mt-1 block text-xs leading-snug md:text-sm">
+                    {fact.label}
+                  </span>
                 </dd>
               </div>
             ))}
@@ -69,7 +71,7 @@ export default function Hero({ profile }: { profile: Profile }) {
 
       <a
         href="#about"
-        className="label absolute bottom-6 left-1/2 hidden -translate-x-1/2 items-center gap-2 text-muted transition-colors hover:text-fg md:flex"
+        className="label text-muted hover:text-fg absolute bottom-6 left-1/2 hidden -translate-x-1/2 items-center gap-2 transition-colors md:flex"
       >
         {hero.scroll}
         <ArrowDown />

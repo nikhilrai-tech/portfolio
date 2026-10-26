@@ -25,7 +25,7 @@ export default function ThemeToggle({ label }: { label: string }) {
       onClick={toggle}
       aria-label={label}
       title={label}
-      className="grid size-9 place-items-center rounded-full border border-line text-muted transition-colors hover:border-line-strong hover:text-fg"
+      className="border-line text-muted hover:border-line-strong hover:text-fg grid size-9 place-items-center rounded-full border transition-colors"
     >
       {/* Half-filled disc: reads as "contrast" in both themes, so no hydration guesswork. */}
       <svg viewBox="0 0 24 24" className="size-4" aria-hidden>

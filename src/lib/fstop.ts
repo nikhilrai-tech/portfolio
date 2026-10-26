@@ -10,7 +10,9 @@ export function fNumber(progress: number) {
 
 /** The nearest full stop, for display. */
 export function nearestStop(f: number) {
-  return STOPS.reduce((best, s) => (Math.abs(Math.log(s / f)) < Math.abs(Math.log(best / f)) ? s : best));
+  return STOPS.reduce((best, s) =>
+    Math.abs(Math.log(s / f)) < Math.abs(Math.log(best / f)) ? s : best,
+  );
 }
 
 /** Iris opening as a fraction of the blade housing radius. Area scales with 1/f². */

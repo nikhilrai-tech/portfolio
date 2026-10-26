@@ -1,5 +1,5 @@
 "use client";
-import { useLayoutEffect, useMemo, useRef } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, Lightformer } from "@react-three/drei";
 import {
@@ -39,7 +39,7 @@ export default function LensScene({ onReady, pointer, slot, maxDpr, active }: Pr
   return (
     <Canvas
       dpr={[1, maxDpr]}
-      frameloop={active ? "always" : "never"}
+      frameloop={active ? "demand" : "never"}
       camera={{ fov: FOV, position: [0, 0, CAM_Z] }}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       onCreated={() => requestAnimationFrame(onReady)}
@@ -49,11 +49,32 @@ export default function LensScene({ onReady, pointer, slot, maxDpr, active }: Pr
       <directionalLight position={[3, 4, 5]} intensity={1.4} />
       <directionalLight position={[-4, -2, 2]} intensity={0.4} color="#63c7d9" />
       <Environment resolution={256} frames={1}>
-        <Lightformer form="rect" intensity={3} position={[-4, 3, 4]} scale={[6, 2, 1]} target={[0, 0, 0]} />
-        <Lightformer form="ring" intensity={2.2} color="#eba73f" position={[4, 2, 3]} scale={2.5} target={[0, 0, 0]} />
-        <Lightformer form="rect" intensity={1.4} color="#63c7d9" position={[2, -4, 2]} scale={[5, 1, 1]} target={[0, 0, 0]} />
+        <Lightformer
+          form="rect"
+          intensity={3}
+          position={[-4, 3, 4]}
+          scale={[6, 2, 1]}
+          target={[0, 0, 0]}
+        />
+        <Lightformer
+          form="ring"
+          intensity={2.2}
+          color="#eba73f"
+          position={[4, 2, 3]}
+          scale={2.5}
+          target={[0, 0, 0]}
+        />
+        <Lightformer
+          form="rect"
+          intensity={1.4}
+          color="#63c7d9"
+          position={[2, -4, 2]}
+          scale={[5, 1, 1]}
+          target={[0, 0, 0]}
+        />
         <Lightformer form="circle" intensity={1.2} position={[0, 0, -6]} scale={6} />
       </Environment>
+      <Invalidator />
       <Rig pointer={pointer} slot={slot}>
         <Lens />
       </Rig>
@@ -62,8 +83,39 @@ export default function LensScene({ onReady, pointer, slot, maxDpr, active }: Pr
   );
 }
 
+// Frames render on demand: on scroll, on pointer move, and while anything is still easing.
+const EPS = 1e-4;
+function settling(...pairs: [number, number][]) {
+  return pairs.some(([a, b]) => Math.abs(a - b) > EPS);
+}
+
+function Invalidator() {
+  const invalidate = useThree((s) => s.invalidate);
+  useEffect(() => {
+    const kick = () => invalidate();
+    window.addEventListener("scroll", kick, { passive: true });
+    window.addEventListener("pointermove", kick, { passive: true });
+    window.addEventListener("resize", kick);
+    kick();
+    return () => {
+      window.removeEventListener("scroll", kick);
+      window.removeEventListener("pointermove", kick);
+      window.removeEventListener("resize", kick);
+    };
+  }, [invalidate]);
+  return null;
+}
+
 /** Places the lens over the #lens-slot box, follows scroll, tilts toward the pointer. */
-function Rig({ children, pointer, slot }: { children: React.ReactNode; pointer: Props["pointer"]; slot: Props["slot"] }) {
+function Rig({
+  children,
+  pointer,
+  slot,
+}: {
+  children: React.ReactNode;
+  pointer: Props["pointer"];
+  slot: Props["slot"];
+}) {
   const group = useRef<Group>(null);
   const { size } = useThree();
   const visibleH = 2 * CAM_Z * Math.tan(MathUtils.degToRad(FOV / 2));
@@ -78,19 +130,37 @@ function Rig({ children, pointer, slot }: { children: React.ReactNode; pointer: 
     const cy = -(((rect.top + rect.height / 2) / size.height) * 2 - 1);
     const scale = ((rect.height / size.height) * visibleH * 0.5) / LENS_RADIUS;
 
-    const k = 1 - Math.exp(-delta * 10);
-    g.position.x = MathUtils.lerp(g.position.x, (cx * visibleW) / 2, k);
-    g.position.y = MathUtils.lerp(g.position.y, (cy * visibleH) / 2, k);
+    // Delta is capped: with on-demand frames the first one after a pause can be very late.
+    const dt = Math.min(delta, 1 / 30);
+    const k = 1 - Math.exp(-dt * 10);
+    const tx = (cx * visibleW) / 2;
+    const ty = (cy * visibleH) / 2;
+    g.position.x = MathUtils.lerp(g.position.x, tx, k);
+    g.position.y = MathUtils.lerp(g.position.y, ty, k);
     g.scale.setScalar(MathUtils.lerp(g.scale.x, scale, k));
 
     const p = scrollProgress();
-    const t = state.clock.elapsedTime;
     const px = pointer.current?.x ?? 0;
     const py = pointer.current?.y ?? 0;
-    const tk = 1 - Math.exp(-delta * 4);
-    g.rotation.y = MathUtils.lerp(g.rotation.y, -0.42 + px * 0.3 + Math.sin(t * 0.4) * 0.03, tk);
-    g.rotation.x = MathUtils.lerp(g.rotation.x, 0.16 - py * 0.22 + p * 0.6, tk);
-    g.rotation.z = MathUtils.lerp(g.rotation.z, p * 0.5, tk);
+    const tk = 1 - Math.exp(-dt * 4);
+    const ry = -0.42 + px * 0.3;
+    const rx = 0.16 - py * 0.22 + p * 0.6;
+    const rz = p * 0.5;
+    g.rotation.y = MathUtils.lerp(g.rotation.y, ry, tk);
+    g.rotation.x = MathUtils.lerp(g.rotation.x, rx, tk);
+    g.rotation.z = MathUtils.lerp(g.rotation.z, rz, tk);
+
+    if (
+      settling(
+        [g.position.x, tx],
+        [g.position.y, ty],
+        [g.scale.x, scale],
+        [g.rotation.y, ry],
+        [g.rotation.x, rx],
+        [g.rotation.z, rz],
+      )
+    )
+      state.invalidate();
   });
 
   return <group ref={group}>{children}</group>;
@@ -105,14 +175,15 @@ function Lens() {
   useFrame((state, delta) => {
     const p = scrollProgress();
     const target = apertureFromF(fNumber(p));
-    aperture.current = MathUtils.damp(aperture.current, target, 6, delta);
+    aperture.current = MathUtils.damp(aperture.current, target, 6, Math.min(delta, 1 / 30));
     const u = irisMesh.current?.material.uniforms;
     if (u) {
       u.uAperture.value = aperture.current;
       u.uRot.value = (0.9 - aperture.current) * 1.6;
-      u.uLight.value = Math.sin(state.clock.elapsedTime * 0.5) * 0.4;
+      u.uLight.value = p * 2.4 - 0.4;
     }
     if (focusRing.current) focusRing.current.rotation.z = p * Math.PI * 1.2;
+    if (settling([aperture.current, target])) state.invalidate();
   });
 
   // Barrel parts are cylinders whose axis we turn toward the camera (z).
@@ -148,7 +219,13 @@ function Lens() {
       {/* Amber accent ring */}
       <mesh position={[0, 0, 0.33]}>
         <torusGeometry args={[1.43, 0.022, 12, 160]} />
-        <meshStandardMaterial color="#eba73f" emissive="#eba73f" emissiveIntensity={0.6} metalness={0.6} roughness={0.3} />
+        <meshStandardMaterial
+          color="#eba73f"
+          emissive="#eba73f"
+          emissiveIntensity={0.6}
+          metalness={0.6}
+          roughness={0.3}
+        />
       </mesh>
 
       {/* Front bezel */}
@@ -250,21 +327,36 @@ function Flare({ pointer }: { pointer: Props["pointer"] }) {
   const { viewport } = useThree();
   const [mainMat, ghostMat] = useMemo(
     () => [
-      new SpriteMaterial({ map: makeGlowTexture("rgba(255,214,150,1)"), blending: AdditiveBlending, transparent: true, depthWrite: false, opacity: 0.5 }),
-      new SpriteMaterial({ map: makeGlowTexture("rgba(99,199,217,1)"), blending: AdditiveBlending, transparent: true, depthWrite: false, opacity: 0.25, color: new Color("#ffffff") }),
+      new SpriteMaterial({
+        map: makeGlowTexture("rgba(255,214,150,1)"),
+        blending: AdditiveBlending,
+        transparent: true,
+        depthWrite: false,
+        opacity: 0.5,
+      }),
+      new SpriteMaterial({
+        map: makeGlowTexture("rgba(99,199,217,1)"),
+        blending: AdditiveBlending,
+        transparent: true,
+        depthWrite: false,
+        opacity: 0.25,
+        color: new Color("#ffffff"),
+      }),
     ],
     [],
   );
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     // Additive light only reads on a dark page.
     const set = document.documentElement.dataset.theme;
-    const light = set ? set === "light" : window.matchMedia("(prefers-color-scheme: light)").matches;
+    const light = set
+      ? set === "light"
+      : window.matchMedia("(prefers-color-scheme: light)").matches;
     if (main.current) main.current.visible = !light;
     if (ghost.current) ghost.current.visible = !light;
     const px = pointer.current?.x ?? 0;
     const py = pointer.current?.y ?? 0;
-    const k = 1 - Math.exp(-delta * 8);
+    const k = 1 - Math.exp(-Math.min(delta, 1 / 30) * 8);
     const tx = (px * viewport.width) / 2;
     const ty = (py * viewport.height) / 2;
     if (main.current) {
@@ -275,6 +367,8 @@ function Flare({ pointer }: { pointer: Props["pointer"] }) {
       ghost.current.position.x = MathUtils.lerp(ghost.current.position.x, -tx * 0.45, k);
       ghost.current.position.y = MathUtils.lerp(ghost.current.position.y, -ty * 0.45, k);
     }
+    if (main.current && settling([main.current.position.x, tx], [main.current.position.y, ty]))
+      state.invalidate();
   });
 
   return (

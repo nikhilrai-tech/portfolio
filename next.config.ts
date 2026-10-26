@@ -1,8 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   cacheComponents: true,
+  experimental: { globalNotFound: true },
+  images: { formats: ["image/avif", "image/webp"] },
+  poweredByHeader: false,
   partialPrefetching: true,
   turbopack: {
     rules: {

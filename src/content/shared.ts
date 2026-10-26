@@ -19,10 +19,49 @@ export const person = {
 export const photos: Photo[] = [];
 
 export const stacks = {
-  vtv: ["Django", "Wagtail", "Docker", "Kubernetes", "DigitalOcean", "Jenkins", "SonarQube", "Sentry", "BetterStack"],
+  vtv: [
+    "Django",
+    "Wagtail",
+    "Docker",
+    "Kubernetes",
+    "DigitalOcean",
+    "Jenkins",
+    "SonarQube",
+    "Sentry",
+    "BetterStack",
+  ],
   aiVarta: ["Django", "Docker", "Jenkins", "SonarQube", "Razorpay", "DigitalOcean", "PostgreSQL"],
-  securiumx: ["React", "Vue.js", "Django", "PostgreSQL", "Azure", "Jenkins", "SonarQube", "Razorpay", "Sentry", "BetterStack"],
-  persius: ["HTML", "JS", "CSS", "Bootstrap", "Django", "Ajax", "Celery", "Redis", "AWS", "Razorpay", "MySQL", "Docker", "RabbitMQ", "Grafana", "SonarQube", "Terraform", "Jenkins"],
+  securiumx: [
+    "React",
+    "Vue.js",
+    "Django",
+    "PostgreSQL",
+    "Azure",
+    "Jenkins",
+    "SonarQube",
+    "Razorpay",
+    "Sentry",
+    "BetterStack",
+  ],
+  persius: [
+    "HTML",
+    "JS",
+    "CSS",
+    "Bootstrap",
+    "Django",
+    "Ajax",
+    "Celery",
+    "Redis",
+    "AWS",
+    "Razorpay",
+    "MySQL",
+    "Docker",
+    "RabbitMQ",
+    "Grafana",
+    "SonarQube",
+    "Terraform",
+    "Jenkins",
+  ],
   aethrone: ["Django", "MySQL", "React", "Docker", "Jenkins", "SonarQube", "DigitalOcean"],
   noc: ["Python", "Django", "PostgreSQL", "REST API", "Jenkins", "Docker"],
 };
@@ -40,9 +79,15 @@ export const companyLinks = {
 };
 
 export const repos = {
-  seatbelt: { repo: "https://github.com/nikhilrai-tech/seatbelt-for-AI-agents", homepage: "https://pypi.org/project/seatbelt-guard/" },
+  seatbelt: {
+    repo: "https://github.com/nikhilrai-tech/seatbelt-for-AI-agents",
+    homepage: "https://pypi.org/project/seatbelt-guard/",
+  },
   ownerlens: { repo: "https://github.com/nikhilrai-tech/cloud-ownerlens" },
-  scamsaathi: { repo: "https://github.com/nikhilrai-tech/ScamSaathi", homepage: "https://nikhilrai-tech.github.io/ScamSaathi/" },
+  scamsaathi: {
+    repo: "https://github.com/nikhilrai-tech/ScamSaathi",
+    homepage: "https://nikhilrai-tech.github.io/ScamSaathi/",
+  },
   vnv: { repo: "https://github.com/nikhilrai-tech/Scenario-Based-VnV-Tool" },
   trading: { repo: "https://github.com/nikhilrai-tech/Stock-Trading-Simulator" },
 };
@@ -54,7 +99,17 @@ export const stackItems = {
   data: ["PostgreSQL", "MySQL", "MongoDB", "SQLite", "Redis"],
   messaging: ["Kafka", "RabbitMQ", "Celery"],
   cloud: ["Azure", "AWS", "DigitalOcean"],
-  platform: ["Docker", "Kubernetes", "Terraform", "Jenkins", "SonarQube", "Nginx", "Gunicorn", "Linux", "GitHub"],
+  platform: [
+    "Docker",
+    "Kubernetes",
+    "Terraform",
+    "Jenkins",
+    "SonarQube",
+    "Nginx",
+    "Gunicorn",
+    "Linux",
+    "GitHub",
+  ],
   observability: ["Grafana", "Prometheus", "Sentry", "BetterStack"],
   tooling: ["REST API", "JWT", "Razorpay", "Postman", "Python unittest", "Web Scraping"],
 };

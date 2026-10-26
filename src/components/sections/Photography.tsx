@@ -21,7 +21,10 @@ export default function Photography({ profile }: { profile: Profile }) {
         <ul className="columns-1 gap-4 sm:columns-2 lg:columns-3">
           {photos.map((photo, i) => (
             <li key={photo.src} className="mb-4 break-inside-avoid">
-              <div data-parallax={speeds[i % speeds.length]} className="overflow-hidden rounded-2xl bg-surface">
+              <div
+                data-parallax={speeds[i % speeds.length]}
+                className="bg-surface overflow-hidden rounded-2xl"
+              >
                 <Image
                   src={photo.src}
                   alt={photo.alt}

@@ -35,7 +35,7 @@ export default function About({ profile }: { profile: Profile }) {
 
         <div className="md:col-span-7 md:pt-10 lg:pl-8">
           <SectionHeader id="about" label={about.label} heading={about.heading} />
-          <div className="measure space-y-5 text-lg text-fg/85">
+          <div className="measure text-fg/85 space-y-5 text-lg">
             {about.paragraphs.map((p) => (
               <p key={p.slice(0, 24)}>{p}</p>
             ))}

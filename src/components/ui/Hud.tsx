@@ -47,11 +47,11 @@ export default function Hud({ sections, frameLabel }: { sections: Section[]; fra
   return (
     <div
       aria-hidden
-      className="pointer-events-none fixed bottom-5 left-5 z-40 hidden overflow-hidden rounded-lg border border-line bg-bg/70 font-mono text-[0.7rem] tracking-wider text-muted backdrop-blur-md sm:block"
+      className="border-line bg-bg/70 text-muted pointer-events-none fixed right-5 bottom-5 z-40 hidden overflow-hidden rounded-lg border font-mono text-[0.7rem] tracking-wider backdrop-blur-md sm:block"
     >
       <div className="flex items-center gap-2.5 px-3 py-2">
-        <span className="size-1.5 rounded-full bg-accent" />
-        <span ref={fRef} className="min-w-[3.2em] text-accent">
+        <span className="bg-accent size-1.5 rounded-full" />
+        <span ref={fRef} className="text-accent min-w-[3.2em]">
           f/1.4
         </span>
         <span className="text-line-strong">·</span>
@@ -63,7 +63,7 @@ export default function Hud({ sections, frameLabel }: { sections: Section[]; fra
           {sections[0]?.label}
         </span>
       </div>
-      <span ref={barRef} className="block h-px origin-left scale-x-0 bg-accent" />
+      <span ref={barRef} className="bg-accent block h-px origin-left scale-x-0" />
     </div>
   );
 }

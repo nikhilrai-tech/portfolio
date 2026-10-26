@@ -25,13 +25,13 @@ const plex = IBM_Plex_Sans({
 });
 const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400"],
   variable: "--font-plex-mono",
   display: "swap",
 });
 const deva = IBM_Plex_Sans_Devanagari({
   subsets: ["devanagari"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "600"],
   variable: "--font-deva",
   display: "swap",
   preload: false,
@@ -90,7 +90,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
       <body>
         <a
           href="#main"
-          className="fixed top-3 left-3 z-[70] -translate-y-20 rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-ink focus:translate-y-0"
+          className="bg-accent text-accent-ink fixed top-3 left-3 z-[70] -translate-y-20 rounded-full px-4 py-2 text-sm font-medium focus:translate-y-0"
         >
           {profile.ui.skip}
         </a>

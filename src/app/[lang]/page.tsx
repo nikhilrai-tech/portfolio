@@ -33,7 +33,10 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <Contact profile={profile} />
       </main>
       <ScrollEffects />
-      <Hud sections={sections.map((id) => ({ id, label: profile.nav[id] }))} frameLabel={profile.ui.frame} />
+      <Hud
+        sections={sections.map((id) => ({ id, label: profile.nav[id] }))}
+        frameLabel={profile.ui.frame}
+      />
     </>
   );
 }

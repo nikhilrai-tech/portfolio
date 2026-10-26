@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, LazyMotion, domAnimation, m } from "framer-motion";
 
 export default function CopyEmail({
   email,
@@ -27,20 +27,22 @@ export default function CopyEmail({
     <button
       type="button"
       onClick={copy}
-      className="relative inline-flex h-12 min-w-36 items-center justify-center overflow-hidden rounded-full border border-line-strong px-6 text-sm font-medium transition-colors hover:border-fg"
+      className="border-line-strong hover:border-fg relative inline-flex h-12 min-w-36 items-center justify-center overflow-hidden rounded-full border px-6 text-sm font-medium transition-colors"
     >
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.span
-          key={copied ? "done" : "idle"}
-          initial={{ y: 14, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -14, opacity: 0 }}
-          transition={{ duration: 0.18 }}
-          className={copied ? "text-accent" : undefined}
-        >
-          {copied ? copiedLabel : copyLabel}
-        </motion.span>
-      </AnimatePresence>
+      <LazyMotion features={domAnimation}>
+        <AnimatePresence mode="wait" initial={false}>
+          <m.span
+            key={copied ? "done" : "idle"}
+            initial={{ y: 14, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -14, opacity: 0 }}
+            transition={{ duration: 0.18 }}
+            className={copied ? "text-accent" : undefined}
+          >
+            {copied ? copiedLabel : copyLabel}
+          </m.span>
+        </AnimatePresence>
+      </LazyMotion>
       <span className="sr-only" aria-live="polite">
         {copied ? copiedLabel : ""}
       </span>

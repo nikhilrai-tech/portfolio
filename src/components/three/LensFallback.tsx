@@ -63,9 +63,21 @@ export default function LensFallback({ className = "" }: { className?: string })
           <path key={d} d={d} />
         ))}
       </g>
-      <polygon points={aperture(58, -Math.PI / 2)} fill="url(#lf-glass)" stroke="#2c333c" strokeWidth="1.5" />
+      <polygon
+        points={aperture(58, -Math.PI / 2)}
+        fill="url(#lf-glass)"
+        stroke="#2c333c"
+        strokeWidth="1.5"
+      />
       <circle cx={C} cy={C} r="138" fill="url(#lf-glass)" opacity="0.55" />
-      <ellipse cx="150" cy="140" rx="70" ry="38" fill="url(#lf-sheen)" transform="rotate(-30 150 140)" />
+      <ellipse
+        cx="150"
+        cy="140"
+        rx="70"
+        ry="38"
+        fill="url(#lf-sheen)"
+        transform="rotate(-30 150 140)"
+      />
       <circle cx="248" cy="252" r="5" fill="#63c7d9" opacity="0.7" />
     </svg>
   );

@@ -15,13 +15,13 @@ export default function SectionHeader({
   const index = String(sections.indexOf(id) + 1).padStart(2, "0");
   return (
     <header className="mb-12 md:mb-16">
-      <p className="label flex items-center gap-3 text-accent">
+      <p className="label text-accent flex items-center gap-3">
         <span>{index}</span>
-        <span aria-hidden className="h-px w-8 bg-accent/60" />
+        <span aria-hidden className="bg-accent/60 h-px w-8" />
         <span>{label}</span>
       </p>
       <h2 className="display mt-5 text-[clamp(2.25rem,6vw,4.75rem)]">{heading}</h2>
-      {intro && <p className="measure mt-5 text-lg text-muted">{intro}</p>}
+      {intro && <p className="measure text-muted mt-5 text-lg">{intro}</p>}
     </header>
   );
 }
