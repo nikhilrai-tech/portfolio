@@ -15,6 +15,7 @@ import ParticleCanvas from "@/components/three/ParticleCanvas";
 import Marquee from "@/components/ui/Marquee";
 import { marquee } from "@/content/profile";
 import Hud from "@/components/ui/Hud";
+import Cursor from "@/components/motion/Cursor";
 
 export default async function Home({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;
@@ -37,6 +38,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <Contact profile={profile} />
       </main>
       <ScrollEffects />
+      <Cursor />
       <Hud sections={sections.map((id) => ({ id, label: profile.nav[id] }))} />
     </>
   );

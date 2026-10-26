@@ -40,7 +40,7 @@ export default function Header({
               href={`#${link.id}`}
               className="text-muted hover:text-fg rounded-full px-3 py-1.5 text-sm transition-colors"
             >
-              {link.label}
+              <span data-scramble>{link.label}</span>
             </a>
           ))}
         </nav>

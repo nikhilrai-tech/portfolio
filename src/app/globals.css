@@ -198,3 +198,77 @@ html[data-gl="on"] .gl-canvas {
 html[data-gl="on"] .shape-fallback {
   opacity: 0;
 }
+
+/* ---------- Custom cursor (desktop, fine pointer only) ---------- */
+html.has-cursor,
+html.has-cursor * {
+  cursor: none;
+}
+html.has-cursor input,
+html.has-cursor textarea {
+  cursor: text;
+}
+html.has-cursor .cursor-layer {
+  display: block;
+}
+html.cursor-hidden .cursor-layer {
+  opacity: 0;
+}
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 999px;
+  translate: -50% -50%;
+}
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+}
+.cursor-ring {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid color-mix(in srgb, var(--fg) 45%, transparent);
+  transition:
+    width 0.35s cubic-bezier(0.2, 0.7, 0.1, 1),
+    height 0.35s cubic-bezier(0.2, 0.7, 0.1, 1),
+    background-color 0.3s,
+    border-color 0.3s,
+    scale 0.2s;
+}
+.cursor-ring[data-state="link"] {
+  width: 58px;
+  height: 58px;
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+.cursor-ring[data-state="label"] {
+  width: 84px;
+  height: 84px;
+  border-color: var(--accent);
+  background: var(--accent);
+}
+.cursor-ring[data-state="text"] {
+  width: 4px;
+  height: 28px;
+  border-radius: 2px;
+}
+.cursor-ring.is-down {
+  scale: 0.82;
+}
+.cursor-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.cursor-ring[data-state="label"] .cursor-label {
+  opacity: 1;
+}
