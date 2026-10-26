@@ -98,7 +98,15 @@ export default function Journey({ profile }: { profile: Profile }) {
 
           <JourneyFilm
             chapters={chapters}
-            labels={{ play: journey.play, pause: journey.pause, replay: journey.replay }}
+            labels={{
+              play: journey.play,
+              pause: journey.pause,
+              replay: journey.replay,
+              upNext: profile.ott.upNext,
+              playNow: profile.ott.playNow,
+              cancel: profile.ott.cancel,
+            }}
+            next={{ id: "work", title: `${profile.nav.work}: ${profile.work.heading}` }}
           />
         </div>
       </div>

@@ -202,6 +202,40 @@ export type Profile = {
     englishOnly: string;
   };
   testimonials: { label: string; heading: string };
+  ott: {
+    whos: string;
+    whosSub: string;
+    skip: string;
+    profiles: Record<
+      "recruiter" | "engineer" | "founder" | "explorer",
+      { name: string; tagline: string }
+    >;
+    picks: string;
+    change: string;
+    open: string;
+    play: string;
+    continueTitle: string;
+    resume: string;
+    dismiss: string;
+    upNext: string;
+    playNow: string;
+    cancel: string;
+    items: Record<
+      | "experience"
+      | "resume"
+      | "contact"
+      | "journey"
+      | "notes"
+      | "terminal"
+      | "activity"
+      | "work"
+      | "ask"
+      | "moments"
+      | "sound"
+      | "stack",
+      { title: string; sub: string }
+    >;
+  };
   linkedin: { heading: string; by: string; load: string; open: string; note: string };
   activity: {
     heading: string;

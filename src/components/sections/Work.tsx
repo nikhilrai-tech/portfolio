@@ -157,7 +157,7 @@ export default function Work({ profile, locale }: { profile: Profile; locale: Lo
           ))}
         </ul>
 
-        <div className="mt-16">
+        <div id="activity" className="mt-16 scroll-mt-24">
           <Activity labels={profile.activity} locale={locale} />
         </div>
       </Container>

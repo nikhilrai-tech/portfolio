@@ -14,15 +14,31 @@ const fmt = (s: number) =>
 export default function JourneyFilm({
   chapters,
   labels,
+  next,
 }: {
   chapters: string[];
-  labels: { play: string; pause: string; replay: string };
+  labels: {
+    play: string;
+    pause: string;
+    replay: string;
+    upNext: string;
+    playNow: string;
+    cancel: string;
+  };
+  /** The section that plays after the film, like the next episode. */
+  next: { id: string; title: string };
 }) {
   const root = useRef<HTMLDivElement>(null);
   const trigger = useRef<ScrollTrigger | null>(null);
   const [enabled, setEnabled] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [upNext, setUpNext] = useState<number | null>(null);
+  const playingRef = useRef(false);
+  const setPlay = (v: boolean) => {
+    playingRef.current = v;
+    setPlaying(v);
+  };
 
   useEffect(() => {
     const stage = root.current?.closest<HTMLElement>(".film-stage");
@@ -138,8 +154,19 @@ export default function JourneyFilm({
         scrub: 0.6,
         animation: tl,
         invalidateOnRefresh: true,
-        onUpdate: (self) => setProgress(self.progress),
-        onLeave: () => setPlaying(false),
+        onUpdate: (self) => {
+          setProgress(self.progress);
+          // Played to the end: offer the next "episode", like a streaming app.
+          if (playingRef.current && self.progress >= 0.995) {
+            playingRef.current = false;
+            setPlaying(false);
+            setUpNext(5);
+          }
+        },
+        onLeave: () => {
+          playingRef.current = false;
+          setPlaying(false);
+        },
         // Lets floating buttons step aside on phones while the film is on screen.
         onToggle: (self) => document.documentElement.classList.toggle("film-active", self.isActive),
       });
@@ -161,7 +188,7 @@ export default function JourneyFilm({
     if (!playing) return;
     const pause = () => {
       stopScroll();
-      setPlaying(false);
+      setPlay(false);
     };
     window.addEventListener("wheel", pause, { passive: true });
     window.addEventListener("touchstart", pause, { passive: true });
@@ -178,13 +205,14 @@ export default function JourneyFilm({
     if (!st) return;
     if (playing) {
       stopScroll();
-      setPlaying(false);
+      setPlay(false);
       return;
     }
     navigator.vibrate?.(8);
     const from = progress >= 0.995 || window.scrollY < st.start - 4 ? 0 : progress;
     if (from === 0) window.scrollTo(0, st.start + 1);
-    setPlaying(true);
+    setUpNext(null);
+    setPlay(true);
     // Let the jump to the start settle before the long linear scroll begins.
     requestAnimationFrame(() => scrollToY(st.end, RUNTIME * (1 - from), true));
   };
@@ -193,66 +221,126 @@ export default function JourneyFilm({
     const st = trigger.current;
     if (!st) return;
     stopScroll();
-    setPlaying(false);
+    setPlay(false);
     const y = st.start + ((st.end - st.start) * i) / (chapters.length + 1) + 8;
     scrollToY(y, 1.1);
   };
+
+  // "Top picks" can start the film from elsewhere on the page.
+  useEffect(() => {
+    const start = () => {
+      if (!playingRef.current) root.current?.querySelector<HTMLButtonElement>("button")?.click();
+    };
+    window.addEventListener("journey:play", start);
+    return () => window.removeEventListener("journey:play", start);
+  }, []);
+
+  // Up-next countdown, then move on to the next section.
+  useEffect(() => {
+    if (upNext === null) return;
+    if (upNext === 0) {
+      const a = document.createElement("a");
+      a.href = `#${next.id}`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      const t = window.setTimeout(() => setUpNext(null), 0);
+      return () => window.clearTimeout(t);
+    }
+    const t = window.setTimeout(() => setUpNext((n) => (n === null ? null : n - 1)), 1000);
+    return () => window.clearTimeout(t);
+  }, [upNext, next.id]);
 
   const done = progress >= 0.995;
   const label = playing ? labels.pause : done ? labels.replay : labels.play;
   const active = Math.min(chapters.length, Math.floor(progress * (chapters.length + 1)));
 
   return (
-    <div ref={root} className={`film-player ${enabled ? "" : "hidden"}`}>
-      <button
-        type="button"
-        onClick={play}
-        aria-label={label}
-        data-magnetic
-        className="bg-accent text-accent-ink grid size-11 shrink-0 place-items-center rounded-full transition active:scale-95"
-      >
-        {playing ? (
-          <svg viewBox="0 0 24 24" className="size-4" aria-hidden>
-            <path d="M7 5h3v14H7zM14 5h3v14h-3z" fill="currentColor" />
-          </svg>
-        ) : (
-          <svg viewBox="0 0 24 24" className="size-4" aria-hidden>
-            <path d="M8 5.5v13l11-6.5z" fill="currentColor" />
-          </svg>
-        )}
-      </button>
-      <span className="label text-fg hidden !text-[0.65rem] sm:inline">{label}</span>
-      <div className="flex min-w-0 flex-1 items-center gap-1">
-        {[...chapters, "→"].map((c, i) => {
-          const segStart = i / (chapters.length + 1);
-          const fill = Math.min(1, Math.max(0, (progress - segStart) * (chapters.length + 1)));
-          return (
+    <>
+      {upNext !== null && (
+        <div
+          role="status"
+          className="palette border-line-strong bg-surface/95 absolute right-4 bottom-24 z-10 w-[min(20rem,calc(100%-2rem))] rounded-2xl border p-4 shadow-[var(--shadow)] backdrop-blur-xl md:right-8 md:bottom-40"
+        >
+          <p className="label text-muted !text-[0.62rem]">
+            {labels.upNext} · {upNext}s
+          </p>
+          <p className="display mt-1 text-xl">{next.title}</p>
+          <div className="mt-3 flex gap-2">
             <button
-              key={c}
               type="button"
-              onClick={() => jump(i)}
-              title={c}
-              aria-label={c}
-              className="group relative h-6 flex-1"
+              onClick={() => setUpNext(0)}
+              className="bg-fg text-bg h-9 rounded-full px-4 text-sm font-medium"
             >
-              <span className="bg-line-strong absolute inset-x-0 top-1/2 h-1 -translate-y-1/2 overflow-hidden rounded-full">
-                <span
-                  className="bg-accent block h-full origin-left"
-                  style={{ transform: `scaleX(${fill})` }}
-                />
-              </span>
-              <span
-                className={`label absolute inset-x-0 -top-5 hidden truncate pr-2 text-left !text-[0.58rem] lg:block ${i === active ? "text-fg" : "text-muted"}`}
-              >
-                {c}
-              </span>
+              ▶ {labels.playNow}
             </button>
-          );
-        })}
+            <button
+              type="button"
+              onClick={() => setUpNext(null)}
+              className="border-line-strong h-9 rounded-full border px-4 text-sm"
+            >
+              {labels.cancel}
+            </button>
+          </div>
+          <span className="bg-line mt-3 block h-1 overflow-hidden rounded-full">
+            <span
+              className="bg-accent block h-full transition-[width] duration-1000 ease-linear"
+              style={{ width: `${((5 - upNext) / 5) * 100}%` }}
+            />
+          </span>
+        </div>
+      )}
+      <div ref={root} className={`film-player ${enabled ? "" : "hidden"}`}>
+        <button
+          type="button"
+          onClick={play}
+          aria-label={label}
+          data-magnetic
+          className="bg-accent text-accent-ink grid size-11 shrink-0 place-items-center rounded-full transition active:scale-95"
+        >
+          {playing ? (
+            <svg viewBox="0 0 24 24" className="size-4" aria-hidden>
+              <path d="M7 5h3v14H7zM14 5h3v14h-3z" fill="currentColor" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" className="size-4" aria-hidden>
+              <path d="M8 5.5v13l11-6.5z" fill="currentColor" />
+            </svg>
+          )}
+        </button>
+        <span className="label text-fg hidden !text-[0.65rem] sm:inline">{label}</span>
+        <div className="flex min-w-0 flex-1 items-center gap-1">
+          {[...chapters, "→"].map((c, i) => {
+            const segStart = i / (chapters.length + 1);
+            const fill = Math.min(1, Math.max(0, (progress - segStart) * (chapters.length + 1)));
+            return (
+              <button
+                key={c}
+                type="button"
+                onClick={() => jump(i)}
+                title={c}
+                aria-label={c}
+                className="group relative h-6 flex-1"
+              >
+                <span className="bg-line-strong absolute inset-x-0 top-1/2 h-1 -translate-y-1/2 overflow-hidden rounded-full">
+                  <span
+                    className="bg-accent block h-full origin-left"
+                    style={{ transform: `scaleX(${fill})` }}
+                  />
+                </span>
+                <span
+                  className={`label absolute inset-x-0 -top-5 hidden truncate pr-2 text-left !text-[0.58rem] lg:block ${i === active ? "text-fg" : "text-muted"}`}
+                >
+                  {c}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+        <span className="text-muted shrink-0 font-mono text-xs tabular-nums">
+          {fmt(progress * RUNTIME)} / {fmt(RUNTIME)}
+        </span>
       </div>
-      <span className="text-muted shrink-0 font-mono text-xs tabular-nums">
-        {fmt(progress * RUNTIME)} / {fmt(RUNTIME)}
-      </span>
-    </div>
+    </>
   );
 }

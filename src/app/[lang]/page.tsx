@@ -24,6 +24,8 @@ import CommandPalette from "@/components/ui/CommandPalette";
 import ServiceWorker from "@/components/ui/ServiceWorker";
 import Shortcuts from "@/components/ui/Shortcuts";
 import AskNikhil from "@/components/ui/AskNikhil";
+import TopPicks from "@/components/ott/TopPicks";
+import OttOverlays from "@/components/ott/OttOverlays";
 
 export default async function Home({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;
@@ -61,6 +63,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       <Header profile={profile} locale={lang} sections={sections} />
       <main id="main" className="relative z-10">
         <Hero profile={profile} />
+        <TopPicks labels={profile.ott} />
         <About profile={profile} />
         <Marquee words={marquee.primary} />
         <Marquee words={marquee.secondary} direction={-1} outline />
@@ -94,6 +97,10 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         }}
       />
       <Shortcuts title={profile.shortcuts.title} items={profile.shortcuts.items} />
+      <OttOverlays
+        labels={profile.ott}
+        sections={sections.map((id) => ({ id, label: profile.nav[id] }))}
+      />
       {/* Answers with AI when a provider key is set, otherwise with instant answers from content. */}
       <AskNikhil labels={profile.ask} email={person.email} />
       <SoundToggle
