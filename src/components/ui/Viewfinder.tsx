@@ -17,7 +17,7 @@ export default function Viewfinder({
         />
         <span
           aria-hidden
-          className="pointer-events-none absolute top-[26%] left-1/2 size-10 -translate-x-1/2 rounded-sm border border-accent/80"
+          className="pointer-events-none absolute top-[31%] left-1/2 size-10 -translate-x-1/2 rounded-sm border border-accent/80"
         />
       </div>
       <span aria-hidden className={`${corner} -top-3 -left-3 border-t-2 border-l-2`} />

@@ -10,6 +10,7 @@ import Work from "@/components/sections/Work";
 import Stack from "@/components/sections/Stack";
 import Photography from "@/components/sections/Photography";
 import Contact from "@/components/sections/Contact";
+import ScrollEffects from "@/components/motion/ScrollEffects";
 
 export default async function Home({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;
@@ -28,6 +29,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <Photography profile={profile} />
         <Contact profile={profile} />
       </main>
+      <ScrollEffects />
     </>
   );
 }

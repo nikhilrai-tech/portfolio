@@ -4,6 +4,7 @@ import { person } from "@/content/profile";
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
 import Viewfinder from "@/components/ui/Viewfinder";
+import Parallax from "@/components/motion/Parallax";
 
 export default function About({ profile }: { profile: Profile }) {
   const { about } = profile;
@@ -17,7 +18,7 @@ export default function About({ profile }: { profile: Profile }) {
 
       <Container className="relative grid gap-14 md:grid-cols-12 md:gap-10">
         <div className="md:col-span-5">
-          <div data-parallax="0.08">
+          <Parallax speed={0.08}>
             <Viewfinder caption={about.caption}>
               <Image
                 src={person.portrait.src}
@@ -29,7 +30,7 @@ export default function About({ profile }: { profile: Profile }) {
                 priority={false}
               />
             </Viewfinder>
-          </div>
+          </Parallax>
         </div>
 
         <div className="md:col-span-7 md:pt-10 lg:pl-8">
