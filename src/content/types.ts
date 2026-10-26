@@ -1,3 +1,5 @@
+import type { Locale } from "@/i18n/config";
+
 export type Product = {
   name: string;
   blurb: string;
@@ -13,6 +15,8 @@ export type Role = {
   place?: string;
   period: string;
   current?: boolean;
+  /** Earlier title at the same company, shown under the current one. */
+  promotedFrom?: { title: string; period: string };
   bullets: string[];
   products?: Product[];
 };
@@ -29,7 +33,7 @@ export type StackGroup = { name: string; items: string[] };
 
 export type Photo = {
   src: string;
-  alt: string;
+  alt: Record<Locale, string>;
   width: number;
   height: number;
 };
@@ -69,6 +73,7 @@ export type Profile = {
     label: string;
     heading: string;
     current: string;
+    joinedAs: string;
     keyProducts: string;
     stack: string;
     responsibilities: string;
@@ -97,6 +102,8 @@ export type Profile = {
     copy: string;
     copied: string;
     elsewhere: string;
+    email: string;
+    resume: string;
     footer: string;
   };
 };

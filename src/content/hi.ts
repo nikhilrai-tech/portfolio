@@ -4,7 +4,7 @@ import type { Profile } from "./types";
 // Hindi edition. Product names, company names and technology names stay in English on purpose.
 export const hi: Profile = {
   meta: {
-    title: `${person.name} · हेड ऑफ़ IT और इंफ्रास्ट्रक्चर`,
+    title: `${person.name} · हेड ऑफ़ इनफ़ॉर्मेशन टेक्नोलॉजी`,
     description:
       "निखिल राय SimDaaS Autonomy में IT, क्लाउड और इंफ्रास्ट्रक्चर संभालते हैं, और मीडिया, साइबर सिक्योरिटी, एयरोस्पेस और टेलीकॉम के लिए माइक्रोसर्विसेज़, CI/CD और क्लाउड प्लेटफ़ॉर्म बना चुके हैं।",
   },
@@ -23,11 +23,11 @@ export const hi: Profile = {
     experience: "अनुभव",
     work: "काम",
     stack: "स्टैक",
-    photography: "फ़ोटोग्राफ़ी",
+    photography: "पल",
     contact: "संपर्क",
   },
   hero: {
-    eyebrow: "हेड ऑफ़ IT और इंफ्रास्ट्रक्चर · SimDaaS Autonomy",
+    eyebrow: "हेड ऑफ़ इनफ़ॉर्मेशन टेक्नोलॉजी · SimDaaS Autonomy",
     role: "सीनियर सॉफ़्टवेयर और DevOps इंजीनियर",
     intro:
       "मैं वो प्लेटफ़ॉर्म डिज़ाइन करता हूँ, बनाता हूँ और चलाता हूँ जिन पर इंजीनियरिंग टीमें टिकी होती हैं: माइक्रोसर्विसेज़, CI/CD, इंफ्रास्ट्रक्चर ऐज़ कोड और उनके नीचे का क्लाउड, पहले commit से production तक।",
@@ -55,6 +55,7 @@ export const hi: Profile = {
     label: "अनुभव",
     heading: "जहाँ मैंने काम किया।",
     current: "वर्तमान",
+    joinedAs: "शुरुआत",
     keyProducts: "मुख्य प्रोडक्ट",
     stack: "टेक स्टैक",
     responsibilities: "ज़िम्मेदारियाँ",
@@ -68,12 +69,16 @@ export const hi: Profile = {
   },
   roles: [
     {
-      title: "हेड ऑफ़ IT और इंफ्रास्ट्रक्चर",
+      title: "हेड ऑफ़ इनफ़ॉर्मेशन टेक्नोलॉजी",
       company: "SimDaaS Autonomy",
       companyHref: companyLinks.simdaas,
       place: "IIT कानपुर",
-      period: "अगस्त 2025 – अब तक",
+      period: "अगस्त 2026 – अब तक",
       current: true,
+      promotedFrom: {
+        title: "सॉफ़्टवेयर डेवलपमेंट इंजीनियर II",
+        period: "अगस्त 2025 – अगस्त 2026",
+      },
       bullets: [
         "SimDaaS के IT इंफ्रास्ट्रक्चर, क्लाउड इकोसिस्टम, सॉफ़्टवेयर डिप्लॉयमेंट प्लेटफ़ॉर्म और इंटरनल बिज़नेस एप्लिकेशन की पूरी ज़िम्मेदारी, ताकि वे सुरक्षित, भरोसेमंद और किफ़ायती रहें।",
         "कंपनी की IT सिक्योरिटी पॉलिसी (डिवाइस सिक्योरिटी, एक्सेस कंट्रोल, स्वीकार्य उपयोग) तय करना और लागू करना, और IT सिक्योरिटी घटनाओं पर इंसिडेंट रिस्पॉन्स।",
@@ -87,7 +92,7 @@ export const hi: Profile = {
       title: "सॉफ़्टवेयर इंजीनियर / AI और क्लाउड इंजीनियर",
       company: "SkyAI Technologies",
       place: "IIT कानपुर",
-      period: "अक्टूबर 2024 – 2025",
+      period: "सितंबर 2024 – अक्टूबर 2025",
       bullets: [
         "मीडिया सेक्टर के लिए दो AI-आधारित, माइक्रोसर्विसेज़ पर बने प्रोडक्ट्स के डेवलपमेंट और क्लाउड मैनेजमेंट का नेतृत्व किया और स्केलेबल समाधान दिए।",
         "DigitalOcean पर माइक्रोसर्विसेज़ डिप्लॉयमेंट को आर्किटेक्ट और मैनेज किया, इंफ्रास्ट्रक्चर ऑटोमेशन के लिए Docker, Kubernetes और Terraform के साथ।",
@@ -280,9 +285,9 @@ export const hi: Profile = {
     ],
   },
   photography: {
-    label: "फ़ोटोग्राफ़ी",
-    heading: "लेंस के उस पार।",
-    intro: "जब कोड नहीं लिख रहा होता, तब तस्वीरें ले रहा होता हूँ।",
+    label: "पल",
+    heading: "काम के बाहर।",
+    intro: "कॉन्फ़्रेंस, कैंपस और उनके बीच की शामें।",
   },
   contact: {
     label: "संपर्क",
@@ -291,6 +296,8 @@ export const hi: Profile = {
     copy: "ईमेल कॉपी करें",
     copied: "कॉपी हो गया",
     elsewhere: "और जगह",
+    email: "ईमेल",
+    resume: "रिज़्यूमे",
     footer: "डिज़ाइन और डेवलपमेंट: निखिल राय।",
   },
 };

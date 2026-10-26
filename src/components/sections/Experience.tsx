@@ -50,6 +50,11 @@ export default function Experience({ profile }: { profile: Profile }) {
                 <h3 className="font-display text-xl font-semibold tracking-tight md:text-2xl">
                   {role.title}
                 </h3>
+                {role.promotedFrom && (
+                  <p className="text-muted mt-1 font-mono text-xs">
+                    {experience.joinedAs} {role.promotedFrom.title} · {role.promotedFrom.period}
+                  </p>
+                )}
                 <ul className="text-fg/85 mt-5 space-y-3">
                   {role.bullets.map((b) => (
                     <li key={b.slice(0, 40)} className="relative pl-6">

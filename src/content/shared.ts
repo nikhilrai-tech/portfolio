@@ -11,12 +11,43 @@ export const person = {
     instagram: "https://instagram.com/officialraisahabh",
   },
   portrait: { src: "/images/portrait.jpg", width: 470, height: 588 },
-  // Set to "/resume.pdf" once a public copy without the phone number is in /public.
-  resume: undefined as string | undefined,
+  // Set to undefined to hide the download button.
+  resume: "/Nikhil-Rai-Resume.pdf" as string | undefined,
 } as const;
 
-// Add 3 to 6 photos here (files in /public/images/photography). The section stays hidden while empty.
-export const photos: Photo[] = [];
+// Files live in /public/images/photography. The section stays hidden while this list is empty.
+export const photos: Photo[] = [
+  {
+    src: "/images/photography/nik2.jpg",
+    width: 1027,
+    height: 1489,
+    alt: {
+      en: "Nikhil in a black suit at a conference",
+      hi: "एक कॉन्फ़्रेंस में काले सूट में निखिल",
+    },
+  },
+  {
+    src: "/images/photography/nik3.jpg",
+    width: 1047,
+    height: 1119,
+    alt: {
+      en: "Black and white mirror portrait of Nikhil",
+      hi: "निखिल का ब्लैक एंड व्हाइट मिरर पोर्ट्रेट",
+    },
+  },
+  {
+    src: "/images/photography/nik4.jpg",
+    width: 855,
+    height: 1441,
+    alt: { en: "Nikhil at an evening event, wearing a lanyard", hi: "शाम के एक इवेंट में निखिल" },
+  },
+  {
+    src: "/images/photography/nik5.jpg",
+    width: 1085,
+    height: 1062,
+    alt: { en: "Nikhil on a campus walkway", hi: "कैंपस के गलियारे में निखिल" },
+  },
+];
 
 export const stacks = {
   vtv: [

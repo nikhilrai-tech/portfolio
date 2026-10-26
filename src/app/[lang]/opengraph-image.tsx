@@ -5,7 +5,7 @@ import { person } from "@/content/profile";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Nikhil Rai, Head of IT & Infrastructure";
+export const alt = "Nikhil Rai, Head of Information Technology";
 
 // One social card for both languages: the default OG font has no Devanagari.
 export default async function OpenGraphImage() {
@@ -29,7 +29,7 @@ export default async function OpenGraphImage() {
         <div
           style={{ color: "#eba73f", fontSize: 22, letterSpacing: 4, textTransform: "uppercase" }}
         >
-          Head of IT & Infrastructure · SimDaaS Autonomy
+          Head of Information Technology · SimDaaS Autonomy
         </div>
         <div
           style={{

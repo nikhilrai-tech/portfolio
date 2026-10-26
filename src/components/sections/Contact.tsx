@@ -44,11 +44,11 @@ export default function Contact({ profile }: { profile: Profile }) {
         </a>
 
         <div className="mt-10 flex flex-wrap gap-3">
-          <Button href={`mailto:${person.email}`}>Email</Button>
+          <Button href={`mailto:${person.email}`}>{contact.email}</Button>
           <CopyEmail email={person.email} copyLabel={contact.copy} copiedLabel={contact.copied} />
           {person.resume && (
             <Button href={person.resume} variant="ghost" download>
-              Resume
+              {contact.resume}
             </Button>
           )}
         </div>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { Locale } from "@/i18n/config";
 import type { Profile } from "@/content/profile";
 import { photos } from "@/content/profile";
 import Container from "@/components/ui/Container";
@@ -6,7 +7,7 @@ import SectionHeader from "@/components/ui/SectionHeader";
 
 const speeds = [0.05, 0.12, 0.08, 0.15, 0.06, 0.1];
 
-export default function Photography({ profile }: { profile: Profile }) {
+export default function Photography({ profile, locale }: { profile: Profile; locale: Locale }) {
   if (photos.length === 0) return null;
   const { photography } = profile;
   return (
@@ -18,22 +19,22 @@ export default function Photography({ profile }: { profile: Profile }) {
           heading={photography.heading}
           intro={photography.intro}
         />
-        <ul className="columns-1 gap-4 sm:columns-2 lg:columns-3">
+        <ul className="grid grid-cols-2 items-start gap-3 sm:gap-4 lg:grid-cols-4">
           {photos.map((photo, i) => (
-            <li key={photo.src} className="mb-4 break-inside-avoid">
-              <div
+            <li key={photo.src} className={i % 2 === 1 ? "mt-10 lg:mt-24" : undefined}>
+              <figure
                 data-parallax={speeds[i % speeds.length]}
                 className="bg-surface overflow-hidden rounded-2xl"
               >
                 <Image
                   src={photo.src}
-                  alt={photo.alt}
+                  alt={photo.alt[locale]}
                   width={photo.width}
                   height={photo.height}
-                  sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw"
-                  className="h-auto w-full"
+                  sizes="(min-width: 1024px) 24vw, 46vw"
+                  className="h-auto w-full transition-transform duration-700 hover:scale-[1.03]"
                 />
-              </div>
+              </figure>
             </li>
           ))}
         </ul>

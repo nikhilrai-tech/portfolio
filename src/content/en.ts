@@ -3,7 +3,7 @@ import type { Profile } from "./types";
 
 export const en: Profile = {
   meta: {
-    title: `${person.name} · Head of IT & Infrastructure`,
+    title: `${person.name} · Head of Information Technology`,
     description:
       "Nikhil Rai runs IT, cloud and infrastructure at SimDaaS Autonomy, and has shipped microservices, CI/CD and cloud platforms for media, cybersecurity, aerospace and telecom.",
   },
@@ -22,11 +22,11 @@ export const en: Profile = {
     experience: "Experience",
     work: "Work",
     stack: "Stack",
-    photography: "Photography",
+    photography: "Moments",
     contact: "Contact",
   },
   hero: {
-    eyebrow: "Head of IT & Infrastructure · SimDaaS Autonomy",
+    eyebrow: "Head of Information Technology · SimDaaS Autonomy",
     role: "Senior Software & DevOps Engineer",
     intro:
       "I design, ship and run the platforms engineering teams depend on: microservices, CI/CD, infrastructure as code and the cloud underneath, from first commit to production.",
@@ -54,6 +54,7 @@ export const en: Profile = {
     label: "Experience",
     heading: "Where I've worked.",
     current: "Current",
+    joinedAs: "Joined as",
     keyProducts: "Key products",
     stack: "Tech stack",
     responsibilities: "Responsibilities",
@@ -67,12 +68,13 @@ export const en: Profile = {
   },
   roles: [
     {
-      title: "Head of IT & Infrastructure",
+      title: "Head of Information Technology",
       company: "SimDaaS Autonomy",
       companyHref: companyLinks.simdaas,
       place: "IIT Kanpur",
-      period: "Aug 2025 – Present",
+      period: "Aug 2026 – Present",
       current: true,
+      promotedFrom: { title: "Software Development Engineer II", period: "Aug 2025 – Aug 2026" },
       bullets: [
         "Own SimDaaS' IT infrastructure, cloud ecosystem, software deployment platform and internal business applications, keeping them secure, reliable and cost-effective.",
         "Define and enforce the company IT security policy across device security, access control and acceptable use, and own incident response for IT security issues.",
@@ -86,7 +88,7 @@ export const en: Profile = {
       title: "Software Engineer / AI and Cloud Engineer",
       company: "SkyAI Technologies",
       place: "IIT Kanpur",
-      period: "Oct 2024 – 2025",
+      period: "Sep 2024 – Oct 2025",
       bullets: [
         "Led development and cloud management for two AI-driven and microservices-based products, delivering scalable solutions for the media sector.",
         "Architected and managed microservices deployments on DigitalOcean, utilizing Docker, Kubernetes, and Terraform for infrastructure automation.",
@@ -278,9 +280,9 @@ export const en: Profile = {
     ],
   },
   photography: {
-    label: "Photography",
-    heading: "Through the lens.",
-    intro: "When I'm not shipping, I'm shooting.",
+    label: "Moments",
+    heading: "Off the clock.",
+    intro: "Conferences, campuses and the evenings in between.",
   },
   contact: {
     label: "Contact",
@@ -289,6 +291,8 @@ export const en: Profile = {
     copy: "Copy email",
     copied: "Copied",
     elsewhere: "Elsewhere",
+    email: "Email",
+    resume: "Resume",
     footer: "Designed and built by Nikhil Rai.",
   },
 };

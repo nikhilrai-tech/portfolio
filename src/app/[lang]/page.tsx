@@ -29,7 +29,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <Experience profile={profile} />
         <Work profile={profile} />
         <Stack profile={profile} />
-        <Photography profile={profile} />
+        <Photography profile={profile} locale={lang} />
         <Contact profile={profile} />
       </main>
       <ScrollEffects />
