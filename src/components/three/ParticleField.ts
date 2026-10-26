@@ -3,6 +3,7 @@ import {
   BufferAttribute,
   BufferGeometry,
   Color,
+  Group,
   DynamicDrawUsage,
   LineBasicMaterial,
   LineSegments,
@@ -113,6 +114,8 @@ export class ParticleField {
   private lineMat = new LineBasicMaterial({ transparent: true, opacity: 0.55, depthWrite: false });
   private linePos = new Float32Array(MAX_SEGMENTS * 6);
   private mouse = { x: 0, y: 0, strength: 0, target: 0 };
+  private rig = new Group();
+  private tilt = { x: 0, y: 0 };
   private frame: Frame | null = null;
   private raf = 0;
   private born = performance.now();
@@ -171,7 +174,8 @@ export class ParticleField {
     });
     const points = new Points(this.geometry, this.material);
     points.frustumCulled = false;
-    this.scene.add(points);
+    this.scene.add(this.rig);
+    this.rig.add(points);
 
     this.nodes = Array.from({ length: NODE_COUNT }, (_, i) => Math.floor((i * count) / NODE_COUNT));
     const lineAttr = new BufferAttribute(this.linePos, 3);
@@ -180,7 +184,7 @@ export class ParticleField {
     this.lineGeo.setDrawRange(0, 0);
     const lines = new LineSegments(this.lineGeo, this.lineMat);
     lines.frustumCulled = false;
-    this.scene.add(lines);
+    this.rig.add(lines);
 
     this.setTheme(false);
   }
@@ -213,6 +217,12 @@ export class ParticleField {
     this.mouse.x = (ndcX * visibleW) / 2;
     this.mouse.y = (ndcY * VISIBLE_H) / 2;
     this.mouse.target = inside ? 1 : 0;
+  }
+
+  /** Device tilt, in radians (small values: about ±0.3). */
+  setTilt(x: number, y: number) {
+    this.tilt.x = x;
+    this.tilt.y = y;
   }
 
   resize(width: number, height: number) {
@@ -259,6 +269,8 @@ export class ParticleField {
     this.frame = f;
     const t = (performance.now() - this.born) / 1000;
     this.mouse.strength += (this.mouse.target - this.mouse.strength) * 0.08;
+    this.rig.rotation.x += (this.tilt.x - this.rig.rotation.x) * 0.06;
+    this.rig.rotation.y += (this.tilt.y - this.rig.rotation.y) * 0.06;
     const u = this.material.uniforms;
     u.uA.value = f.a;
     u.uB.value = f.b;

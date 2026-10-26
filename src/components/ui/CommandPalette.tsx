@@ -68,6 +68,7 @@ export default function CommandPalette({
     setActive(0);
     setNote("");
     setInstallable(canInstall());
+    navigator.vibrate?.(8);
     dialog.current.showModal();
     requestAnimationFrame(() => input.current?.focus());
   }, []);

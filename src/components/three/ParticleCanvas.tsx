@@ -139,6 +139,27 @@ export default function ParticleCanvas() {
       const onLeave = (e: MouseEvent) => {
         if (!e.relatedTarget) field?.setPointer(0, 0, false);
       };
+      // Phones: a finger works like the cursor while it is down, without blocking scroll.
+      let release = 0;
+      const onTouch = (e: TouchEvent) => {
+        const t = e.touches[0];
+        if (!t) return;
+        window.clearTimeout(release);
+        field?.setPointer(
+          (t.clientX / window.innerWidth) * 2 - 1,
+          -((t.clientY / window.innerHeight) * 2 - 1),
+          true,
+        );
+      };
+      const onTouchEnd = () => {
+        release = window.setTimeout(() => field?.setPointer(0, 0, false), 700);
+      };
+      // Tilting the phone turns the particles a little, like looking around them.
+      const onTilt = (e: DeviceOrientationEvent) => {
+        if (e.beta == null || e.gamma == null) return;
+        const clamp = (v: number) => Math.max(-1, Math.min(1, v));
+        field?.setTilt(clamp((e.beta - 45) / 45) * 0.28, clamp(e.gamma / 35) * 0.35);
+      };
       const themeObserver = new MutationObserver(() => field?.setTheme(isLight()));
       themeObserver.observe(document.documentElement, {
         attributes: true,
@@ -150,11 +171,20 @@ export default function ParticleCanvas() {
       window.addEventListener("resize", onResize);
       window.addEventListener("pointermove", onMove, { passive: true });
       document.addEventListener("mouseout", onLeave);
+      window.addEventListener("touchstart", onTouch, { passive: true });
+      window.addEventListener("touchmove", onTouch, { passive: true });
+      window.addEventListener("touchend", onTouchEnd, { passive: true });
+      window.addEventListener("deviceorientation", onTilt);
       mq.addEventListener("change", onScheme);
       cleanup = () => {
         window.removeEventListener("resize", onResize);
         window.removeEventListener("pointermove", onMove);
         document.removeEventListener("mouseout", onLeave);
+        window.removeEventListener("touchstart", onTouch);
+        window.removeEventListener("touchmove", onTouch);
+        window.removeEventListener("touchend", onTouchEnd);
+        window.removeEventListener("deviceorientation", onTilt);
+        window.clearTimeout(release);
         mq.removeEventListener("change", onScheme);
         themeObserver.disconnect();
         field?.dispose();

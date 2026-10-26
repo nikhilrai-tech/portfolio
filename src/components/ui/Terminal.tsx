@@ -179,6 +179,7 @@ export default function Terminal({ data, hint }: { data: TerminalData; hint: str
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     const raw = value;
+    navigator.vibrate?.(6);
     setValue("");
     cursor.current = -1;
     if (raw.trim()) history.current.unshift(raw);
@@ -274,7 +275,7 @@ export default function Terminal({ data, hint }: { data: TerminalData; hint: str
             autoComplete="off"
             autoCorrect="off"
             spellCheck={false}
-            className="caret-accent w-full bg-transparent outline-none focus-visible:outline-none"
+            className="caret-accent w-full bg-transparent text-base outline-none focus-visible:outline-none md:text-sm"
           />
         </form>
       </div>

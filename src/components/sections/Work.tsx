@@ -13,7 +13,21 @@ export default function Work({ profile }: { profile: Profile }) {
 
   return (
     <section id="work" data-section="work" className="relative pt-28 pb-28 md:pb-40 lg:pt-0">
-      {/* On large screens this panel pins and the track scrolls sideways (see ScrollEffects). */}
+      {/* Phones and tablets: header above a swipeable card row. */}
+      <Container className="lg:hidden">
+        <SectionHeader id="work" label={work.label} heading={work.heading} intro={work.intro} />
+        <p className="label text-muted -mt-4 mb-5 flex items-center justify-between">
+          <span>{work.productsHeading}</span>
+          <span className="text-accent flex items-center gap-2">
+            {String(products.length).padStart(2, "0")}
+            <span aria-hidden className="swipe-hint">
+              ⟶
+            </span>
+          </span>
+        </p>
+      </Container>
+
+      {/* Large screens: this panel pins and the track scrolls sideways (see ScrollEffects). */}
       <div
         data-hscroll
         className="relative lg:flex lg:h-[100svh] lg:items-center lg:overflow-hidden"
@@ -27,22 +41,25 @@ export default function Work({ profile }: { profile: Profile }) {
         />
         <ul
           data-hscroll-track
-          className="relative grid gap-4 px-4 sm:px-6 md:grid-cols-2 lg:flex lg:w-max lg:items-stretch lg:gap-6 lg:pr-[12vw] lg:pl-[max(2.5rem,calc((100vw-80rem)/2+2.5rem))]"
+          className="no-scrollbar relative flex snap-x snap-mandatory scroll-px-4 gap-4 overflow-x-auto px-4 pb-2 sm:scroll-px-6 sm:px-6 lg:w-max lg:snap-none lg:items-stretch lg:gap-6 lg:overflow-visible lg:pr-[12vw] lg:pb-0 lg:pl-[max(2.5rem,calc((100vw-80rem)/2+2.5rem))]"
         >
-          <li className="flex flex-col justify-center md:col-span-2 lg:w-[30rem] lg:shrink-0 lg:pr-8">
+          <li className="hidden flex-col justify-center lg:flex lg:w-[30rem] lg:shrink-0 lg:pr-8">
             <SectionHeader id="work" label={work.label} heading={work.heading} intro={work.intro} />
-            <p className="label text-muted -mt-6 hidden items-center gap-3 lg:flex">
+            <p className="label text-muted -mt-6 flex items-center gap-3">
               {work.productsHeading}
               <span aria-hidden className="bg-accent h-px w-16" />
               <span aria-hidden className="text-accent">
                 →
               </span>
             </p>
-            <h3 className="label text-muted lg:sr-only">{work.productsHeading}</h3>
           </li>
 
           {products.map((product, i) => (
-            <li key={product.name} data-reveal className="h-full lg:w-[25rem] lg:shrink-0">
+            <li
+              key={product.name}
+              data-reveal
+              className="w-[84vw] max-w-[24rem] shrink-0 snap-start lg:w-[25rem] lg:max-w-none"
+            >
               <TiltCard className="border-line bg-surface/85 flex h-full flex-col rounded-3xl border p-6 backdrop-blur-md md:p-7 lg:max-h-[74svh] lg:overflow-y-auto">
                 <div className="flex items-center justify-between">
                   <span className="text-muted font-mono text-xs">

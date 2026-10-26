@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getSound } from "@/lib/sound";
 
 const KEY = "sound";
@@ -11,9 +11,16 @@ export default function SoundToggle({
 }) {
   const [on, setOn] = useState(false);
   const [hint, setHint] = useState(false);
+  const bars = useRef<(HTMLSpanElement | null)[]>([]);
 
   const toggle = async (next: boolean) => {
     const sound = getSound();
+    navigator.vibrate?.(12);
+    // iOS only shares device tilt after a tap-time permission; the sound tap is a natural moment.
+    const motion = (
+      globalThis as { DeviceOrientationEvent?: { requestPermission?: () => Promise<string> } }
+    ).DeviceOrientationEvent;
+    if (next && motion?.requestPermission) motion.requestPermission().catch(() => {});
     if (next) await sound.start();
     else sound.stop();
     setOn(next);
@@ -83,6 +90,24 @@ export default function SoundToggle({
     };
   }, []);
 
+  // The bars follow the real output level while sound plays.
+  useEffect(() => {
+    if (!on) {
+      bars.current.forEach((b) => b && (b.style.transform = ""));
+      return;
+    }
+    const sound = getSound();
+    let raf = 0;
+    const draw = () => {
+      bars.current.forEach((b, i) => {
+        if (b) b.style.transform = `scaleY(${0.18 + sound.level([1, 3, 6, 10][i]) * 0.95})`;
+      });
+      raf = requestAnimationFrame(draw);
+    };
+    raf = requestAnimationFrame(draw);
+    return () => cancelAnimationFrame(raf);
+  }, [on]);
+
   const label = on ? labels.off : labels.on;
   return (
     <div className="fixed right-5 bottom-5 z-40 flex items-center gap-3">
@@ -103,11 +128,10 @@ export default function SoundToggle({
         data-magnetic
         className="border-line bg-bg/70 text-fg hover:border-accent grid size-11 place-items-center rounded-full border backdrop-blur-md transition-colors"
       >
-        <span className="eq flex h-3.5 items-end gap-[3px]" data-on={on ? "" : undefined}>
-          <span />
-          <span />
-          <span />
-          <span />
+        <span className="eq flex h-3.5 items-end gap-[3px]">
+          {[0, 1, 2, 3].map((i) => (
+            <span key={i} ref={(el) => void (bars.current[i] = el)} />
+          ))}
         </span>
       </button>
     </div>

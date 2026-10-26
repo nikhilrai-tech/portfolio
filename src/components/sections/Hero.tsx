@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type { Profile } from "@/content/profile";
 import { person } from "@/content/profile";
 import Button from "@/components/ui/Button";
@@ -6,7 +5,7 @@ import Container from "@/components/ui/Container";
 import { ArrowDown } from "@/components/ui/Icons";
 
 export default function Hero({ profile }: { profile: Profile }) {
-  const { hero, about } = profile;
+  const { hero } = profile;
   const [first, ...rest] = person.name.split(" ");
   let i = 0;
   const rise = () => ({ className: "rise", style: { "--i": i++ } as React.CSSProperties });
@@ -17,7 +16,7 @@ export default function Hero({ profile }: { profile: Profile }) {
       data-section="intro"
       className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden pt-24 pb-20"
     >
-      {/* The particle globe sits on this box, behind the portrait. */}
+      {/* The particle globe sits on this box, between the two halves of the name. */}
       <div
         data-shape-anchor
         data-shape-fill="0.95"
@@ -31,28 +30,13 @@ export default function Hero({ profile }: { profile: Profile }) {
           <span {...rise()}>{hero.eyebrow}</span>
         </p>
 
-        <h1 className="display mt-8 grid w-full grid-cols-[1fr_auto_1fr] items-center gap-[2.5vw] text-[clamp(2.6rem,11vw,12.5rem)] leading-none">
-          <span data-hero-split="-1" className="justify-self-end">
+        {/* Desktop: NIKHIL · globe · RAI. on one line. Phones: two big stacked lines. */}
+        <h1 className="display mt-8 flex w-full flex-col items-center text-[clamp(4.5rem,24vw,8rem)] leading-[0.86] md:grid md:grid-cols-[1fr_minmax(10rem,20vw)_1fr] md:text-[clamp(4rem,11vw,12.5rem)] md:leading-none">
+          <span data-hero-split="-1" className="md:justify-self-end">
             <span {...rise()}>{first.toUpperCase()}</span>
           </span>
-          <span data-hero-zoom className="relative block w-[clamp(5.5rem,17vw,16rem)]">
-            <span
-              aria-hidden
-              className="border-accent absolute inset-0 translate-x-2 translate-y-2 rounded-[1.1rem] border-2 md:translate-x-3 md:translate-y-3"
-            />
-            <span className="bg-surface relative block aspect-[4/5] overflow-hidden rounded-[1.1rem] shadow-[var(--shadow)]">
-              <Image
-                src={person.portrait.src}
-                width={person.portrait.width}
-                height={person.portrait.height}
-                alt={about.portraitAlt}
-                sizes="(min-width: 768px) 17vw, 24vw"
-                className="size-full object-cover"
-                priority
-              />
-            </span>
-          </span>
-          <span data-hero-split="1" className="justify-self-start">
+          <span aria-hidden className="hidden md:block" />
+          <span data-hero-split="1" className="md:justify-self-start">
             <span {...rise()}>
               {rest.join(" ").toUpperCase()}
               <span className="text-accent">.</span>

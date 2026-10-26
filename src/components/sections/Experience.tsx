@@ -25,6 +25,15 @@ export default function Experience({ profile }: { profile: Profile }) {
             </div>
           </aside>
 
+          {/* Phones: a slim sticky bar under the header carries the rolling year. */}
+          <div className="border-line bg-bg/85 sticky top-16 z-20 -mx-4 border-b px-4 py-3 backdrop-blur-md sm:-mx-6 sm:px-6 lg:hidden">
+            <YearRoller
+              compact
+              label={experience.chapter}
+              chapters={roles.map((r) => ({ year: r.year, name: r.chapter }))}
+            />
+          </div>
+
           <ol className="lg:col-span-7">
             {roles.map((role, index) => (
               <li
@@ -33,9 +42,7 @@ export default function Experience({ profile }: { profile: Profile }) {
                 data-reveal
                 className="border-line border-t py-12 first:border-t-0 first:pt-0 md:py-16"
               >
-                {/* Small screens have no sticky column, so each role carries its own year. */}
-                <p className="display text-accent text-6xl lg:hidden">{role.year}</p>
-                <p className="label text-muted mt-2 lg:mt-0">
+                <p className="label text-muted">
                   {experience.chapter} {String(index + 1).padStart(2, "0")} · {role.chapter}
                 </p>
 

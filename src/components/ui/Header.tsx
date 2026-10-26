@@ -50,7 +50,12 @@ export default function Header({
           <PaletteButton label={profile.palette.open} />
           <LanguageSwitch current={locale} label={profile.ui.language} />
           <ThemeToggle label={profile.ui.theme} />
-          <MobileMenu links={links} menuLabel={profile.ui.menu} closeLabel={profile.ui.close} />
+          <MobileMenu
+            links={links}
+            menuLabel={profile.ui.menu}
+            closeLabel={profile.ui.close}
+            commandLabel={profile.palette.open}
+          />
         </div>
       </div>
     </header>

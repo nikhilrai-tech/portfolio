@@ -7,7 +7,6 @@ import { gsap, ScrollTrigger } from "@/lib/gsap";
 //   data-parallax="0.1"      moves the element vertically at that speed (photos)
 //   data-reveal              fades the element in from 24px below, once
 //   data-hero-split="1|-1"   hero name halves slide apart as you leave the hero
-//   data-hero-zoom           hero portrait grows and fades as you leave the hero
 //   data-marquee="1|-1"      endless word band; speed and skew follow scroll velocity
 //   data-hscroll             pins on large screens while its [data-hscroll-track] moves sideways
 //   data-count               counts a number up when it first appears
@@ -52,15 +51,6 @@ export default function ScrollEffects() {
           gsap.to(el, {
             xPercent: 35 * Number(el.dataset.heroSplit),
             opacity: 0.15,
-            ease: "none",
-            scrollTrigger: leave,
-          });
-        });
-        gsap.utils.toArray<HTMLElement>("[data-hero-zoom]").forEach((el) => {
-          gsap.to(el, {
-            scale: 1.35,
-            yPercent: 18,
-            opacity: 0,
             ease: "none",
             scrollTrigger: leave,
           });

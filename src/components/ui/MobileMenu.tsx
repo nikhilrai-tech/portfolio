@@ -8,10 +8,12 @@ export default function MobileMenu({
   links,
   menuLabel,
   closeLabel,
+  commandLabel,
 }: {
   links: Link[];
   menuLabel: string;
   closeLabel: string;
+  commandLabel: string;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -67,6 +69,17 @@ export default function MobileMenu({
                   </span>
                 </a>
               ))}
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  window.dispatchEvent(new Event("palette:open"));
+                }}
+                className="border-line text-accent mt-1 flex w-full items-center justify-between rounded-xl border-t px-4 py-3 text-left text-base"
+              >
+                {commandLabel}
+                <span className="font-mono text-xs">⌘K</span>
+              </button>
             </m.nav>
           )}
         </AnimatePresence>
