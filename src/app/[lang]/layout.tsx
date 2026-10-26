@@ -64,6 +64,7 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
     alternates: {
       canonical: `/${lang}`,
       languages: Object.fromEntries(locales.map((l) => [l, `/${l}`])),
+      types: { "application/rss+xml": "/feed.xml" },
     },
     openGraph: {
       type: "profile",

@@ -6,6 +6,7 @@ import { notes, readingMinutes } from "@/content/notes";
 import ArticleHeader from "@/components/ui/ArticleHeader";
 import RichText from "@/components/ui/RichText";
 import { ArrowUpRight } from "@/components/ui/Icons";
+import NoteShare from "@/components/ui/NoteShare";
 
 export function generateStaticParams() {
   return notes.map((n) => ({ slug: n.slug }));
@@ -138,6 +139,11 @@ export default async function NotePage({ params }: PageProps<"/[lang]/notes/[slu
               <ArrowUpRight />
             </a>
           </p>
+          <NoteShare
+            url={`${person.siteUrl}/${lang}/notes/${note.slug}`}
+            title={note.title}
+            labels={{ button: profile.share.button, copied: profile.share.copied }}
+          />
         </article>
 
         <nav aria-label={t.all} className="mt-16">

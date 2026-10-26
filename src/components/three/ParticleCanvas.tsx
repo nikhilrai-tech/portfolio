@@ -51,7 +51,16 @@ export default function ParticleCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !hasHardwareWebGL())
+    // Data Saver or a very slow connection: keep the static layout and skip the 3D download.
+    const net = (
+      navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }
+    ).connection;
+    const saveData = net?.saveData || /(^|-)2g$/.test(net?.effectiveType ?? "");
+    if (
+      saveData ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      !hasHardwareWebGL()
+    )
       return;
     let disposed = false;
     let cleanup = () => {};
