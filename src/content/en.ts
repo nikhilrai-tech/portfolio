@@ -382,7 +382,7 @@ export const en: Profile = {
   },
   ask: {
     launcher: "Ask about me",
-    title: "Ask Nikhil (AI)",
+    title: "Ask about Nikhil",
     intro:
       "Ask anything about my work, experience or stack. Answers come from this site's content.",
     placeholder: "e.g. Has he run Kubernetes in production?",
@@ -394,6 +394,7 @@ export const en: Profile = {
       "Tell me about his cybersecurity work",
     ],
     disclaimer: "AI answers can be imperfect. For anything important, email me.",
+    instant: "Instant answers from this site's content (no AI). For anything else, email me.",
     unavailable: "The assistant isn't available right now. Please email me instead.",
     limited: "That's a lot of questions! Please try again in an hour, or email me.",
   },

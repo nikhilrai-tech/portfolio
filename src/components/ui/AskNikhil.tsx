@@ -10,6 +10,7 @@ export default function AskNikhil({ labels, email }: { labels: Profile["ask"]; e
   const [busy, setBusy] = useState(false);
   const [input, setInput] = useState("");
   const [msgs, setMsgs] = useState<Msg[]>([]);
+  const [mode, setMode] = useState<"ai" | "instant" | null>(null);
   const list = useRef<HTMLDivElement>(null);
   const field = useRef<HTMLInputElement>(null);
 
@@ -57,6 +58,7 @@ export default function AskNikhil({ labels, email }: { labels: Profile["ask"]; e
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: history.slice(-10), lang: document.documentElement.lang }),
       });
+      setMode(res.headers.get("X-Ask-Mode") === "instant" ? "instant" : "ai");
       if (!res.ok || !res.body) {
         append(res.status === 429 ? labels.limited : labels.unavailable);
         return;
@@ -179,7 +181,7 @@ export default function AskNikhil({ labels, email }: { labels: Profile["ask"]; e
             </button>
           </form>
           <p className="text-muted px-5 pb-3 text-[0.68rem]">
-            {labels.disclaimer}{" "}
+            {mode === "instant" ? labels.instant : labels.disclaimer}{" "}
             <a href={`mailto:${email}`} className="underline underline-offset-2">
               {email}
             </a>

@@ -173,6 +173,7 @@ export type Profile = {
     close: string;
     suggestions: string[];
     disclaimer: string;
+    instant: string;
     unavailable: string;
     limited: string;
   };
