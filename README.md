@@ -16,8 +16,17 @@ npm run build      # production build, must pass before every PR
 npm run lint
 ```
 
-Set `NEXT_PUBLIC_SITE_URL` (for example `https://nikhilrai.dev`) in Vercel so canonical URLs, the
-sitemap and the Open Graph image use the real domain.
+### Environment variables (Vercel → Project → Settings → Environment Variables)
+
+| Variable | Needed for | Without it |
+| --- | --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | Canonical URLs, sitemap, share cards, QR code | Falls back to `http://localhost:3000` |
+| `RESEND_API_KEY` | Contact form email delivery ([resend.com](https://resend.com)) | Form opens the visitor's mail app instead |
+| `CONTACT_TO`, `CONTACT_FROM` | Optional overrides for the form's recipient and sender | Sends to the profile email from `onboarding@resend.dev` |
+| `ANTHROPIC_API_KEY` | "Ask Nikhil" AI chat (Claude Opus 5.5) | Chat button stays hidden |
+| `GITHUB_TOKEN` | Optional, raises GitHub API limits for the activity block | Unauthenticated (fine with hourly caching) |
+
+Redeploy after adding or changing a variable.
 
 ## Changing content (handover)
 
@@ -39,6 +48,13 @@ sitemap and the Open Graph image use the real domain.
 Import the repo in Vercel (framework preset: Next.js, no extra settings). Every PR gets a preview URL;
 `main` deploys to production. Add the custom domain under Project → Settings → Domains.
 
+## Features at a glance
+
+Boot screen, particle scene, custom cursor, generative sound, The Journey (scroll film with a
+player), live GitHub activity, contact form, QR + share + vCard, "Ask Nikhil" AI chat, ⌘K menu,
+terminal, PWA with offline page, print stylesheet, English/Hindi, dark/light, Vercel Analytics and
+Speed Insights (no cookies).
+
 ## How the pieces fit
 
 | Where | What |
@@ -51,6 +67,11 @@ Import the repo in Vercel (framework preset: Next.js, no extra settings). Every 
 | `src/components/motion/` | `ScrollEffects` (all `data-*` scroll effects), `Cursor`, `TiltCard`, `SmoothScroll` |
 | `src/components/ui/` | `BootScreen`, `SoundToggle`, `CommandPalette`, `Terminal`, `Hud`, `YearRoller`, `Marquee` |
 | `src/lib/sound.ts` | Generative Web Audio score (no audio files) |
+| `src/components/sections/Journey.tsx`, `src/components/journey/` | The Journey film: scenes, SVG visuals, player |
+| `src/lib/github.ts`, `src/components/sections/Activity.tsx` | Live GitHub calendar and recent repos (`use cache`, hourly) |
+| `src/app/api/contact/route.ts` | Contact form endpoint (Resend, spam protection) |
+| `src/app/api/ask/route.ts`, `src/lib/ask-context.ts` | AI chat endpoint and the system prompt built from `src/content` |
+| `scripts/` | Share-card template and renderer (`public/og/card-*.jpg`) |
 
 **Where particles go:** any element with `data-shape-anchor` inside a `[data-section]` decides where
 that section's shape sits (`data-shape-fill` for size, `data-shape-opacity` for strength). The
