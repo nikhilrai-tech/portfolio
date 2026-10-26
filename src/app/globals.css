@@ -514,12 +514,12 @@ html.film-on .film-scene {
   position: absolute;
   inset: 0;
   padding-top: 5rem;
-  padding-bottom: 8.5rem;
+  padding-bottom: 11rem;
 }
 html.film-on .film-pipeline {
   position: absolute;
   left: 50%;
-  bottom: 4.6rem;
+  bottom: 7rem;
   width: max-content;
   max-width: calc(100% - 2rem);
   padding: 0;
