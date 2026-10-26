@@ -4,6 +4,7 @@ import { person } from "@/content/profile";
 import LanguageSwitch from "./LanguageSwitch";
 import MobileMenu from "./MobileMenu";
 import ThemeToggle from "./ThemeToggle";
+import PaletteButton from "./PaletteButton";
 
 export default function Header({
   profile,
@@ -46,6 +47,7 @@ export default function Header({
         </nav>
 
         <div className="flex items-center gap-2">
+          <PaletteButton label={profile.palette.open} />
           <LanguageSwitch current={locale} label={profile.ui.language} />
           <ThemeToggle label={profile.ui.theme} />
           <MobileMenu links={links} menuLabel={profile.ui.menu} closeLabel={profile.ui.close} />

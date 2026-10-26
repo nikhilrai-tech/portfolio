@@ -58,6 +58,7 @@ export type Profile = {
     soundOff: string;
     soundHint: string;
     skipIntro: string;
+    offline: string;
   };
   nav: Record<SectionId, string>;
   hero: {
@@ -103,6 +104,23 @@ export type Profile = {
   projects: Project[];
   stack: { label: string; heading: string; intro: string; groups: StackGroup[] };
   photography: { label: string; heading: string; intro: string };
+  palette: {
+    open: string;
+    placeholder: string;
+    empty: string;
+    groups: { navigate: string; actions: string; links: string };
+    actions: {
+      theme: string;
+      language: string;
+      sound: string;
+      copyEmail: string;
+      resume: string;
+      install: string;
+      terminal: string;
+    };
+    copied: string;
+  };
+  terminal: { label: string; heading: string; hint: string };
   contact: {
     label: string;
     heading: string;

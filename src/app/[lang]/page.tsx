@@ -13,19 +13,45 @@ import Contact from "@/components/sections/Contact";
 import ScrollEffects from "@/components/motion/ScrollEffects";
 import ParticleCanvas from "@/components/three/ParticleCanvas";
 import Marquee from "@/components/ui/Marquee";
-import { marquee } from "@/content/profile";
+import { marquee, person } from "@/content/profile";
 import Hud from "@/components/ui/Hud";
 import Cursor from "@/components/motion/Cursor";
 import BootScreen from "@/components/ui/BootScreen";
 import SoundToggle from "@/components/ui/SoundToggle";
+import CommandPalette from "@/components/ui/CommandPalette";
+import ServiceWorker from "@/components/ui/ServiceWorker";
 
 export default async function Home({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
   const profile = getProfile(lang);
 
+  const other = lang === "en" ? "hi" : "en";
+  // Structured data so search engines understand who this page is about.
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: person.name,
+    jobTitle: profile.roles[0].title,
+    worksFor: {
+      "@type": "Organization",
+      name: profile.roles[0].company,
+      url: profile.roles[0].companyHref,
+    },
+    email: `mailto:${person.email}`,
+    url: `${person.siteUrl}/${lang}`,
+    image: `${person.siteUrl}${person.portrait.src}`,
+    nationality: "India",
+    knowsAbout: profile.stack.groups.flatMap((g) => g.items).slice(0, 30),
+    sameAs: Object.values(person.links),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+      />
       <BootScreen skipLabel={profile.ui.skipIntro} />
       <ParticleCanvas />
       <Header profile={profile} locale={lang} sections={sections} />
@@ -38,10 +64,23 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <Work profile={profile} />
         <Stack profile={profile} />
         <Photography profile={profile} locale={lang} />
-        <Contact profile={profile} />
+        <Contact profile={profile} locale={lang} />
       </main>
       <ScrollEffects />
       <Cursor />
+      <ServiceWorker offlineLabel={profile.ui.offline} />
+      <CommandPalette
+        labels={profile.palette}
+        sections={sections.map((id) => ({ id, label: profile.nav[id] }))}
+        otherLocale={other}
+        email={person.email}
+        resume={person.resume}
+        links={[
+          { label: "GitHub", href: person.links.github },
+          { label: "LinkedIn", href: person.links.linkedin },
+          { label: "Instagram", href: person.links.instagram },
+        ]}
+      />
       <SoundToggle
         labels={{ on: profile.ui.soundOn, off: profile.ui.soundOff, hint: profile.ui.soundHint }}
       />

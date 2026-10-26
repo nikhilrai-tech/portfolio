@@ -41,6 +41,10 @@ export default function SoundToggle({
     window.addEventListener("pointerdown", resume);
     window.addEventListener("keydown", resume);
 
+    // The command palette toggles sound through this event.
+    const fromPalette = () => toggle(!sound.on);
+    window.addEventListener("sound:toggle", fromPalette);
+
     // A one-time nudge after the intro, for visitors who have never chosen.
     const nudge = saved === null ? window.setTimeout(() => setHint(true), 3200) : 0;
     const unnudge = saved === null ? window.setTimeout(() => setHint(false), 9500) : 0;
@@ -72,6 +76,7 @@ export default function SoundToggle({
       window.clearTimeout(unnudge);
       window.removeEventListener("pointerdown", resume);
       window.removeEventListener("keydown", resume);
+      window.removeEventListener("sound:toggle", fromPalette);
       document.removeEventListener("pointerover", over);
       document.removeEventListener("pointerdown", press);
       io.disconnect();

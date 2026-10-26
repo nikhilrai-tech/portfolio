@@ -1,10 +1,11 @@
 # Nikhil Rai · Portfolio
 
-"Code meets Lens": a bilingual (English / हिन्दी) portfolio with a scroll-driven 3D camera lens,
-parallax and a viewfinder HUD.
+A bilingual (English / हिन्दी) portfolio for an IT & infrastructure lead: GPU particles that morph
+into a globe, a portrait, server racks, a service mesh, a Kubernetes helm and a security shield as
+you scroll, plus a boot screen, generative sound, a command menu, a working terminal and PWA support.
 
 **Stack:** Next.js 16 (App Router) · TypeScript · Tailwind CSS v4 · GSAP + ScrollTrigger · Lenis ·
-three.js + React Three Fiber + drei · Framer Motion
+three.js (plain, lazy-loaded) · Framer Motion · Web Audio
 
 ## Run it
 
@@ -24,11 +25,13 @@ sitemap and the Open Graph image use the real domain.
    `Profile` type in `types.ts`, so TypeScript tells you if one language is missing a field.
 2. Links, email, portrait, tech stacks and repo URLs that are the same in every language are in
    `shared.ts`.
-3. **Photos:** put files in `public/images/photography/` and list them in `photos` in `shared.ts`.
-   The Photography section and its nav link appear automatically once the list has items.
-4. **Resume:** add a copy *without the phone number* as `public/resume.pdf`, then set
-   `resume: "/resume.pdf"` in `shared.ts`. The download button appears on its own.
-5. **New language:** add the code to `src/i18n/config.ts`, add a `xx.ts` profile and register it in
+3. **Photos:** put files in `public/images/photography/` and list them in `photos` in `shared.ts`
+   (strip EXIF/GPS first). The Moments section and its nav link appear once the list has items.
+4. **Resume:** replace `public/Nikhil-Rai-Resume.pdf`, or set `resume` in `shared.ts` to
+   `undefined` to hide the download button.
+5. **Career chapters:** each role in `en.ts` / `hi.ts` has a `chapter` name and a `year`; the
+   rolling year in Experience reads them.
+6. **New language:** add the code to `src/i18n/config.ts`, add a `xx.ts` profile and register it in
    `src/content/profile.ts`.
 
 ## Deploying
@@ -42,13 +45,20 @@ Import the repo in Vercel (framework preset: Next.js, no extra settings). Every 
 | --- | --- |
 | `src/proxy.ts` | Sends `/` to `/en` or `/hi` (cookie first, then browser language) |
 | `src/app/[lang]/` | Layout (fonts, theme, metadata), page, 404, OG image |
-| `src/components/sections/` | Hero, About, Experience, Work, Stack, Photography, Contact |
-| `src/components/motion/` | `ScrollEffects` (parallax, drift, reveal via `data-*` attributes), `TiltCard`, `SmoothScroll` |
-| `src/components/three/` | `LensCanvas` (lazy loader, GPU check), `LensScene`, iris shader, SVG fallback |
-| `src/components/ui/Hud.tsx` | f-stop, frame and section read-out |
-| `src/lib/fstop.ts` | Maps scroll progress to f/1.4 → f/16 |
+| `src/app/manifest.ts`, `public/sw.js`, `public/offline.html` | PWA: install, offline cache and fallback |
+| `src/components/sections/` | Hero, About, Experience, Work, Stack, Photography (Moments), Contact |
+| `src/components/three/` | `ParticleCanvas` (GPU check, lazy load, section → shape), `ParticleField` (shader, cursor lines), `shapes.ts` |
+| `src/components/motion/` | `ScrollEffects` (all `data-*` scroll effects), `Cursor`, `TiltCard`, `SmoothScroll` |
+| `src/components/ui/` | `BootScreen`, `SoundToggle`, `CommandPalette`, `Terminal`, `Hud`, `YearRoller`, `Marquee` |
+| `src/lib/sound.ts` | Generative Web Audio score (no audio files) |
 
-**Performance guardrails:** three.js loads in its own chunk after the page is idle, renders only when
-something changes, stops when no lens is on screen, and is skipped entirely (SVG lens instead) for
-`prefers-reduced-motion` and for software-only WebGL. Add `?lens=force` to the URL to force the 3D
-lens while testing.
+**Where particles go:** any element with `data-shape-anchor` inside a `[data-section]` decides where
+that section's shape sits (`data-shape-fill` for size, `data-shape-opacity` for strength). The
+section → shape map is at the top of `ParticleCanvas.tsx`.
+
+**Performance guardrails:** three.js loads in its own chunk once the page is idle and is skipped
+entirely (static layout and photo instead) for `prefers-reduced-motion` and software-only WebGL. Add
+`?gl=force` to the URL to force it while testing. The boot screen shows once per browser session.
+
+**Keyboard:** `⌘K` / `Ctrl K` opens the command menu, `Esc` skips the boot screen, and the terminal
+in Contact answers `help`.

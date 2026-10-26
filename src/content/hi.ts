@@ -19,6 +19,7 @@ export const hi: Profile = {
     soundOff: "आवाज़ बंद करें",
     soundHint: "आवाज़ के साथ सुनें",
     skipIntro: "छोड़ें",
+    offline: "आप ऑफ़लाइन हैं। सेव की हुई कॉपी दिख रही है।",
   },
   nav: {
     intro: "परिचय",
@@ -300,6 +301,27 @@ export const hi: Profile = {
     label: "पल",
     heading: "काम के बाहर।",
     intro: "कॉन्फ़्रेंस, कैंपस और उनके बीच की शामें।",
+  },
+  palette: {
+    open: "कमांड मेन्यू खोलें",
+    placeholder: "कमांड लिखें या खोजें…",
+    empty: "कुछ नहीं मिला।",
+    groups: { navigate: "जाएँ", actions: "काम", links: "लिंक" },
+    actions: {
+      theme: "लाइट / डार्क थीम बदलें",
+      language: "View in English",
+      sound: "आवाज़ चालू / बंद",
+      copyEmail: "ईमेल कॉपी करें",
+      resume: "रिज़्यूमे डाउनलोड करें",
+      install: "ऐप की तरह इंस्टॉल करें",
+      terminal: "टर्मिनल खोलें",
+    },
+    copied: "ईमेल कॉपी हो गया",
+  },
+  terminal: {
+    label: "शेल",
+    heading: "टर्मिनल पसंद है?",
+    hint: "help लिखें और Enter दबाएँ।",
   },
   contact: {
     label: "संपर्क",

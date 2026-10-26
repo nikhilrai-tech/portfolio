@@ -372,3 +372,25 @@ html.booting .rise {
     transform: scaleY(1);
   }
 }
+
+/* ---------- Theme switch reveal (View Transitions) ---------- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* ---------- Command palette ---------- */
+.palette::backdrop {
+  background: rgb(5 7 10 / 0.55);
+  backdrop-filter: blur(4px);
+}
+.palette[open] {
+  animation: palette-in 0.22s cubic-bezier(0.2, 0.7, 0.1, 1);
+}
+@keyframes palette-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+}

@@ -5,9 +5,11 @@ import Container from "@/components/ui/Container";
 import CopyEmail from "@/components/ui/CopyEmail";
 import { ArrowUpRight } from "@/components/ui/Icons";
 import SectionHeader from "@/components/ui/SectionHeader";
+import Terminal from "@/components/ui/Terminal";
+import type { Locale } from "@/i18n/config";
 
-export default function Contact({ profile }: { profile: Profile }) {
-  const { contact, ui } = profile;
+export default function Contact({ profile, locale }: { profile: Profile; locale: Locale }) {
+  const { contact, ui, terminal } = profile;
   const elsewhere = [
     { label: "LinkedIn", href: person.links.linkedin },
     { label: "GitHub", href: person.links.github },
@@ -53,6 +55,38 @@ export default function Contact({ profile }: { profile: Profile }) {
               {contact.resume}
             </Button>
           )}
+        </div>
+
+        <div id="terminal" className="mt-20 grid scroll-mt-24 gap-8 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <p className="label text-accent">{terminal.label}</p>
+            <p className="display mt-4 text-3xl md:text-4xl">{terminal.heading}</p>
+            <p className="text-muted mt-3">{terminal.hint}</p>
+          </div>
+          <div className="lg:col-span-8">
+            <Terminal
+              hint={terminal.hint}
+              data={{
+                name: person.name,
+                headline: profile.roles[0].title,
+                company: profile.roles[0].company,
+                email: person.email,
+                resume: person.resume,
+                locale,
+                otherLocale: locale === "en" ? "hi" : "en",
+                roles: profile.roles.map((r) => ({
+                  year: r.year,
+                  title: r.title,
+                  company: r.company,
+                  period: r.period,
+                })),
+                stack: profile.stack.groups,
+                projects: profile.projects.map((p) => ({ name: p.name, repo: p.repo })),
+                links: elsewhere,
+                since: 2021,
+              }}
+            />
+          </div>
         </div>
 
         <div className="border-line mt-20 grid gap-6 border-t pt-8 md:grid-cols-12">

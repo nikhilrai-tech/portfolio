@@ -18,6 +18,7 @@ export const en: Profile = {
     soundOff: "Turn sound off",
     soundHint: "Best with sound",
     skipIntro: "Skip",
+    offline: "You are offline. Showing the saved copy.",
   },
   nav: {
     intro: "Intro",
@@ -295,6 +296,27 @@ export const en: Profile = {
     label: "Moments",
     heading: "Off the clock.",
     intro: "Conferences, campuses and the evenings in between.",
+  },
+  palette: {
+    open: "Open command menu",
+    placeholder: "Type a command or search…",
+    empty: "No matches.",
+    groups: { navigate: "Go to", actions: "Actions", links: "Links" },
+    actions: {
+      theme: "Toggle light / dark theme",
+      language: "हिन्दी में देखें",
+      sound: "Toggle sound",
+      copyEmail: "Copy email address",
+      resume: "Download resume",
+      install: "Install as an app",
+      terminal: "Open the terminal",
+    },
+    copied: "Email copied",
+  },
+  terminal: {
+    label: "Shell",
+    heading: "Prefer a terminal?",
+    hint: "Type help and press Enter.",
   },
   contact: {
     label: "Contact",

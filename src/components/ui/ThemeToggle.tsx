@@ -1,28 +1,14 @@
 "use client";
-
-type Theme = "light" | "dark";
-
-function currentTheme(): Theme {
-  const set = document.documentElement.dataset.theme;
-  if (set === "light" || set === "dark") return set;
-  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
-}
+import { toggleTheme } from "@/lib/theme";
 
 export default function ThemeToggle({ label }: { label: string }) {
-  const toggle = () => {
-    const next: Theme = currentTheme() === "dark" ? "light" : "dark";
-    document.documentElement.dataset.theme = next;
-    try {
-      localStorage.setItem("theme", next);
-    } catch {
-      // Storage can be blocked; the choice still applies for this visit.
-    }
-  };
-
   return (
     <button
       type="button"
-      onClick={toggle}
+      onClick={(e) => {
+        const r = e.currentTarget.getBoundingClientRect();
+        toggleTheme({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
+      }}
       aria-label={label}
       title={label}
       className="border-line text-muted hover:border-line-strong hover:text-fg grid size-9 place-items-center rounded-full border transition-colors"
