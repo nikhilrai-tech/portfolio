@@ -3,51 +3,42 @@ import type { Profile } from "@/content/profile";
 import { person } from "@/content/profile";
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
-import Viewfinder from "@/components/ui/Viewfinder";
-import Parallax from "@/components/motion/Parallax";
 
 export default function About({ profile }: { profile: Profile }) {
   const { about } = profile;
   return (
-    <section id="about" data-section="about" className="relative overflow-hidden py-20 md:py-28">
-      <div aria-hidden className="pointer-events-none mb-10 select-none md:mb-16">
-        <p data-drift="-1" className="outline-word text-[clamp(6rem,22vw,20rem)]">
-          CODE&nbsp;CODE&nbsp;CODE
-        </p>
-      </div>
-
-      <Container className="relative grid gap-14 md:grid-cols-12 md:gap-10">
+    <section id="about" data-section="about" className="relative py-24 md:py-36">
+      <Container className="relative grid items-center gap-14 md:grid-cols-12 md:gap-10">
+        {/* The particles draw the portrait here; the photo shows when WebGL is off. */}
         <div className="md:col-span-5">
-          <Parallax speed={0.08}>
-            <Viewfinder caption={about.caption}>
-              <Image
-                src={person.portrait.src}
-                width={person.portrait.width}
-                height={person.portrait.height}
-                alt={about.portraitAlt}
-                sizes="(min-width: 768px) 36vw, 90vw"
-                className="size-full object-cover"
-                priority={false}
-              />
-            </Viewfinder>
-          </Parallax>
+          <div
+            data-shape-anchor
+            data-shape-fill="1.22"
+            className="relative mx-auto aspect-[4/5] w-full max-w-[26rem]"
+          >
+            <Image
+              src={person.portrait.src}
+              width={person.portrait.width}
+              height={person.portrait.height}
+              alt={about.portraitAlt}
+              sizes="(min-width: 768px) 36vw, 90vw"
+              className="shape-fallback size-full rounded-[1.25rem] object-cover"
+            />
+            <span className="label text-muted absolute -bottom-8 left-0">{about.caption}</span>
+          </div>
         </div>
 
-        <div className="md:col-span-7 md:pt-10 lg:pl-8">
+        <div className="md:col-span-7 lg:pl-8">
           <SectionHeader id="about" label={about.label} heading={about.heading} />
           <div className="measure text-fg/85 space-y-5 text-lg">
             {about.paragraphs.map((p) => (
-              <p key={p.slice(0, 24)}>{p}</p>
+              <p key={p.slice(0, 24)} data-reveal>
+                {p}
+              </p>
             ))}
           </div>
         </div>
       </Container>
-
-      <div aria-hidden className="pointer-events-none mt-16 select-none md:mt-24">
-        <p data-drift="1" className="outline-word -translate-x-1/3 text-[clamp(6rem,22vw,20rem)]">
-          LENS&nbsp;LENS&nbsp;LENS
-        </p>
-      </div>
     </section>
   );
 }

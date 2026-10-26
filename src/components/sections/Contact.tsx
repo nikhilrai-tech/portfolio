@@ -5,7 +5,6 @@ import Container from "@/components/ui/Container";
 import CopyEmail from "@/components/ui/CopyEmail";
 import { ArrowUpRight } from "@/components/ui/Icons";
 import SectionHeader from "@/components/ui/SectionHeader";
-import LensFallback from "@/components/three/LensFallback";
 
 export default function Contact({ profile }: { profile: Profile }) {
   const { contact, ui } = profile;
@@ -19,7 +18,7 @@ export default function Contact({ profile }: { profile: Profile }) {
     <section id="contact" data-section="contact" className="relative pt-28 md:pt-40">
       <Container>
         <div className="grid items-center gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-8">
+          <div className="lg:col-span-7">
             <SectionHeader
               id="contact"
               label={contact.label}
@@ -27,27 +26,30 @@ export default function Contact({ profile }: { profile: Profile }) {
               intro={contact.body}
             />
           </div>
-          {/* Second stop for the 3D lens: by the end of the page it is stopped down to f/16. */}
+          {/* Shield and padlock: a secure channel to reach out. */}
           <div
-            data-lens-slot
-            className="relative hidden aspect-square w-full max-w-[19rem] justify-self-end lg:col-span-4 lg:block"
-          >
-            <LensFallback className="lens-fallback size-full" />
-          </div>
+            data-shape-anchor
+            data-shape-fill="0.85"
+            aria-hidden
+            className="hidden aspect-square w-full max-w-[22rem] justify-self-end lg:col-span-5 lg:block"
+          />
         </div>
 
         <a
           href={`mailto:${person.email}`}
+          data-cursor={contact.email}
           className="display decoration-line-strong hover:text-accent hover:decoration-accent block text-[clamp(1.75rem,6.5vw,5.5rem)] break-all underline decoration-1 underline-offset-[0.18em] transition-colors"
         >
           {person.email}
         </a>
 
         <div className="mt-10 flex flex-wrap gap-3">
-          <Button href={`mailto:${person.email}`}>{contact.email}</Button>
+          <Button href={`mailto:${person.email}`} data-magnetic>
+            {contact.email}
+          </Button>
           <CopyEmail email={person.email} copyLabel={contact.copy} copiedLabel={contact.copied} />
           {person.resume && (
-            <Button href={person.resume} variant="ghost" download>
+            <Button href={person.resume} variant="ghost" download data-magnetic>
               {contact.resume}
             </Button>
           )}
@@ -64,7 +66,7 @@ export default function Contact({ profile }: { profile: Profile }) {
                   rel="me noreferrer"
                   className="font-display hover:text-accent inline-flex items-center gap-1.5 text-xl tracking-tight transition-colors"
                 >
-                  {link.label}
+                  <span data-scramble>{link.label}</span>
                   <ArrowUpRight />
                 </a>
               </li>

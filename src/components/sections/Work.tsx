@@ -12,15 +12,38 @@ export default function Work({ profile }: { profile: Profile }) {
   );
 
   return (
-    <section id="work" data-section="work" className="relative py-28 md:py-40">
-      <Container>
-        <SectionHeader id="work" label={work.label} heading={work.heading} intro={work.intro} />
+    <section id="work" data-section="work" className="relative pt-28 pb-28 md:pb-40 lg:pt-0">
+      {/* On large screens this panel pins and the track scrolls sideways (see ScrollEffects). */}
+      <div
+        data-hscroll
+        className="relative lg:flex lg:h-[100svh] lg:items-center lg:overflow-hidden"
+      >
+        <div
+          data-shape-anchor
+          data-shape-fill="1.25"
+          data-shape-opacity="0.4"
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+        />
+        <ul
+          data-hscroll-track
+          className="relative grid gap-4 px-4 sm:px-6 md:grid-cols-2 lg:flex lg:w-max lg:items-stretch lg:gap-6 lg:pr-[12vw] lg:pl-[max(2.5rem,calc((100vw-80rem)/2+2.5rem))]"
+        >
+          <li className="flex flex-col justify-center md:col-span-2 lg:w-[30rem] lg:shrink-0 lg:pr-8">
+            <SectionHeader id="work" label={work.label} heading={work.heading} intro={work.intro} />
+            <p className="label text-muted -mt-6 hidden items-center gap-3 lg:flex">
+              {work.productsHeading}
+              <span aria-hidden className="bg-accent h-px w-16" />
+              <span aria-hidden className="text-accent">
+                →
+              </span>
+            </p>
+            <h3 className="label text-muted lg:sr-only">{work.productsHeading}</h3>
+          </li>
 
-        <h3 className="label text-muted mb-6">{work.productsHeading}</h3>
-        <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {products.map((product, i) => (
-            <li key={product.name} data-reveal className="h-full">
-              <TiltCard className="border-line bg-surface flex h-full flex-col rounded-3xl border p-6 md:p-7">
+            <li key={product.name} data-reveal className="h-full lg:w-[25rem] lg:shrink-0">
+              <TiltCard className="border-line bg-surface/85 flex h-full flex-col rounded-3xl border p-6 backdrop-blur-md md:p-7 lg:max-h-[74svh] lg:overflow-y-auto">
                 <div className="flex items-center justify-between">
                   <span className="text-muted font-mono text-xs">
                     {String(i + 1).padStart(2, "0")} · {product.company}
@@ -30,6 +53,7 @@ export default function Work({ profile }: { profile: Profile }) {
                       href={product.href}
                       target="_blank"
                       rel="noreferrer"
+                      data-cursor={work.visit}
                       className="text-muted hover:text-accent inline-flex items-center gap-1 text-xs transition-colors"
                     >
                       {work.visit}
@@ -70,8 +94,10 @@ export default function Work({ profile }: { profile: Profile }) {
             </li>
           ))}
         </ul>
+      </div>
 
-        <h3 className="label text-muted mt-20 mb-6">{work.openSourceHeading}</h3>
+      <Container>
+        <h3 className="label text-muted mt-20 mb-6 lg:mt-24">{work.openSourceHeading}</h3>
         <ul className="divide-line border-line divide-y border-y">
           {projects.map((project) => (
             <li
@@ -83,9 +109,10 @@ export default function Work({ profile }: { profile: Profile }) {
                 href={project.repo}
                 target="_blank"
                 rel="noreferrer"
+                data-cursor={work.source}
                 className="display group-hover:text-accent inline-flex items-center gap-2 text-2xl transition-colors md:col-span-4 md:text-3xl"
               >
-                {project.name}
+                <span data-scramble>{project.name}</span>
                 <ArrowUpRight className="size-4 opacity-0 transition-opacity group-hover:opacity-100" />
               </a>
               <p className="text-fg/80 md:col-span-5">{project.blurb}</p>

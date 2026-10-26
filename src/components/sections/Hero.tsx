@@ -1,72 +1,100 @@
+import Image from "next/image";
 import type { Profile } from "@/content/profile";
 import { person } from "@/content/profile";
-import LensFallback from "@/components/three/LensFallback";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 import { ArrowDown } from "@/components/ui/Icons";
 
 export default function Hero({ profile }: { profile: Profile }) {
-  const { hero } = profile;
+  const { hero, about } = profile;
   const [first, ...rest] = person.name.split(" ");
   let i = 0;
-  const word = (text: string, extra = "") => (
-    <span className={`rise ${extra}`} style={{ "--i": i++ } as React.CSSProperties}>
-      {text}
-    </span>
-  );
+  const rise = () => ({ className: "rise", style: { "--i": i++ } as React.CSSProperties });
 
   return (
     <section
       id="intro"
       data-section="intro"
-      className="relative flex min-h-[100svh] flex-col justify-center pt-24 pb-16 lg:pt-28"
+      className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden pt-24 pb-20"
     >
-      <Container className="grid items-center gap-10 lg:grid-cols-12">
-        {/* The 3D lens tracks any [data-lens-slot] box. On mobile this one sits above the text. */}
-        <div
-          id="lens-slot"
-          data-lens-slot
-          className="relative order-first mx-auto aspect-square w-[min(68vw,22rem)] lg:order-last lg:col-span-5 lg:w-full lg:max-w-[34rem]"
-        >
-          <LensFallback className="lens-fallback size-full drop-shadow-[0_40px_60px_rgb(0_0_0/0.45)]" />
+      {/* The particle globe sits on this box, behind the portrait. */}
+      <div
+        data-shape-anchor
+        data-shape-fill="0.95"
+        data-shape-opacity="0.85"
+        aria-hidden
+        className="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[min(118vw,88svh)] -translate-x-1/2 -translate-y-[54%]"
+      />
+
+      <Container className="relative flex flex-col items-center text-center">
+        <p className="label text-accent">
+          <span {...rise()}>{hero.eyebrow}</span>
+        </p>
+
+        <h1 className="display mt-8 grid w-full grid-cols-[1fr_auto_1fr] items-center gap-[2.5vw] text-[clamp(2.6rem,11vw,12.5rem)] leading-none">
+          <span data-hero-split="-1" className="justify-self-end">
+            <span {...rise()}>{first.toUpperCase()}</span>
+          </span>
+          <span data-hero-zoom className="relative block w-[clamp(5.5rem,17vw,16rem)]">
+            <span
+              aria-hidden
+              className="border-accent absolute inset-0 translate-x-2 translate-y-2 rounded-[1.1rem] border-2 md:translate-x-3 md:translate-y-3"
+            />
+            <span className="bg-surface relative block aspect-[4/5] overflow-hidden rounded-[1.1rem] shadow-[var(--shadow)]">
+              <Image
+                src={person.portrait.src}
+                width={person.portrait.width}
+                height={person.portrait.height}
+                alt={about.portraitAlt}
+                sizes="(min-width: 768px) 17vw, 24vw"
+                className="size-full object-cover"
+                priority
+              />
+            </span>
+          </span>
+          <span data-hero-split="1" className="justify-self-start">
+            <span {...rise()}>
+              {rest.join(" ").toUpperCase()}
+              <span className="text-accent">.</span>
+            </span>
+          </span>
+        </h1>
+
+        <p className="text-muted mt-8 font-mono text-sm">
+          <span {...rise()}>{hero.role}</span>
+        </p>
+        <p className="measure text-fg/85 mt-4 max-w-2xl text-lg md:text-xl">
+          <span {...rise()}>{hero.intro}</span>
+        </p>
+
+        <div className="mt-9 flex flex-wrap justify-center gap-3">
+          <span {...rise()}>
+            <Button href="#work" data-magnetic>
+              {hero.primaryCta}
+            </Button>
+          </span>
+          <span {...rise()}>
+            <Button href="#contact" variant="ghost" data-magnetic>
+              {hero.secondaryCta}
+            </Button>
+          </span>
         </div>
 
-        <div className="relative z-10 lg:col-span-7">
-          <p className="label text-accent">{word(hero.eyebrow)}</p>
-          <h1 className="display mt-6 text-[clamp(3.5rem,12vw,10rem)]">
-            {word(first)}
-            <br />
-            {word(rest.join(" "))}
-            {word(".", "text-accent")}
-          </h1>
-          <p className="text-muted mt-6 font-mono text-sm">{word(hero.role)}</p>
-          <p className="measure text-fg/85 mt-5 text-lg md:text-xl">{word(hero.intro)}</p>
-
-          <div className="mt-9 flex flex-wrap gap-3">
-            <span className="rise" style={{ "--i": i++ } as React.CSSProperties}>
-              <Button href="#work">{hero.primaryCta}</Button>
-            </span>
-            <span className="rise" style={{ "--i": i++ } as React.CSSProperties}>
-              <Button href="#contact" variant="ghost">
-                {hero.secondaryCta}
-              </Button>
-            </span>
-          </div>
-
-          <dl className="border-line mt-12 grid max-w-xl grid-cols-3 gap-4 border-t pt-6">
-            {hero.facts.map((fact) => (
-              <div key={fact.label}>
-                <dt className="sr-only">{fact.label}</dt>
-                <dd>
-                  <span className="display block text-3xl md:text-4xl">{fact.value}</span>
-                  <span className="text-muted mt-1 block text-xs leading-snug md:text-sm">
-                    {fact.label}
-                  </span>
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </div>
+        <dl className="border-line mt-12 grid w-full max-w-2xl grid-cols-3 gap-4 border-t pt-6">
+          {hero.facts.map((fact) => (
+            <div key={fact.label}>
+              <dt className="sr-only">{fact.label}</dt>
+              <dd>
+                <span data-count className="display block text-3xl md:text-5xl">
+                  {fact.value}
+                </span>
+                <span className="text-muted mt-1 block text-xs leading-snug md:text-sm">
+                  {fact.label}
+                </span>
+              </dd>
+            </div>
+          ))}
+        </dl>
       </Container>
 
       <a

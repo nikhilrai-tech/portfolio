@@ -11,7 +11,9 @@ import Stack from "@/components/sections/Stack";
 import Photography from "@/components/sections/Photography";
 import Contact from "@/components/sections/Contact";
 import ScrollEffects from "@/components/motion/ScrollEffects";
-import LensCanvas from "@/components/three/LensCanvas";
+import ParticleCanvas from "@/components/three/ParticleCanvas";
+import Marquee from "@/components/ui/Marquee";
+import { marquee } from "@/content/profile";
 import Hud from "@/components/ui/Hud";
 
 export default async function Home({ params }: PageProps<"/[lang]">) {
@@ -21,11 +23,13 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
 
   return (
     <>
-      <LensCanvas />
+      <ParticleCanvas />
       <Header profile={profile} locale={lang} sections={sections} />
       <main id="main" className="relative z-10">
         <Hero profile={profile} />
         <About profile={profile} />
+        <Marquee words={marquee.primary} />
+        <Marquee words={marquee.secondary} direction={-1} outline />
         <Experience profile={profile} />
         <Work profile={profile} />
         <Stack profile={profile} />
@@ -33,10 +37,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         <Contact profile={profile} />
       </main>
       <ScrollEffects />
-      <Hud
-        sections={sections.map((id) => ({ id, label: profile.nav[id] }))}
-        frameLabel={profile.ui.frame}
-      />
+      <Hud sections={sections.map((id) => ({ id, label: profile.nav[id] }))} />
     </>
   );
 }

@@ -184,10 +184,17 @@ html:lang(hi) .display {
   }
 }
 
-/* The static lens shows until the 3D lens has rendered its first frame. */
-.lens-fallback {
-  transition: opacity 0.6s ease;
+/* Particle canvas fades in once WebGL is running; static fallbacks fade out. */
+.gl-canvas {
+  opacity: 0;
+  transition: opacity 1.2s ease;
 }
-html[data-lens="3d"] .lens-fallback {
+html[data-gl="on"] .gl-canvas {
+  opacity: 1;
+}
+.shape-fallback {
+  transition: opacity 0.8s ease;
+}
+html[data-gl="on"] .shape-fallback {
   opacity: 0;
 }

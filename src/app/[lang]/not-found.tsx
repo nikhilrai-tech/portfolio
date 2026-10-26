@@ -1,18 +1,17 @@
 import { lang } from "next/root-params";
 import { defaultLocale, hasLocale } from "@/i18n/config";
-import LensFallback from "@/components/three/LensFallback";
 import Button from "@/components/ui/Button";
 
 const copy = {
   en: {
-    title: "Out of focus.",
-    body: "This frame doesn't exist. The page may have moved.",
-    home: "Back home",
+    title: "Route not found.",
+    body: "The request reached the edge, but no service answers on this path.",
+    home: "Back to the homepage",
   },
   hi: {
-    title: "फ़ोकस से बाहर।",
-    body: "यह फ़्रेम मौजूद नहीं है। हो सकता है पेज हट गया हो।",
-    home: "होम पर जाएँ",
+    title: "रूट नहीं मिला।",
+    body: "रिक्वेस्ट एज तक पहुँची, पर इस पाथ पर कोई सर्विस जवाब नहीं देती।",
+    home: "होम पेज पर जाएँ",
   },
 };
 
@@ -23,9 +22,9 @@ export default async function NotFound() {
   return (
     <main className="grid min-h-[100svh] place-items-center px-4 text-center">
       <div>
-        <LensFallback className="mx-auto size-40 blur-[1.5px]" />
-        <p className="label text-accent mt-8">404</p>
-        <h1 className="display mt-4 text-[clamp(2.5rem,8vw,5rem)]">{t.title}</h1>
+        <p className="display text-accent text-[clamp(6rem,22vw,14rem)] leading-none">404</p>
+        <p className="label text-muted mt-6 font-mono">HTTP/2 404 · x-served-by: edge</p>
+        <h1 className="display mt-6 text-[clamp(2rem,6vw,4rem)]">{t.title}</h1>
         <p className="text-muted mx-auto mt-4 max-w-md">{t.body}</p>
         <Button href={`/${locale}`} className="mt-8">
           {t.home}

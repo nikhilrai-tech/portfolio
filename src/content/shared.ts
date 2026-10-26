@@ -49,6 +49,12 @@ export const photos: Photo[] = [
   },
 ];
 
+// Words for the scrolling marquees. Technology names read the same in every language.
+export const marquee = {
+  primary: ["Infrastructure", "Cloud", "DevOps", "Security", "Kubernetes", "Terraform", "Python"],
+  secondary: ["Azure", "AWS", "DigitalOcean", "Docker", "Jenkins", "Kafka", "Grafana", "Sentry"],
+};
+
 export const stacks = {
   vtv: [
     "Django",

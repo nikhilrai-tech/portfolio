@@ -14,7 +14,6 @@ export const en: Profile = {
     theme: "Switch colour theme",
     language: "Language",
     backToTop: "Back to top",
-    frame: "Frame",
   },
   nav: {
     intro: "Intro",
@@ -55,6 +54,7 @@ export const en: Profile = {
     heading: "Where I've worked.",
     current: "Current",
     joinedAs: "Joined as",
+    chapter: "Chapter",
     keyProducts: "Key products",
     stack: "Tech stack",
     responsibilities: "Responsibilities",
@@ -68,6 +68,8 @@ export const en: Profile = {
   },
   roles: [
     {
+      chapter: "Leadership",
+      year: "2026",
       title: "Head of Information Technology",
       company: "SimDaaS Autonomy",
       companyHref: companyLinks.simdaas,
@@ -85,6 +87,8 @@ export const en: Profile = {
       ],
     },
     {
+      chapter: "AI & Cloud",
+      year: "2024",
       title: "Software Engineer / AI and Cloud Engineer",
       company: "SkyAI Technologies",
       place: "IIT Kanpur",
@@ -124,6 +128,8 @@ export const en: Profile = {
       ],
     },
     {
+      chapter: "Security & Scale",
+      year: "2022",
       title: "Software Engineer",
       company: "Cyber3ra",
       place: "IIT Kanpur",
@@ -179,6 +185,8 @@ export const en: Profile = {
       ],
     },
     {
+      chapter: "Foundations",
+      year: "2021",
       title: "NOC Developer",
       company: "Bharti Airtel",
       place: "Gurugram, Haryana",

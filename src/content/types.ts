@@ -9,6 +9,10 @@ export type Product = {
 };
 
 export type Role = {
+  /** Short theme for this stretch of the career, shown next to the rolling year. */
+  chapter: string;
+  /** Year shown in the timeline (when this chapter began). */
+  year: string;
   title: string;
   company: string;
   companyHref?: string;
@@ -50,7 +54,6 @@ export type Profile = {
     theme: string;
     language: string;
     backToTop: string;
-    frame: string;
   };
   nav: Record<SectionId, string>;
   hero: {
@@ -74,6 +77,7 @@ export type Profile = {
     heading: string;
     current: string;
     joinedAs: string;
+    chapter: string;
     keyProducts: string;
     stack: string;
     responsibilities: string;

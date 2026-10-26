@@ -1,23 +1,25 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { ScrollTrigger } from "@/lib/gsap";
-import { fNumber, nearestStop } from "@/lib/fstop";
 
 type Section = { id: string; label: string };
 
-// Viewfinder read-out: live f-stop from scroll, and which frame (section) is in view.
-export default function Hud({ sections, frameLabel }: { sections: Section[]; frameLabel: string }) {
-  const fRef = useRef<HTMLSpanElement>(null);
-  const frameRef = useRef<HTMLSpanElement>(null);
+// Status bar in the corner: which section is live, scroll progress and local time in India.
+// Hidden over the hero, where it would sit on top of the stats.
+export default function Hud({ sections }: { sections: Section[] }) {
+  const root = useRef<HTMLDivElement>(null);
+  const indexRef = useRef<HTMLSpanElement>(null);
   const nameRef = useRef<HTMLSpanElement>(null);
+  const pctRef = useRef<HTMLSpanElement>(null);
   const barRef = useRef<HTMLSpanElement>(null);
+  const clockRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const st = ScrollTrigger.create({
       start: 0,
       end: "max",
       onUpdate: (self) => {
-        if (fRef.current) fRef.current.textContent = `f/${nearestStop(fNumber(self.progress))}`;
+        if (pctRef.current) pctRef.current.textContent = `${Math.round(self.progress * 100)}%`;
         if (barRef.current) barRef.current.style.transform = `scaleX(${self.progress})`;
       },
     });
@@ -28,8 +30,10 @@ export default function Hud({ sections, frameLabel }: { sections: Section[]; fra
           if (!entry.isIntersecting) continue;
           const index = sections.findIndex((s) => s.id === entry.target.id);
           if (index < 0) continue;
-          if (frameRef.current) frameRef.current.textContent = `${index + 1}/${sections.length}`;
+          if (indexRef.current)
+            indexRef.current.textContent = `${String(index + 1).padStart(2, "0")}/${String(sections.length).padStart(2, "0")}`;
           if (nameRef.current) nameRef.current.textContent = sections[index].label;
+          root.current?.toggleAttribute("data-hidden", index === 0);
         }
       },
       { rootMargin: "-45% 0px -45% 0px" },
@@ -38,30 +42,46 @@ export default function Hud({ sections, frameLabel }: { sections: Section[]; fra
       const el = document.getElementById(s.id);
       if (el) io.observe(el);
     });
+
+    const fmt = new Intl.DateTimeFormat("en-IN", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+      timeZone: "Asia/Kolkata",
+    });
+    const tick = () =>
+      clockRef.current && (clockRef.current.textContent = `IST ${fmt.format(new Date())}`);
+    tick();
+    const clock = window.setInterval(tick, 15000);
     return () => {
       st.kill();
       io.disconnect();
+      window.clearInterval(clock);
     };
   }, [sections]);
 
   return (
     <div
+      ref={root}
       aria-hidden
-      className="border-line bg-bg/70 text-muted pointer-events-none fixed right-5 bottom-5 z-40 hidden overflow-hidden rounded-lg border font-mono text-[0.7rem] tracking-wider backdrop-blur-md sm:block"
+      data-hidden
+      className="border-line bg-bg/70 text-muted pointer-events-none fixed bottom-5 left-5 z-40 hidden overflow-hidden rounded-lg border font-mono text-[0.7rem] tracking-wider backdrop-blur-md transition-[opacity,transform] duration-500 data-[hidden]:translate-y-3 data-[hidden]:opacity-0 sm:block"
     >
       <div className="flex items-center gap-2.5 px-3 py-2">
-        <span className="bg-accent size-1.5 rounded-full" />
-        <span ref={fRef} className="text-accent min-w-[3.2em]">
-          f/1.4
+        <span className="relative flex size-1.5">
+          <span className="bg-accent absolute inline-flex size-full animate-ping rounded-full opacity-60" />
+          <span className="bg-accent relative inline-flex size-1.5 rounded-full" />
         </span>
-        <span className="text-line-strong">·</span>
-        <span>
-          {frameLabel} <span ref={frameRef}>1/{sections.length}</span>
+        <span ref={indexRef} className="text-accent">
+          01/{String(sections.length).padStart(2, "0")}
         </span>
-        <span className="text-line-strong">·</span>
-        <span ref={nameRef} className="text-fg">
+        <span ref={nameRef} className="text-fg uppercase">
           {sections[0]?.label}
         </span>
+        <span className="text-line-strong">·</span>
+        <span ref={pctRef}>0%</span>
+        <span className="text-line-strong">·</span>
+        <span ref={clockRef} />
       </div>
       <span ref={barRef} className="bg-accent block h-px origin-left scale-x-0" />
     </div>

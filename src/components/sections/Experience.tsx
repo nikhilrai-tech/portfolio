@@ -3,7 +3,10 @@ import Container from "@/components/ui/Container";
 import { ArrowUpRight } from "@/components/ui/Icons";
 import SectionHeader from "@/components/ui/SectionHeader";
 import Tag from "@/components/ui/Tag";
+import YearRoller from "@/components/ui/YearRoller";
 
+// Career told as chapters: a sticky rolling year (and the server-rack particles) on the left,
+// the roles scrolling past on the right.
 export default function Experience({ profile }: { profile: Profile }) {
   const { experience, roles } = profile;
   return (
@@ -11,17 +14,33 @@ export default function Experience({ profile }: { profile: Profile }) {
       <Container>
         <SectionHeader id="experience" label={experience.label} heading={experience.heading} />
 
-        <ol className="relative">
-          {roles.map((role) => (
-            <li
-              key={`${role.company}-${role.period}`}
-              data-reveal
-              className="border-line grid gap-6 border-t py-12 md:grid-cols-12 md:gap-10 md:py-16"
-            >
-              <div className="md:col-span-4">
-                <div className="md:sticky md:top-28">
-                  <p className="text-muted font-mono text-sm">{role.period}</p>
-                  <p className="display mt-3 text-2xl md:text-3xl">
+        <div className="grid gap-10 lg:grid-cols-12">
+          <aside className="hidden lg:col-span-5 lg:block">
+            <div className="sticky top-24 flex h-[calc(100svh-8rem)] flex-col">
+              <YearRoller
+                label={experience.chapter}
+                chapters={roles.map((r) => ({ year: r.year, name: r.chapter }))}
+              />
+              <div data-shape-anchor data-shape-fill="0.85" className="mt-6 min-h-0 flex-1" />
+            </div>
+          </aside>
+
+          <ol className="lg:col-span-7">
+            {roles.map((role, index) => (
+              <li
+                key={`${role.company}-${role.period}`}
+                data-chapter={index}
+                data-reveal
+                className="border-line border-t py-12 first:border-t-0 first:pt-0 md:py-16"
+              >
+                {/* Small screens have no sticky column, so each role carries its own year. */}
+                <p className="display text-accent text-6xl lg:hidden">{role.year}</p>
+                <p className="label text-muted mt-2 lg:mt-0">
+                  {experience.chapter} {String(index + 1).padStart(2, "0")} · {role.chapter}
+                </p>
+
+                <div className="mt-5 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+                  <p className="display text-3xl md:text-4xl">
                     {role.companyHref ? (
                       <a
                         href={role.companyHref}
@@ -36,26 +55,29 @@ export default function Experience({ profile }: { profile: Profile }) {
                       role.company
                     )}
                   </p>
-                  {role.place && <p className="text-muted mt-1 text-sm">{role.place}</p>}
-                  {role.current && (
-                    <p className="label border-accent/40 text-accent mt-4 inline-flex items-center gap-2 rounded-full border px-3 py-1 !text-[0.65rem]">
-                      <span className="bg-accent size-1.5 rounded-full" aria-hidden />
-                      {experience.current}
-                    </p>
-                  )}
+                  <p className="text-muted font-mono text-sm">{role.period}</p>
                 </div>
-              </div>
 
-              <div className="md:col-span-8">
-                <h3 className="font-display text-xl font-semibold tracking-tight md:text-2xl">
+                <h3 className="font-display mt-3 flex flex-wrap items-center gap-3 text-xl font-semibold tracking-tight md:text-2xl">
                   {role.title}
+                  {role.current && (
+                    <span className="label border-accent/40 text-accent inline-flex items-center gap-2 rounded-full border px-3 py-1 !text-[0.65rem]">
+                      <span className="bg-accent size-1.5 animate-pulse rounded-full" aria-hidden />
+                      {experience.current}
+                    </span>
+                  )}
                 </h3>
-                {role.promotedFrom && (
-                  <p className="text-muted mt-1 font-mono text-xs">
-                    {experience.joinedAs} {role.promotedFrom.title} · {role.promotedFrom.period}
-                  </p>
-                )}
-                <ul className="text-fg/85 mt-5 space-y-3">
+                <p className="text-muted mt-1 text-sm">
+                  {role.place}
+                  {role.promotedFrom && (
+                    <span className="font-mono text-xs">
+                      {" "}
+                      · {experience.joinedAs} {role.promotedFrom.title} · {role.promotedFrom.period}
+                    </span>
+                  )}
+                </p>
+
+                <ul className="text-fg/85 mt-6 space-y-3">
                   {role.bullets.map((b) => (
                     <li key={b.slice(0, 40)} className="relative pl-6">
                       <span
@@ -74,7 +96,7 @@ export default function Experience({ profile }: { profile: Profile }) {
                       {role.products.map((product) => (
                         <li
                           key={product.name}
-                          className="border-line bg-surface/60 rounded-2xl border p-5"
+                          className="border-line bg-surface/70 rounded-2xl border p-5 backdrop-blur-sm"
                         >
                           <div className="flex items-start justify-between gap-3">
                             <p className="font-display text-lg font-semibold tracking-tight">
@@ -103,17 +125,17 @@ export default function Experience({ profile }: { profile: Profile }) {
                     </ul>
                   </div>
                 )}
-              </div>
-            </li>
-          ))}
-        </ol>
+              </li>
+            ))}
+          </ol>
+        </div>
 
         <div
           data-reveal
-          className="border-line grid gap-4 border-y py-10 md:grid-cols-12 md:gap-10"
+          className="border-line mt-6 grid gap-4 border-y py-10 md:grid-cols-12 md:gap-10"
         >
-          <p className="label text-muted md:col-span-4">{experience.education.label}</p>
-          <div className="md:col-span-8">
+          <p className="label text-muted md:col-span-5">{experience.education.label}</p>
+          <div className="md:col-span-7">
             <p className="font-display text-xl font-semibold tracking-tight">
               {experience.education.degree}
             </p>

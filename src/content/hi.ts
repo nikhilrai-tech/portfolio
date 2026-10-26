@@ -15,7 +15,6 @@ export const hi: Profile = {
     theme: "कलर थीम बदलें",
     language: "भाषा",
     backToTop: "ऊपर जाएँ",
-    frame: "फ़्रेम",
   },
   nav: {
     intro: "परिचय",
@@ -56,6 +55,7 @@ export const hi: Profile = {
     heading: "जहाँ मैंने काम किया।",
     current: "वर्तमान",
     joinedAs: "शुरुआत",
+    chapter: "अध्याय",
     keyProducts: "मुख्य प्रोडक्ट",
     stack: "टेक स्टैक",
     responsibilities: "ज़िम्मेदारियाँ",
@@ -69,6 +69,8 @@ export const hi: Profile = {
   },
   roles: [
     {
+      chapter: "नेतृत्व",
+      year: "2026",
       title: "हेड ऑफ़ इनफ़ॉर्मेशन टेक्नोलॉजी",
       company: "SimDaaS Autonomy",
       companyHref: companyLinks.simdaas,
@@ -89,6 +91,8 @@ export const hi: Profile = {
       ],
     },
     {
+      chapter: "AI और क्लाउड",
+      year: "2024",
       title: "सॉफ़्टवेयर इंजीनियर / AI और क्लाउड इंजीनियर",
       company: "SkyAI Technologies",
       place: "IIT कानपुर",
@@ -128,6 +132,8 @@ export const hi: Profile = {
       ],
     },
     {
+      chapter: "सिक्योरिटी और स्केल",
+      year: "2022",
       title: "सॉफ़्टवेयर इंजीनियर",
       company: "Cyber3ra",
       place: "IIT कानपुर",
@@ -183,6 +189,8 @@ export const hi: Profile = {
       ],
     },
     {
+      chapter: "बुनियाद",
+      year: "2021",
       title: "NOC डेवलपर",
       company: "Bharti Airtel",
       place: "गुरुग्राम, हरियाणा",

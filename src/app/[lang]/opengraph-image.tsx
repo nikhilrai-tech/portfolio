@@ -47,20 +47,22 @@ export default async function OpenGraphImage() {
           Cloud, DevOps and microservices, from first commit to production.
         </div>
         <div style={{ display: "flex", gap: 14, marginTop: 40 }}>
-          {["f/1.4", "Azure · AWS · DigitalOcean", "Kubernetes · Terraform"].map((t) => (
-            <div
-              key={t}
-              style={{
-                border: "1px solid #2a3038",
-                borderRadius: 999,
-                padding: "8px 18px",
-                fontSize: 20,
-                color: "#9aa3ae",
-              }}
-            >
-              {t}
-            </div>
-          ))}
+          {["IT · Cloud · Security", "Azure · AWS · DigitalOcean", "Kubernetes · Terraform"].map(
+            (t) => (
+              <div
+                key={t}
+                style={{
+                  border: "1px solid #2a3038",
+                  borderRadius: 999,
+                  padding: "8px 18px",
+                  fontSize: 20,
+                  color: "#9aa3ae",
+                }}
+              >
+                {t}
+              </div>
+            ),
+          )}
         </div>
       </div>
       <div
