@@ -110,7 +110,7 @@ export default function SoundToggle({
 
   const label = on ? labels.off : labels.on;
   return (
-    <div className="fixed right-5 bottom-5 z-40 flex items-center gap-3">
+    <div className="floating-ui fixed right-5 bottom-5 z-40 flex items-center gap-3">
       <span
         aria-hidden
         className={`label border-line bg-bg/80 text-muted rounded-full border px-3 py-1.5 !text-[0.65rem] backdrop-blur-md transition-all duration-500 ${

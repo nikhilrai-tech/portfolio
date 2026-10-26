@@ -31,7 +31,7 @@ export default function Journey({ profile }: { profile: Profile }) {
               <Container className="grid h-full items-center gap-6 md:grid-cols-12 md:gap-10">
                 <div
                   data-visual
-                  className="order-first aspect-[600/420] w-full max-md:mx-auto max-md:max-h-[32svh] max-md:w-auto md:order-last md:col-span-7"
+                  className="order-first aspect-[600/420] w-full max-md:mx-auto max-md:max-h-[28svh] max-md:w-auto md:order-last md:col-span-7"
                 >
                   <JourneyVisual kind={scene.visual} />
                 </div>

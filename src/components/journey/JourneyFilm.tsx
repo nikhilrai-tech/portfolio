@@ -140,6 +140,8 @@ export default function JourneyFilm({
         invalidateOnRefresh: true,
         onUpdate: (self) => setProgress(self.progress),
         onLeave: () => setPlaying(false),
+        // Lets floating buttons step aside on phones while the film is on screen.
+        onToggle: (self) => document.documentElement.classList.toggle("film-active", self.isActive),
       });
       trigger.current = st;
 
@@ -147,7 +149,7 @@ export default function JourneyFilm({
         st.kill();
         tl.kill();
         trigger.current = null;
-        document.documentElement.classList.remove("film-on");
+        document.documentElement.classList.remove("film-on", "film-active");
         setEnabled(false);
       };
     });

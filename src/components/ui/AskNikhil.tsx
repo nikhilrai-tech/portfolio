@@ -85,7 +85,7 @@ export default function AskNikhil({ labels, email }: { labels: Profile["ask"]; e
         aria-expanded={open}
         aria-controls="ask-panel"
         data-magnetic
-        className="border-accent/50 bg-bg/80 text-fg hover:border-accent fixed right-5 bottom-20 z-40 flex h-11 items-center gap-2 rounded-full border px-4 text-sm font-medium shadow-[var(--shadow)] backdrop-blur-md transition-colors"
+        className="floating-ui border-accent/50 bg-bg/80 text-fg hover:border-accent fixed right-5 bottom-20 z-40 flex h-11 items-center gap-2 rounded-full border px-4 text-sm font-medium shadow-[var(--shadow)] backdrop-blur-md transition-colors"
       >
         <span className="text-accent" aria-hidden>
           ✦
