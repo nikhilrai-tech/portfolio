@@ -223,6 +223,7 @@ export type Profile = {
     englishOnly: string;
   };
   testimonials: { label: string; heading: string };
+  sponsor: { heading: string; body: string; button: string };
   ott: {
     whos: string;
     whosSub: string;

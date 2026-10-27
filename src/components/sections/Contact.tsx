@@ -10,6 +10,7 @@ import ShareCard from "@/components/ui/ShareCard";
 import ContactForm from "@/components/ui/ContactForm";
 import Testimonials from "@/components/ui/Testimonials";
 import Services from "@/components/ui/Services";
+import SponsorCard from "@/components/ui/SponsorCard";
 import type { Locale } from "@/i18n/config";
 
 export default function Contact({ profile, locale }: { profile: Profile; locale: Locale }) {
@@ -101,6 +102,10 @@ export default function Contact({ profile, locale }: { profile: Profile; locale:
 
         <div className="mt-20">
           <ShareCard profile={profile} url={`${person.siteUrl}/${locale}`} />
+        </div>
+
+        <div className="mt-20">
+          <SponsorCard labels={profile.sponsor} />
         </div>
 
         <div className="border-line mt-20 grid gap-6 border-t pt-8 md:grid-cols-12">
