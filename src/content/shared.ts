@@ -13,6 +13,8 @@ export const person = {
   portrait: { src: "/images/portrait.jpg", width: 470, height: 588 },
   // Set to undefined to hide the download button.
   resume: "/Nikhil-Rai-Resume.pdf" as string | undefined,
+  // Cal.com or Calendly link for the "Book a call" button. Leave undefined to hide the button.
+  booking: undefined as string | undefined,
 } as const;
 
 // Files live in /public/images/photography. The section stays hidden while this list is empty.

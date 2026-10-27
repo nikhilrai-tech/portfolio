@@ -9,6 +9,7 @@ import Terminal from "@/components/ui/Terminal";
 import ShareCard from "@/components/ui/ShareCard";
 import ContactForm from "@/components/ui/ContactForm";
 import Testimonials from "@/components/ui/Testimonials";
+import Services from "@/components/ui/Services";
 import type { Locale } from "@/i18n/config";
 
 export default function Contact({ profile, locale }: { profile: Profile; locale: Locale }) {
@@ -23,6 +24,7 @@ export default function Contact({ profile, locale }: { profile: Profile; locale:
     <section id="contact" data-section="contact" className="relative pt-28 md:pt-40">
       <Container>
         <Testimonials labels={profile.testimonials} />
+        <Services labels={profile.services} />
         <div className="grid items-center gap-10 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <SectionHeader

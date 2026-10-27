@@ -63,6 +63,16 @@ export type JourneyScene = {
   visual: "network" | "security" | "cloud" | "autonomy";
 };
 
+export type ServiceId = "devops" | "cloud" | "security" | "backend";
+
+export type Service = {
+  id: ServiceId;
+  title: string;
+  body: string;
+  /** What the engagement covers, as short phrases. */
+  includes: string[];
+};
+
 export type Testimonial = {
   quote: string;
   name: string;
@@ -189,6 +199,17 @@ export type Profile = {
     limited: string;
     invalid: string;
     note: string;
+    topic: string;
+    topics: Record<ServiceId | "other", string>;
+  };
+  services: {
+    label: string;
+    heading: string;
+    intro: string;
+    book: string;
+    brief: string;
+    note: string;
+    items: Service[];
   };
   notes: {
     label: string;

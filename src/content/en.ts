@@ -410,6 +410,49 @@ export const en: Profile = {
     limited: "Too many messages from here. Please try again in an hour.",
     invalid: "Please check your name, email, and a message of at least 10 characters.",
     note: "Goes straight to my inbox. No newsletter, no tracking.",
+    topic: "What do you need?",
+    topics: {
+      devops: "DevOps and CI/CD",
+      cloud: "Cloud cost review",
+      security: "Security baseline",
+      backend: "Python backend or API",
+      other: "Something else",
+    },
+  },
+  services: {
+    label: "Work with me",
+    heading: "Need a hand with your infrastructure?",
+    intro:
+      "Short, well-defined projects for startups and small teams. Scope and timeline are agreed in writing before any work starts.",
+    book: "Book a call",
+    brief: "Send a brief",
+    note: "Tell me what you run today and where it hurts. I reply with a plan and a fixed scope.",
+    items: [
+      {
+        id: "devops",
+        title: "DevOps and CI/CD",
+        body: "From manual deploys to a pipeline that tests, builds and ships on every merge.",
+        includes: ["Docker", "Jenkins or GitHub Actions", "Kubernetes", "Rollbacks"],
+      },
+      {
+        id: "cloud",
+        title: "Cloud cost review",
+        body: "Find what you pay for and nobody uses, then cut it safely with the owners in the loop.",
+        includes: ["AWS, Azure, DigitalOcean", "Unused resources", "Ownership", "Budgets"],
+      },
+      {
+        id: "security",
+        title: "Security baseline",
+        body: "The basics that stop most incidents: who has access, where secrets live, what gets backed up.",
+        includes: ["Access policy", "Secrets", "Backups", "Monitoring and alerts"],
+      },
+      {
+        id: "backend",
+        title: "Python backend or API",
+        body: "Django and REST services built to be boring in production: observable, tested, documented.",
+        includes: ["Django and DRF", "PostgreSQL", "Celery and queues", "Sentry"],
+      },
+    ],
   },
   notes: {
     label: "Notes",

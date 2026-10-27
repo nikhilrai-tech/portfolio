@@ -7,9 +7,17 @@ type State = "idle" | "sending" | "sent" | "error" | "limited" | "invalid";
 export default function ContactForm({ labels, email }: { labels: Profile["form"]; email: string }) {
   const [state, setState] = useState<State>("idle");
   const started = useRef(0);
+  const topicRef = useRef<HTMLSelectElement>(null);
   useEffect(() => {
     started.current = Date.now();
-  }, []);
+    // "Send a brief" on a service card picks the matching topic.
+    const pick = (e: Event) => {
+      const topic = (e as CustomEvent<string>).detail;
+      if (topicRef.current && topic in labels.topics) topicRef.current.value = topic;
+    };
+    window.addEventListener("contact:topic", pick);
+    return () => window.removeEventListener("contact:topic", pick);
+  }, [labels.topics]);
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,7 +42,10 @@ export default function ContactForm({ labels, email }: { labels: Profile["form"]
     } catch {
       // Not configured or failed: hand the message to the visitor's own mail app.
       setState("error");
-      const subject = encodeURIComponent(`Hello from ${data.name || "your portfolio"}`);
+      const topic = labels.topics[data.topic as keyof typeof labels.topics];
+      const subject = encodeURIComponent(
+        `${topic && data.topic !== "other" ? `${topic}: ` : ""}Hello from ${data.name || "your portfolio"}`,
+      );
       const body = encodeURIComponent(`${data.message ?? ""}\n\n— ${data.name ?? ""}`);
       window.setTimeout(
         () => (window.location.href = `mailto:${email}?subject=${subject}&body=${body}`),
@@ -54,6 +65,7 @@ export default function ContactForm({ labels, email }: { labels: Profile["form"]
 
   return (
     <form
+      id="brief"
       onSubmit={submit}
       className="border-line bg-surface/70 rounded-3xl border p-6 backdrop-blur-md md:p-8"
       noValidate
@@ -83,6 +95,30 @@ export default function ContactForm({ labels, email }: { labels: Profile["form"]
             placeholder={labels.email}
             className={field}
           />
+        </label>
+        <label className="relative block sm:col-span-2">
+          <span className="sr-only">{labels.topic}</span>
+          <select
+            ref={topicRef}
+            name="topic"
+            defaultValue=""
+            className={`${field} appearance-none`}
+          >
+            <option value="" disabled>
+              {labels.topic}
+            </option>
+            {Object.entries(labels.topics).map(([id, label]) => (
+              <option key={id} value={id}>
+                {label}
+              </option>
+            ))}
+          </select>
+          <span
+            aria-hidden
+            className="text-muted pointer-events-none absolute top-1/2 right-4 -translate-y-1/2"
+          >
+            ▾
+          </span>
         </label>
         <label className="block sm:col-span-2">
           <span className="sr-only">{labels.message}</span>

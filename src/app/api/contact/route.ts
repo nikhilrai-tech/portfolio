@@ -1,5 +1,6 @@
 import type { NextRequest } from "next/server";
 import { person } from "@/content/profile";
+import { en } from "@/content/en";
 
 // Sends contact-form messages to Nikhil's inbox through Resend (https://resend.com).
 // Needs RESEND_API_KEY. CONTACT_TO and CONTACT_FROM are optional overrides. Without a key the
@@ -26,6 +27,12 @@ export async function POST(request: NextRequest) {
   const name = String(body.name ?? "").trim();
   const email = String(body.email ?? "").trim();
   const message = String(body.message ?? "").trim();
+  const topicId = String(body.topic ?? "");
+  // Only known topics reach the subject line; anything else is dropped.
+  const topic =
+    topicId in en.form.topics && topicId !== "other"
+      ? en.form.topics[topicId as keyof typeof en.form.topics]
+      : "";
   const honeypot = String(body.company ?? "");
   const startedAt = Number(body.t ?? 0);
 
@@ -60,7 +67,7 @@ export async function POST(request: NextRequest) {
       from: process.env.CONTACT_FROM ?? "Portfolio <onboarding@resend.dev>",
       to: [process.env.CONTACT_TO ?? person.email],
       reply_to: email,
-      subject: `Portfolio message from ${name}`,
+      subject: `${topic ? `[${topic}] ` : ""}Portfolio message from ${name}`,
       text: `${message}\n\n— ${name} <${email}>`,
       html: `<p style="white-space:pre-wrap;font:15px/1.6 system-ui">${escape(message)}</p><p style="color:#666;font:13px system-ui">— ${escape(name)} &lt;${escape(email)}&gt;</p>`,
     }),
