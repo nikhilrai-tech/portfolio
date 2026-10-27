@@ -467,6 +467,11 @@ export const en: Profile = {
     englishOnly: "",
   },
   testimonials: { label: "Kind words", heading: "What people say." },
+  sponsor: {
+    heading: "Support the open source",
+    body: "seatbelt, cloud-ownerlens, ScamSaathi and this portfolio are free. Sponsoring keeps them maintained.",
+    button: "Sponsor on GitHub",
+  },
   ott: {
     whos: "Who's visiting?",
     whosSub: "Pick one and the site lines up what you'll care about most.",
