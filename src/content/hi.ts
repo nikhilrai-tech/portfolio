@@ -471,6 +471,11 @@ export const hi: Profile = {
     englishOnly: "ये नोट्स अंग्रेज़ी में हैं।",
   },
   testimonials: { label: "कुछ शब्द", heading: "लोग क्या कहते हैं।" },
+  sponsor: {
+    heading: "ओपन सोर्स का साथ दें",
+    body: "seatbelt, cloud-ownerlens, ScamSaathi और यह पोर्टफ़ोलियो मुफ़्त हैं। स्पॉन्सर करने से इनका रखरखाव चलता रहता है।",
+    button: "GitHub पर स्पॉन्सर करें",
+  },
   ott: {
     whos: "कौन देख रहा है?",
     whosSub: "एक चुनिए, साइट वही सामने रखेगी जो आपके लिए सबसे काम का है।",

@@ -14,7 +14,9 @@ export const person = {
   // Set to undefined to hide the download button.
   resume: "/Nikhil-Rai-Resume.pdf" as string | undefined,
   // Cal.com or Calendly link for the "Book a call" button. Leave undefined to hide the button.
-  booking: undefined as string | undefined,
+  booking: "https://cal.com/nikhil-rai-exnpld" as string | undefined,
+  // GitHub Sponsors profile. Leave undefined to hide the sponsor card.
+  sponsor: "https://github.com/sponsors/nikhilrai-tech" as string | undefined,
 } as const;
 
 // Files live in /public/images/photography. The section stays hidden while this list is empty.
