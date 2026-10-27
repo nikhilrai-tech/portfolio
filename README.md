@@ -100,6 +100,8 @@ have your own site:
 5. **Resume and vCard:** `public/` (or set `resume` to `undefined` in `shared.ts`).
 6. **Share cards:** edit `scripts/og-card.html` and run `scripts/render-og-cards.cjs` (instructions at the top).
 7. **Colours and fonts:** tokens at the top of `src/app/globals.css`, fonts in `src/app/[lang]/layout.tsx`.
+8. **Services ("Work with me"):** `services` in the content files; set `items` to `[]` to hide the block. Put a
+   Cal.com or Calendly link in `booking` in `shared.ts` to show the "Book a call" button.
 
 ## How it works (the interesting bits)
 
@@ -225,6 +227,7 @@ environment variables above and you're done.
 ## Contributing, security, license
 
 - [CONTRIBUTING.md](CONTRIBUTING.md) · [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) · [SECURITY.md](SECURITY.md)
+- Found it useful? A ⭐ helps others find it, and the **Sponsor** button on the repo supports the work.
 - Publishing your own portfolio repo? [docs/PUBLIC-REPO-CHECKLIST.md](docs/PUBLIC-REPO-CHECKLIST.md) is the checklist used here.
 - **Code:** [MIT](LICENSE). **Content** (text, photos, resume, notes, share cards): © Nikhil Rai, see
   [CONTENT-LICENSE.md](CONTENT-LICENSE.md).
