@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security issue
+    url: https://github.com/nikhilrai-tech/portfolio/blob/main/SECURITY.md
+    about: Please report vulnerabilities privately.
+  - name: Say hello
+    url: mailto:nikhilrai662@gmail.com
+    about: Questions about the work, collaborations or hiring.

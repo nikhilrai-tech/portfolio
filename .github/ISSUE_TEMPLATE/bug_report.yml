@@ -1,0 +1,25 @@
+name: Bug report
+description: Something looks broken or behaves oddly
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, what you saw instead.
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Page and section
+      placeholder: /en, Journey section
+  - type: input
+    id: device
+    attributes:
+      label: Browser and device
+      placeholder: Chrome 140 on Android, iPhone 15 Safari, Firefox on Windows…
+  - type: textarea
+    id: screens
+    attributes:
+      label: Screenshots or recording
